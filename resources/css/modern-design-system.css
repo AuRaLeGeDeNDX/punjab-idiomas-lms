@@ -1,0 +1,268 @@
+/**
+ * MODERN CREATIVE DESIGN SYSTEM
+ * Bold, Dramatic, Visible Changes
+ */
+
+:root {
+    /* ========================================
+       BOLD GRADIENT SYSTEM
+       ======================================== */
+    --gradient-purple-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-orange-pink: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-green-teal: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --gradient-blue-cyan: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --gradient-yellow-orange: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    --gradient-pink-purple: linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%);
+    
+    /* Animated Hero Gradient */
+    --gradient-hero: linear-gradient(270deg, #667eea, #764ba2, #f093fb, #f5576c);
+    
+    /* ========================================
+       GLASSMORPHISM SYSTEM
+       ======================================== */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-bg-strong: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    
+    /* ========================================
+       MODERN COLOR PALETTE
+       ======================================== */
+    --color-primary: #667eea;
+    --color-secondary: #764ba2;
+    --color-accent: #f093fb;
+    --color-success: #38ef7d;
+    --color-warning: #fee140;
+    --color-danger: #f5576c;
+    --color-info: #4facfe;
+    
+    /* ========================================
+       BOLD SHADOWS
+       ======================================== */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.16);
+    --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.2);
+    --shadow-colored: 0 20px 60px rgba(102, 126, 234, 0.3);
+    --shadow-colored-hover: 0 30px 80px rgba(102, 126, 234, 0.4);
+    
+    /* ========================================
+       LARGE BORDER RADIUS
+       ======================================== */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-full: 9999px;
+    
+    /* ========================================
+       OVERSIZED TYPOGRAPHY
+       ======================================== */
+    --font-size-xs: 0.75rem;      /* 12px */
+    --font-size-sm: 0.875rem;     /* 14px */
+    --font-size-base: 1rem;       /* 16px */
+    --font-size-lg: 1.125rem;     /* 18px */
+    --font-size-xl: 1.5rem;       /* 24px */
+    --font-size-2xl: 2rem;        /* 32px */
+    --font-size-3xl: 2.5rem;      /* 40px */
+    --font-size-4xl: 3rem;        /* 48px */
+    --font-size-5xl: 3.5rem;      /* 56px */
+    --font-size-6xl: 4rem;        /* 64px */
+    
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-black: 900;
+    
+    /* ========================================
+       SMOOTH TRANSITIONS
+       ======================================== */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   ANIMATED GRADIENT BACKGROUND
+   ======================================== */
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-gradient-bg {
+    background: var(--gradient-hero);
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+}
+
+/* ========================================
+   GLASSMORPHISM UTILITIES
+   ======================================== */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.glass-strong {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+/* ========================================
+   GRADIENT TEXT
+   ======================================== */
+.gradient-text {
+    background: var(--gradient-purple-blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-pink {
+    background: var(--gradient-orange-pink);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-green {
+    background: var(--gradient-green-teal);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ========================================
+   ANIMATION UTILITIES
+   ======================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.6s ease-out;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Stagger delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.text-gradient {
+    background: var(--gradient-purple-blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shadow-colored {
+    box-shadow: var(--shadow-colored);
+}
+
+.shadow-colored-hover:hover {
+    box-shadow: var(--shadow-colored-hover);
+}
+
+.rounded-lg {
+    border-radius: var(--radius-lg);
+}
+
+.rounded-xl {
+    border-radius: var(--radius-xl);
+}
+
+.transition-all {
+    transition: all var(--transition-base);
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+   ======================================== */
+:root[data-theme="dark"] {
+    --glass-bg: rgba(30, 41, 59, 0.5);
+    --glass-bg-strong: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   ACCESSIBILITY - REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,676 @@
+/**
+ * Alert Component Styles
+ * 
+ * This file defines the alert component styling standards for the design system.
+ * It includes alert borders, padding, colors, and semantic variants for
+ * success, warning, danger, and info states.
+ * 
+ * Requirements: 11.5
+ */
+
+/* ========================================
+   BASE ALERT STYLES
+   ======================================== */
+
+/**
+ * Base alert class that applies the design system standards
+ * - 0.5rem border radius (medium)
+ * - 1px solid border with semantic colors
+ * - 0.75rem vertical and 1rem horizontal padding
+ * - Semantic background colors with proper contrast
+ * - Icon support with proper spacing
+ */
+.alert-design-system {
+    display: flex;
+    align-items: flex-start;
+    border-radius: var(--radius-md);
+    border: 1px solid;
+    font-size: var(--font-size-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    line-height: var(--line-height-normal);
+    transition: all var(--transition-base);
+}
+
+.alert-design-system:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   ALERT ICON STYLES
+   ======================================== */
+
+/**
+ * Icon styling within alerts
+ * - Proper spacing from alert text
+ * - Aligned to top for multi-line alerts
+ * - Semantic colors matching alert variant
+ */
+.alert-design-system i,
+.alert-design-system .icon {
+    font-size: 1.125rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.alert-design-system i:only-child,
+.alert-design-system .icon:only-child {
+    margin-right: 0;
+}
+
+/* ========================================
+   ALERT CONTENT
+   ======================================== */
+
+/**
+ * Alert content wrapper
+ * - Flexible layout for text content
+ * - Proper spacing for headings and paragraphs
+ */
+.alert-design-system .alert-content {
+    flex: 1;
+}
+
+.alert-design-system .alert-heading {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 0.25rem;
+    line-height: var(--line-height-tight);
+}
+
+.alert-design-system p {
+    margin-bottom: 0.5rem;
+}
+
+.alert-design-system p:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   ALERT DISMISS BUTTON
+   ======================================== */
+
+/**
+ * Dismissible alert close button
+ * - Positioned to the right
+ * - Proper hover states
+ * - Accessible click target
+ */
+.alert-design-system .alert-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: inherit;
+    opacity: 0.5;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 1rem;
+    flex-shrink: 0;
+    transition: opacity var(--transition-base);
+}
+
+.alert-design-system .alert-close:hover {
+    opacity: 0.75;
+}
+
+.alert-design-system .alert-close:focus {
+    outline: none;
+    opacity: 1;
+}
+
+/* ========================================
+   SUCCESS ALERT VARIANT
+   ======================================== */
+
+/**
+ * Success alert variant
+ * - Emerald color scheme
+ * - Light green background with proper contrast
+ * - Green border and text
+ */
+.alert-design-system.alert-success {
+    background-color: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #065f46;
+}
+
+.alert-design-system.alert-success i,
+.alert-design-system.alert-success .icon {
+    color: var(--admin-success);
+}
+
+.alert-design-system.alert-success .alert-heading {
+    color: #064e3b;
+}
+
+.alert-design-system.alert-success a {
+    color: #047857;
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+}
+
+.alert-design-system.alert-success a:hover {
+    color: #065f46;
+}
+
+/* ========================================
+   WARNING ALERT VARIANT
+   ======================================== */
+
+/**
+ * Warning alert variant
+ * - Amber color scheme
+ * - Light amber background with proper contrast
+ * - Amber border and text
+ */
+.alert-design-system.alert-warning {
+    background-color: #fffbeb;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.alert-design-system.alert-warning i,
+.alert-design-system.alert-warning .icon {
+    color: var(--admin-warning);
+}
+
+.alert-design-system.alert-warning .alert-heading {
+    color: #78350f;
+}
+
+.alert-design-system.alert-warning a {
+    color: #b45309;
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+}
+
+.alert-design-system.alert-warning a:hover {
+    color: #92400e;
+}
+
+/* ========================================
+   DANGER ALERT VARIANT
+   ======================================== */
+
+/**
+ * Danger alert variant
+ * - Red color scheme
+ * - Light red background with proper contrast
+ * - Red border and text
+ */
+.alert-design-system.alert-danger {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.alert-design-system.alert-danger i,
+.alert-design-system.alert-danger .icon {
+    color: var(--admin-danger);
+}
+
+.alert-design-system.alert-danger .alert-heading {
+    color: #7f1d1d;
+}
+
+.alert-design-system.alert-danger a {
+    color: #b91c1c;
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+}
+
+.alert-design-system.alert-danger a:hover {
+    color: #991b1b;
+}
+
+/* ========================================
+   INFO ALERT VARIANT
+   ======================================== */
+
+/**
+ * Info alert variant
+ * - Blue color scheme
+ * - Light blue background with proper contrast
+ * - Blue border and text
+ */
+.alert-design-system.alert-info {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1e40af;
+}
+
+.alert-design-system.alert-info i,
+.alert-design-system.alert-info .icon {
+    color: var(--admin-info);
+}
+
+.alert-design-system.alert-info .alert-heading {
+    color: #1e3a8a;
+}
+
+.alert-design-system.alert-info a {
+    color: #2563eb;
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+}
+
+.alert-design-system.alert-info a:hover {
+    color: #1e40af;
+}
+
+/* ========================================
+   SECONDARY ALERT VARIANT
+   ======================================== */
+
+/**
+ * Secondary alert variant
+ * - Gray color scheme
+ * - Light gray background with proper contrast
+ * - Gray border and text
+ */
+.alert-design-system.alert-secondary {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    color: #374151;
+}
+
+.alert-design-system.alert-secondary i,
+.alert-design-system.alert-secondary .icon {
+    color: var(--admin-secondary);
+}
+
+.alert-design-system.alert-secondary .alert-heading {
+    color: #1f2937;
+}
+
+.alert-design-system.alert-secondary a {
+    color: #4b5563;
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+}
+
+.alert-design-system.alert-secondary a:hover {
+    color: #374151;
+}
+
+/* ========================================
+   PRIMARY ALERT VARIANT
+   ======================================== */
+
+/**
+ * Primary alert variant
+ * - Indigo color scheme
+ * - Light indigo background with proper contrast
+ * - Indigo border and text
+ */
+.alert-design-system.alert-primary {
+    background-color: #eef2ff;
+    border-color: #c7d2fe;
+    color: #3730a3;
+}
+
+.alert-design-system.alert-primary i,
+.alert-design-system.alert-primary .icon {
+    color: var(--admin-primary);
+}
+
+.alert-design-system.alert-primary .alert-heading {
+    color: #312e81;
+}
+
+.alert-design-system.alert-primary a {
+    color: #4338ca;
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+}
+
+.alert-design-system.alert-primary a:hover {
+    color: #3730a3;
+}
+
+/* ========================================
+   ALERT WITH LIST
+   ======================================== */
+
+/**
+ * Alert with list styling
+ * - Proper spacing for list items
+ * - Maintains semantic colors
+ */
+.alert-design-system ul,
+.alert-design-system ol {
+    margin-bottom: 0.5rem;
+    padding-left: 1.25rem;
+}
+
+.alert-design-system ul:last-child,
+.alert-design-system ol:last-child {
+    margin-bottom: 0;
+}
+
+.alert-design-system li {
+    margin-bottom: 0.25rem;
+}
+
+.alert-design-system li:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   ALERT SIZE VARIANTS
+   ======================================== */
+
+/**
+ * Small alert variant
+ * - Reduced padding for compact layouts
+ * - Smaller font size
+ */
+.alert-design-system.alert-sm {
+    padding: 0.5rem 0.75rem;
+    font-size: var(--font-size-xs);
+}
+
+.alert-design-system.alert-sm i,
+.alert-design-system.alert-sm .icon {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+}
+
+.alert-design-system.alert-sm .alert-heading {
+    font-size: var(--font-size-sm);
+}
+
+/**
+ * Large alert variant
+ * - Increased padding for emphasis
+ * - Larger font size
+ */
+.alert-design-system.alert-lg {
+    padding: 1rem 1.25rem;
+    font-size: var(--font-size-base);
+}
+
+.alert-design-system.alert-lg i,
+.alert-design-system.alert-lg .icon {
+    font-size: 1.25rem;
+    margin-right: 0.875rem;
+}
+
+.alert-design-system.alert-lg .alert-heading {
+    font-size: var(--font-size-lg);
+}
+
+/* ========================================
+   BOOTSTRAP ALERT OVERRIDES
+   ======================================== */
+
+/**
+ * Override Bootstrap alert classes to use design system styles
+ * This ensures consistency when using standard Bootstrap alert classes
+ */
+.alert:not(.alert-design-system) {
+    border-radius: var(--radius-md);
+    border: 1px solid;
+    font-size: var(--font-size-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.alert.alert-success:not(.alert-design-system) {
+    background-color: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #065f46;
+}
+
+.alert.alert-warning:not(.alert-design-system) {
+    background-color: #fffbeb;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.alert.alert-danger:not(.alert-design-system) {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.alert.alert-info:not(.alert-design-system) {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1e40af;
+}
+
+.alert.alert-primary:not(.alert-design-system) {
+    background-color: #eef2ff;
+    border-color: #c7d2fe;
+    color: #3730a3;
+}
+
+.alert.alert-secondary:not(.alert-design-system) {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    color: #374151;
+}
+
+/* ========================================
+   ALERT DISMISSIBLE ANIMATION
+   ======================================== */
+
+/**
+ * Fade out animation for dismissible alerts
+ * - Smooth opacity transition
+ * - Collapses height after fade
+ */
+.alert-design-system.alert-dismissible {
+    padding-right: 3rem;
+    position: relative;
+}
+
+.alert-design-system.alert-dismissible .alert-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+}
+
+.alert-design-system.alert-dismissible.alert-sm .alert-close {
+    top: 0.5rem;
+    right: 0.75rem;
+}
+
+.alert-design-system.alert-dismissible.alert-lg .alert-close {
+    top: 1rem;
+    right: 1.25rem;
+}
+
+.alert-design-system.fade-out {
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+}
+
+.alert-design-system.collapse-out {
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: none;
+    transition: all var(--transition-slow);
+}
+
+/* ========================================
+   ALERT WITH ACTIONS
+   ======================================== */
+
+/**
+ * Alert with action buttons
+ * - Buttons aligned to the right or bottom
+ * - Proper spacing between buttons
+ */
+.alert-design-system .alert-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.alert-design-system .alert-actions .btn {
+    font-size: var(--font-size-xs);
+    padding: 0.375rem 0.75rem;
+}
+
+/* Inline actions (buttons next to text) */
+.alert-design-system.alert-inline-actions {
+    align-items: center;
+}
+
+.alert-design-system.alert-inline-actions .alert-actions {
+    margin-top: 0;
+    margin-left: auto;
+}
+
+/* ========================================
+   ALERT BORDER VARIANTS
+   ======================================== */
+
+/**
+ * Left border accent variant
+ * - Thick left border for emphasis
+ * - Subtle background
+ */
+.alert-design-system.alert-border-left {
+    border-left-width: 4px;
+}
+
+/**
+ * Top border accent variant
+ * - Thick top border for emphasis
+ */
+.alert-design-system.alert-border-top {
+    border-top-width: 4px;
+}
+
+/**
+ * No border variant
+ * - Removes border, keeps background
+ */
+.alert-design-system.alert-no-border {
+    border: none;
+}
+
+/* ========================================
+   ALERT STACKING
+   ======================================== */
+
+/**
+ * Alert stack container
+ * - Fixed positioning for toast-style alerts
+ * - Proper z-index for visibility
+ */
+.alert-stack {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: var(--z-tooltip);
+    max-width: 400px;
+    width: 100%;
+}
+
+.alert-stack .alert-design-system {
+    margin-bottom: 0.5rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.alert-stack .alert-design-system:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+/**
+ * Mobile-specific alert adjustments
+ * - Full width alerts on small screens
+ * - Adjusted padding for smaller screens
+ */
+@media (max-width: 576px) {
+    .alert-design-system {
+        padding: 0.625rem 0.875rem;
+        font-size: var(--font-size-xs);
+    }
+    
+    .alert-design-system i,
+    .alert-design-system .icon {
+        font-size: 1rem;
+        margin-right: 0.625rem;
+    }
+    
+    .alert-design-system .alert-heading {
+        font-size: var(--font-size-sm);
+    }
+    
+    .alert-design-system .alert-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .alert-design-system .alert-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .alert-stack {
+        top: 0.5rem;
+        right: 0.5rem;
+        left: 0.5rem;
+        max-width: none;
+    }
+}
+
+/**
+ * Tablet-specific alert adjustments
+ * - Standard sizing maintained
+ */
+@media (min-width: 577px) and (max-width: 992px) {
+    .alert-stack {
+        max-width: 360px;
+    }
+}
+
+/**
+ * Desktop-specific alert adjustments
+ * - Standard sizing maintained
+ */
+@media (min-width: 993px) {
+    /* Standard sizing maintained */
+}
+
+/* ========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ======================================== */
+
+/**
+ * Screen reader only text for alert context
+ * - Provides semantic context for assistive technologies
+ */
+.alert-design-system .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/**
+ * Focus styles for dismissible alerts
+ * - Ensures keyboard accessibility
+ */
+.alert-design-system .alert-close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}

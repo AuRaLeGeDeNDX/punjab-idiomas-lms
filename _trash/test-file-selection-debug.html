@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Selection Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .file-drop-zone { 
+            border: 2px dashed #ccc; 
+            padding: 40px; 
+            text-align: center; 
+            cursor: pointer; 
+            margin: 10px 0;
+            background: #f9f9f9;
+        }
+        .file-input-hidden { position: absolute; opacity: 0; pointer-events: none; }
+        .debug-log { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 4px; font-family: monospace; }
+        .preview-area { margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>File Selection Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>Test File Selection</h2>
+        
+        <div class="file-drop-zone" onclick="document.getElementById('test-file').click()">
+            <input type="file" class="file-input-hidden" id="test-file" name="file" 
+                   onclick="event.stopPropagation()" accept="image/*">
+            <div>
+                📁 Click to select an image file
+            </div>
+        </div>
+        
+        <div class="preview-area" id="preview-area" style="display: none;">
+            <h3>File Selected:</h3>
+            <div id="file-details"></div>
+            <div id="file-preview"></div>
+        </div>
+        
+        <div class="debug-log" id="debug-log">
+            <strong>Debug Log:</strong><br>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const debugLog = document.getElementById('debug-log');
+            debugLog.innerHTML += `[${timestamp}] ${message}<br>`;
+            console.log(`[${timestamp}] ${message}`);
+        }
+        
+        log('Page loaded');
+        
+        // Monitor file input changes
+        document.getElementById('test-file').addEventListener('change', function(e) {
+            log(`File input change event triggered`);
+            log(`Files count: ${e.target.files.length}`);
+            
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                log(`File selected: ${file.name}`);
+                log(`File size: ${file.size} bytes`);
+                log(`File type: ${file.type}`);
+                log(`File last modified: ${new Date(file.lastModified)}`);
+                
+                showFilePreview(file);
+            } else {
+                log('No file selected');
+                hideFilePreview();
+            }
+        });
+        
+        // Monitor clicks
+        document.querySelector('.file-drop-zone').addEventListener('click', function() {
+            log('Drop zone clicked');
+        });
+        
+        document.getElementById('test-file').addEventListener('click', function(e) {
+            log('File input clicked directly');
+            log('Event propagation stopped: ' + (e.defaultPrevented ? 'Yes' : 'No'));
+        });
+        
+        function showFilePreview(file) {
+            log('Showing file preview...');
+            
+            const previewArea = document.getElementById('preview-area');
+            const fileDetails = document.getElementById('file-details');
+            const filePreview = document.getElementById('file-preview');
+            
+            // Show file details
+            fileDetails.innerHTML = `
+                <p><strong>Name:</strong> ${file.name}</p>
+                <p><strong>Size:</strong> ${formatFileSize(file.size)}</p>
+                <p><strong>Type:</strong> ${file.type}</p>
+                <p><strong>Last Modified:</strong> ${new Date(file.lastModified).toLocaleString()}</p>
+            `;
+            
+            // Show image preview if it's an image
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    filePreview.innerHTML = `
+                        <h4>Image Preview:</h4>
+                        <img src="${e.target.result}" alt="Preview" style="max-width: 300px; max-height: 300px; border: 1px solid #ddd; border-radius: 4px;">
+                    `;
+                    log('Image preview loaded successfully');
+                };
+                reader.onerror = function() {
+                    log('Error loading image preview');
+                    filePreview.innerHTML = '<p style="color: red;">Error loading image preview</p>';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                filePreview.innerHTML = '<p>Preview not available for this file type</p>';
+            }
+            
+            previewArea.style.display = 'block';
+            log('File preview shown');
+        }
+        
+        function hideFilePreview() {
+            log('Hiding file preview...');
+            document.getElementById('preview-area').style.display = 'none';
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        log('Event listeners attached');
+    </script>
+</body>
+</html>

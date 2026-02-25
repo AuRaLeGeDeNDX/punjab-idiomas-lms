@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image Upload</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
+    <h1>Test Image Upload</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="hidden" name="type" value="image">
+        <input type="hidden" name="visibility" value="student">
+        <input type="file" name="file" accept="image/*" required>
+        <input type="text" name="title" placeholder="Image title">
+        <input type="text" name="alt_text" placeholder="Alt text">
+        <button type="submit">Upload Image</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        // Set CSRF token for all AJAX requests
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                resultDiv.innerHTML = 'Uploading...';
+                
+                const response = await fetch('/api/admin/courses/1/modules/1/subpages/1/content-blocks', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div style="color: green;">Success: ${data.message}</div>`;
+                    console.log('Upload successful:', data);
+                } else {
+                    resultDiv.innerHTML = `<div style="color: red;">Error: ${data.message || 'Upload failed'}</div>`;
+                    console.error('Upload failed:', data);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: red;">Network Error: ${error.message}</div>`;
+                console.error('Network error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

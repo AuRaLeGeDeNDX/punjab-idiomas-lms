@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punjab Idiomas Escuela | Barcelona</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #EF4444; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
+
+        .hero-bg {
+            /* Placeholder for a Barcelona/Student background */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50">
+
+    <header class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-book-open text-red-500 text-3xl"></i>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900 leading-none">PUNJAB</h1>
+                    <span class="text-sm font-semibold text-red-500 tracking-widest">IDIOMAS</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex space-x-8 items-center font-medium">
+                <a href="#home" class="text-gray-600 hover:text-red-500 transition">Inicio</a>
+                <a href="#about" class="text-gray-600 hover:text-red-500 transition">Nosotros</a>
+                <a href="#services" class="text-gray-600 hover:text-red-500 transition">Cursos</a>
+                <a href="#faq" class="text-gray-600 hover:text-red-500 transition">FAQ</a>
+                <a href="#contact" class="px-5 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition shadow-lg">
+                    Contáctanos
+                </a>
+            </nav>
+
+            <button class="md:hidden text-gray-700 text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section id="home" class="hero-bg h-screen flex items-center justify-center text-center px-4 pt-16">
+        <div class="max-w-4xl">
+            <span class="inline-block py-1 px-3 rounded-full bg-red-500/20 text-red-100 text-sm font-semibold mb-4 border border-red-500/30">
+                Escuela de Idiomas en Barcelona
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Domina el idioma. <br/>
+                <span class="text-red-500">Gana confianza.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+                Enseñanza estructurada y apoyo real para aprobar los exámenes DELE A1 a B2. 
+                Tu éxito es nuestra misión.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#services" class="px-8 py-4 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition shadow-xl transform hover:-translate-y-1">
+                    Ver Cursos
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-white text-gray-900 font-bold rounded-lg hover:bg-gray-100 transition shadow-xl transform hover:-translate-y-1">
+                    Inscribirse Ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h4 class="text-red-500 font-bold uppercase tracking-wide mb-2">Sobre Nosotros</h4>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Aprendizaje seguro y estructurado en Barcelona</h2>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Punjab Idiomas es un centro de español en Barcelona creado para ayudarte a aprender el idioma con seguridad y prepararte con éxito para los exámenes oficiales.
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Ofrecemos una enseñanza estructurada, clara y basada en teoría, ideal para estudiantes que desean avanzar con una guía completa desde el nivel A1 hasta B2. Somos una de las primeras plataformas informativas en Barcelona que ofrece apoyo real al estudiante.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+                        <div class="p-6 bg-gray-50 rounded-xl border border-gray-100">
+                            <i class="fas fa-bullseye text-red-500 text-2xl mb-3"></i>
+                            <h3 class="font-bold text-xl mb-2">Nuestra Misión</h3>
+                            <p class="text-sm text-gray-600">Formar estudiantes con bases sólidas y confianza para aprobar los exámenes DELE A1 a B2 con alta calidad.</p>
+                        </div>
+                        <div class="p-6 bg-gray-50 rounded-xl border border-gray-100">
+                            <i class="fas fa-eye text-red-500 text-2xl mb-3"></i>
+                            <h3 class="font-bold text-xl mb-2">Nuestra Visión</h3>
+                            <p class="text-sm text-gray-600">Convertirnos en una de las escuelas más confiables de España, reconocida por la calidad y el acompañamiento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Students learning" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-6 -left-6 bg-red-500 text-white p-6 rounded-xl shadow-lg hidden md:block">
+                        <p class="text-2xl font-bold">A1 - B2</p>
+                        <p class="text-sm opacity-90">Niveles Completos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 bg-gray-900 text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-red-500 font-bold uppercase tracking-wide mb-2">Nuestros Servicios</h4>
+                <h2 class="text-3xl md:text-4xl font-bold">Cursos diseñados para tu éxito</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 p-8 rounded-2xl hover:bg-gray-750 transition border border-gray-700 hover:border-red-500 group">
+                    <div class="w-14 h-14 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-red-500 group-hover:text-white transition">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Cursos de Español (A1-B2)</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Niveles desde Principiante (A1) hasta Intermedio Alto (B2). Clases estructuradas, gramática clara y práctica oral.</p>
+                    <ul class="text-sm text-gray-400 space-y-1">
+                        <li>• A1 (Principiante)</li>
+                        <li>• A2 (Elemental)</li>
+                        <li>• B1 (Intermedio)</li>
+                        <li>• B2 (Intermedio Alto)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800 p-8 rounded-2xl hover:bg-gray-750 transition border border-gray-700 hover:border-red-500 group">
+                    <div class="w-14 h-14 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-red-500 group-hover:text-white transition">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Preparación DELE</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Método enfocado al examen con resultados reales.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Explicación formato DELE</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Modelos de examen</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Simulacros intensivos</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Material incluido</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800 p-8 rounded-2xl hover:bg-gray-750 transition border border-gray-700 hover:border-red-500 group">
+                    <div class="w-14 h-14 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-red-500 group-hover:text-white transition">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Práctica DELE A2</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Formación especial para dominar la parte práctica del examen.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Práctica oral guiada</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Roleplays reales</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Corrección y fluidez</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800 p-8 rounded-2xl hover:bg-gray-750 transition border border-gray-700 hover:border-red-500 group">
+                    <div class="w-14 h-14 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-red-500 group-hover:text-white transition">
+                        <i class="fas fa-taxi"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Español B1 para Taxistas</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Curso específico con enfoque profesional.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Vocabulario de trabajo</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Comunicación con clientes</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Requisitos B1 completos</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800 p-8 rounded-2xl hover:bg-gray-750 transition border border-gray-700 hover:border-red-500 group">
+                    <div class="w-14 h-14 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-red-500 group-hover:text-white transition">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Refuerzo para Niños</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Mejora el rendimiento escolar y nivel de español.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Apoyo con deberes</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Lectura y escritura</li>
+                        <li><i class="fas fa-check text-red-500 mr-2"></i>Confianza al hablar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Preguntas Frecuentes</h2>
+                <p class="text-gray-600 mt-2">Todo lo que necesitas saber antes de empezar</p>
+            </div>
+
+            <div class="space-y-4">
+                <details class="group bg-white p-6 rounded-lg shadow-sm border border-gray-100 cursor-pointer">
+                    <summary class="flex justify-between items-center font-medium text-gray-900 list-none">
+                        <span>¿Tienen clases para principiantes?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-red-500"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm">Sí. Nuestro curso A1 está diseñado para personas que comienzan desde cero.</p>
+                </details>
+
+                <details class="group bg-white p-6 rounded-lg shadow-sm border border-gray-100 cursor-pointer">
+                    <summary class="flex justify-between items-center font-medium text-gray-900 list-none">
+                        <span>¿Incluyen material de estudio?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-red-500"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm">Sí. Proporcionamos todo el material necesario y recursos de práctica.</p>
+                </details>
+
+                <details class="group bg-white p-6 rounded-lg shadow-sm border border-gray-100 cursor-pointer">
+                    <summary class="flex justify-between items-center font-medium text-gray-900 list-none">
+                        <span>¿Preparan para los exámenes DELE?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-red-500"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm">Sí. Preparamos DELE A1, A2, B1 y B2 con acompañamiento completo.</p>
+                </details>
+
+                <details class="group bg-white p-6 rounded-lg shadow-sm border border-gray-100 cursor-pointer">
+                    <summary class="flex justify-between items-center font-medium text-gray-900 list-none">
+                        <span>¿Las clases son presenciales u online?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-red-500"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm">Puedes elegir modalidad presencial, online o ambas, según tu disponibilidad.</p>
+                </details>
+
+                <details class="group bg-white p-6 rounded-lg shadow-sm border border-gray-100 cursor-pointer">
+                    <summary class="flex justify-between items-center font-medium text-gray-900 list-none">
+                        <span>¿Cómo puedo inscribirme?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-red-500"></i></span>
+                    </summary>
+                    <p class="text-gray-600 mt-4 text-sm">Puedes registrarte contactándonos por teléfono, correo electrónico o a través del formulario de la web.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 bg-gray-50 rounded-3xl overflow-hidden shadow-lg">
+                <div class="p-10 md:p-14">
+                    <h4 class="text-red-500 font-bold uppercase tracking-wide mb-2">Contáctanos</h4>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Estamos aquí para ayudarte</h2>
+                    <p class="text-gray-600 mb-8">
+                        Si deseas inscribirte, conocer los cursos o recibir orientación sobre tu preparación DELE, contáctanos. Te responderemos lo antes posible.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-500 shrink-0">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-900">Ubicación</h5>
+                                <p class="text-gray-600">Calle Padilla 391, 08025 Barcelona</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-500 shrink-0">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-900">Horario</h5>
+                                <p class="text-gray-600">Lun - Sáb: 10:00 AM - 8:00 PM</p>
+                                <p class="text-gray-600">Domingo: Cerrado</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-500 shrink-0">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-900">Correo Electrónico</h5>
+                                <p class="text-gray-600">info@panjabidiomas.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-red-500 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-red-500 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-red-500 hover:text-white transition"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-red-500 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-200 h-64 lg:h-auto min-h-[300px] relative">
+                     <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2992.569427289568!2d2.1746883!3d41.4052344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3260c07d377%3A0x6b8f804576394344!2sCarrer%20de%20Padilla%2C%20391%2C%20Horta-Guinard%C3%B3%2C%2008025%20Barcelona%2C%20Spain!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">PUNJAB <span class="text-red-500">IDIOMAS</span></h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Tu centro de confianza en Barcelona para aprender español y superar los exámenes DELE.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4 text-gray-200">Enlaces Rápidos</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#home" class="hover:text-red-500 transition">Inicio</a></li>
+                        <li><a href="#about" class="hover:text-red-500 transition">Sobre Nosotros</a></li>
+                        <li><a href="#services" class="hover:text-red-500 transition">Cursos</a></li>
+                        <li><a href="#contact" class="hover:text-red-500 transition">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4 text-gray-200">Legal</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-red-500 transition">Política de Privacidad</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Términos de Servicio</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+                &copy; 2024 Punjab Idiomas Escuela. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition z-50 flex items-center justify-center w-14 h-14">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+/**
+ * PROFESSIONAL MINIMAL DESIGN SYSTEM
+ * Clean, Subtle, Professional
+ */
+
+:root {
+    /* ========================================
+       PROFESSIONAL COLOR PALETTE
+       ======================================== */
+    --color-primary: #4A90E2;
+    --color-primary-dark: #357ABD;
+    --color-primary-light: #E8F4FD;
+    
+    --color-success: #5CB85C;
+    --color-success-light: #E8F5E8;
+    
+    --color-warning: #F0AD4E;
+    --color-warning-light: #FDF6E8;
+    
+    --color-danger: #D9534F;
+    --color-danger-light: #FCE8E8;
+    
+    --color-info: #5BC0DE;
+    --color-info-light: #E8F7FB;
+    
+    /* Neutral Colors */
+    --color-gray-50: #F9FAFB;
+    --color-gray-100: #F3F4F6;
+    --color-gray-200: #E5E7EB;
+    --color-gray-300: #D1D5DB;
+    --color-gray-400: #9CA3AF;
+    --color-gray-500: #6B7280;
+    --color-gray-600: #4B5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1F2937;
+    --color-gray-900: #111827;
+    
+    /* ========================================
+       SUBTLE SHADOWS
+       ======================================== */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    
+    /* ========================================
+       CLEAN BORDER RADIUS
+       ======================================== */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    
+    /* ========================================
+       PROFESSIONAL TYPOGRAPHY
+       ======================================== */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* ========================================
+       SMOOTH TRANSITIONS
+       ======================================== */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 0.3s ease;
+}
+
+/* ========================================
+   PROFESSIONAL CARD
+   ======================================== */
+.pro-card {
+    background: white;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.pro-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-gray-300);
+}
+
+.pro-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.pro-card-header h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+    margin: 0;
+}
+
+.pro-card-body {
+    color: var(--color-gray-700);
+}
+
+/* ========================================
+   PROFESSIONAL STAT CARD
+   ======================================== */
+.pro-stat-card {
+    background: white;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.pro-stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.pro-stat-card .icon {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+}
+
+.pro-stat-card .number {
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.pro-stat-card .label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pro-stat-card .subtitle {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    margin-top: 0.25rem;
+}
+
+/* Color Variants */
+.pro-stat-card.variant-primary {
+    border-left: 4px solid var(--color-primary);
+}
+
+.pro-stat-card.variant-primary .icon {
+    color: var(--color-primary);
+}
+
+.pro-stat-card.variant-success {
+    border-left: 4px solid var(--color-success);
+}
+
+.pro-stat-card.variant-success .icon {
+    color: var(--color-success);
+}
+
+.pro-stat-card.variant-warning {
+    border-left: 4px solid var(--color-warning);
+}
+
+.pro-stat-card.variant-warning .icon {
+    color: var(--color-warning);
+}
+
+.pro-stat-card.variant-info {
+    border-left: 4px solid var(--color-info);
+}
+
+.pro-stat-card.variant-info .icon {
+    color: var(--color-info);
+}
+
+/* ========================================
+   PROFESSIONAL BUTTON
+   ======================================== */
+.pro-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    transition: all var(--transition-base);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pro-btn-primary {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.pro-btn-primary:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+.pro-btn-success {
+    background: var(--color-success);
+    color: white;
+    border-color: var(--color-success);
+}
+
+.pro-btn-success:hover {
+    background: #4CAE4C;
+    box-shadow: var(--shadow-sm);
+}
+
+.pro-btn-outline {
+    background: white;
+    color: var(--color-primary);
+    border-color: var(--color-gray-300);
+}
+
+.pro-btn-outline:hover {
+    background: var(--color-gray-50);
+    border-color: var(--color-primary);
+}
+
+/* ========================================
+   PROFESSIONAL TABLE
+   ======================================== */
+.pro-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pro-table thead th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gray-600);
+    background: var(--color-gray-50);
+    border-bottom: 2px solid var(--color-gray-200);
+}
+
+.pro-table tbody tr {
+    border-bottom: 1px solid var(--color-gray-200);
+    transition: background var(--transition-fast);
+}
+
+.pro-table tbody tr:hover {
+    background: var(--color-gray-50);
+}
+
+.pro-table tbody td {
+    padding: 1rem;
+    color: var(--color-gray-700);
+}
+
+/* ========================================
+   PROFESSIONAL BADGE
+   ======================================== */
+.pro-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+}
+
+.pro-badge-primary {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+
+.pro-badge-success {
+    background: var(--color-success-light);
+    color: #3D8B3D;
+}
+
+.pro-badge-warning {
+    background: var(--color-warning-light);
+    color: #C87F0A;
+}
+
+.pro-badge-danger {
+    background: var(--color-danger-light);
+    color: #A94442;
+}
+
+.pro-badge-info {
+    background: var(--color-info-light);
+    color: #31708F;
+}
+
+/* ========================================
+   PROFESSIONAL FORM
+   ======================================== */
+.pro-form-group {
+    margin-bottom: 1rem;
+}
+
+.pro-form-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    margin-bottom: 0.5rem;
+}
+
+.pro-form-input {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: var(--font-size-sm);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.pro-form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.text-muted {
+    color: var(--color-gray-500);
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.bg-light {
+    background: var(--color-gray-50);
+}
+
+.border-light {
+    border-color: var(--color-gray-200);
+}
+
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.rounded {
+    border-radius: var(--radius-md);
+}
+
+.rounded-lg {
+    border-radius: var(--radius-lg);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .pro-stat-card {
+        padding: 1.25rem;
+    }
+    
+    .pro-stat-card .number {
+        font-size: 1.75rem;
+    }
+    
+    .pro-card {
+        padding: 1.25rem;
+    }
+}

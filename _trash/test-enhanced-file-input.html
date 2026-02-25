@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced File Input Test - Task 5.3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Enhanced file input styles with improved drag-and-drop */
+        .form-control[type="file"] {
+            transition: all 0.3s ease;
+            border: 2px dashed #dee2e6;
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            cursor: pointer;
+            border-radius: 8px;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .form-control[type="file"]:hover {
+            border-color: #007bff;
+            background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+        }
+
+        .form-control[type="file"].drag-over {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #f0fff4 100%);
+            box-shadow: 0 0 20px rgba(40, 167, 69, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Enhanced drag-and-drop zone */
+        .file-drop-zone {
+            position: relative;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .file-drop-zone:hover {
+            border-color: #007bff;
+            background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+        }
+
+        .file-drop-zone.drag-over {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #f0fff4 100%);
+            box-shadow: 0 0 20px rgba(40, 167, 69, 0.3);
+            transform: scale(1.02);
+        }
+
+        .file-drop-zone-content {
+            pointer-events: none;
+        }
+
+        .file-drop-zone-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .file-drop-zone:hover .file-drop-zone-icon {
+            color: #007bff;
+            transform: scale(1.1);
+        }
+
+        .file-drop-zone.drag-over .file-drop-zone-icon {
+            color: #28a745;
+            transform: scale(1.2);
+        }
+
+        .file-drop-zone-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-drop-zone-subtext {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .file-drop-zone.drag-over .file-drop-zone-text {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Hidden file input */
+        .file-input-hidden {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        /* Enhanced file preview and upload progress styles */
+        .file-preview-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .file-preview-container:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+        }
+
+        .file-preview-image img {
+            transition: transform 0.2s ease;
+        }
+
+        .file-preview-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h1 class="mb-4">
+                    <i class="fas fa-upload me-2"></i>
+                    Enhanced File Input Test - Task 5.3
+                </h1>
+                
+                <div class="alert alert-info">
+                    <h5><i class="fas fa-info-circle me-2"></i>Testing Requirements</h5>
+                    <ul class="mb-0">
+                        <li><strong>Drag-and-drop file selection:</strong> Drag files onto the upload zone</li>
+                        <li><strong>File preview for images:</strong> Images should show preview with dimensions</li>
+                        <li><strong>File information display:</strong> Name, size, type should be shown</li>
+                        <li><strong>Clear invalid files automatically:</strong> Invalid files should be rejected with feedback</li>
+                    </ul>
+                </div>
+
+                <!-- Test Section 1: Image Upload -->
+                <div class="test-section">
+                    <h3><i class="fas fa-image me-2"></i>Test 1: Image Upload</h3>
+                    <p>Test drag-and-drop with image files. Should show enhanced preview with dimensions.</p>
+                    
+                    <div class="mb-3">
+                        <label for="test-image-file" class="form-label">Image File Upload</label>
+                        
+                        <div class="file-drop-zone" onclick="document.getElementById('test-image-file').click()">
+                            <input type="file" class="file-input-hidden" id="test-image-file" name="file" 
+                                   accept=".jpg,.jpeg,.png,.gif,.webp">
+                            
+                            <div class="file-drop-zone-content">
+                                <div class="file-drop-zone-icon">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="file-drop-zone-text">
+                                    Click to select an image or drag and drop
+                                </div>
+                                <div class="file-drop-zone-subtext">
+                                    Allowed: .jpg, .jpeg, .png, .gif, .webp (Max: 10 MB)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Section 2: Document Upload -->
+                <div class="test-section">
+                    <h3><i class="fas fa-file-pdf me-2"></i>Test 2: Document Upload</h3>
+                    <p>Test with PDF and document files. Should show file information without image preview.</p>
+                    
+                    <div class="mb-3">
+                        <label for="test-doc-file" class="form-label">Document File Upload</label>
+                        
+                        <div class="file-drop-zone" onclick="document.getElementById('test-doc-file').click()">
+                            <input type="file" class="file-input-hidden" id="test-doc-file" name="file" 
+                                   accept=".pdf,.doc,.docx,.txt">
+                            
+                            <div class="file-drop-zone-content">
+                                <div class="file-drop-zone-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="file-drop-zone-text">
+                                    Click to select a document or drag and drop
+                                </div>
+                                <div class="file-drop-zone-subtext">
+                                    Allowed: .pdf, .doc, .docx, .txt (Max: 10 MB)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Section 3: Invalid File Test -->
+                <div class="test-section">
+                    <h3><i class="fas fa-exclamation-triangle me-2"></i>Test 3: Invalid File Handling</h3>
+                    <p>Test with invalid files (wrong type, too large). Should automatically clear and show errors.</p>
+                    
+                    <div class="mb-3">
+                        <label for="test-invalid-file" class="form-label">Restricted File Upload (Images Only, 1MB Max)</label>
+                        
+                        <div class="file-drop-zone" onclick="document.getElementById('test-invalid-file').click()">
+                            <input type="file" class="file-input-hidden" id="test-invalid-file" name="file" 
+                                   accept=".jpg,.png">
+                            
+                            <div class="file-drop-zone-content">
+                                <div class="file-drop-zone-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="file-drop-zone-text">
+                                    Click to select a file or drag and drop
+                                </div>
+                                <div class="file-drop-zone-subtext">
+                                    Allowed: .jpg, .png only (Max: 1 MB) - Try uploading invalid files!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Results -->
+                <div class="test-section">
+                    <h3><i class="fas fa-clipboard-check me-2"></i>Test Results</h3>
+                    <div id="test-results">
+                        <p class="text-muted">Upload files to see test results here...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="resources/js/FileUploadValidator.js"></script>
+    <script>
+        // Test configuration for different file types
+        const testConfigs = {
+            'test-image-file': {
+                content_type: 'image',
+                max_file_size: 10 * 1024 * 1024, // 10MB
+                allowed_extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+                allowed_mime_types: ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+            },
+            'test-doc-file': {
+                content_type: 'document',
+                max_file_size: 10 * 1024 * 1024, // 10MB
+                allowed_extensions: ['pdf', 'doc', 'docx', 'txt'],
+                allowed_mime_types: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain']
+            },
+            'test-invalid-file': {
+                content_type: 'image',
+                max_file_size: 1 * 1024 * 1024, // 1MB - small limit for testing
+                allowed_extensions: ['jpg', 'png'],
+                allowed_mime_types: ['image/jpeg', 'image/png']
+            }
+        };
+
+        // Enhanced file input handling
+        function setupFileInputHandling() {
+            let dragCounter = 0;
+
+            // Handle file selection changes
+            document.addEventListener('change', function(e) {
+                if (e.target && e.target.type === 'file') {
+                    handleFileSelection(e.target);
+                }
+            });
+
+            // Enhanced drag and drop support
+            document.addEventListener('dragenter', function(e) {
+                const dropZone = e.target.closest('.file-drop-zone');
+                if (dropZone) {
+                    e.preventDefault();
+                    dragCounter++;
+                    dropZone.classList.add('drag-over');
+                }
+            });
+
+            document.addEventListener('dragover', function(e) {
+                const dropZone = e.target.closest('.file-drop-zone');
+                if (dropZone) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'copy';
+                }
+            });
+
+            document.addEventListener('dragleave', function(e) {
+                const dropZone = e.target.closest('.file-drop-zone');
+                if (dropZone) {
+                    dragCounter--;
+                    if (dragCounter === 0) {
+                        dropZone.classList.remove('drag-over');
+                    }
+                }
+            });
+
+            document.addEventListener('drop', function(e) {
+                const dropZone = e.target.closest('.file-drop-zone');
+                if (dropZone) {
+                    e.preventDefault();
+                    dragCounter = 0;
+                    dropZone.classList.remove('drag-over');
+
+                    const fileInput = dropZone.querySelector('input[type="file"]');
+                    if (fileInput && e.dataTransfer.files.length > 0) {
+                        const dt = new DataTransfer();
+                        dt.items.add(e.dataTransfer.files[0]);
+                        fileInput.files = dt.files;
+                        handleFileSelection(fileInput);
+                    }
+                }
+            });
+        }
+
+        function handleFileSelection(fileInput) {
+            const file = fileInput.files[0];
+            if (!file) {
+                clearFilePreview(fileInput.id);
+                return;
+            }
+
+            // Get test configuration
+            const config = testConfigs[fileInput.id] || {};
+            
+            // Create validator instance
+            const validator = FileUploadValidator.forContentType(config.content_type, config);
+            const result = validator.validateFile(file);
+
+            // Log test result
+            logTestResult(fileInput.id, file.name, result);
+
+            if (!result.valid) {
+                // Clear invalid file automatically
+                clearInvalidFile(fileInput, file.name, result.errors);
+                return false;
+            }
+
+            // Show file preview
+            showFilePreview(fileInput, file, config, result.fileInfo);
+            return true;
+        }
+
+        function clearInvalidFile(fileInput, fileName, errors) {
+            fileInput.value = '';
+            clearFilePreview(fileInput.id);
+            
+            const dropZone = fileInput.closest('.file-drop-zone');
+            if (dropZone) {
+                dropZone.style.borderColor = '#dc3545';
+                dropZone.style.backgroundColor = '#f8d7da';
+                
+                setTimeout(() => {
+                    dropZone.style.borderColor = '';
+                    dropZone.style.backgroundColor = '';
+                }, 2000);
+            }
+
+            showNotification('error', `File "${fileName}" was automatically removed: ${errors.join(', ')}`);
+        }
+
+        function showFilePreview(fileInput, file, config, fileInfo) {
+            let previewElement = document.getElementById(`preview-${fileInput.id}`);
+            
+            if (!previewElement) {
+                previewElement = document.createElement('div');
+                previewElement.id = `preview-${fileInput.id}`;
+                previewElement.className = 'mt-3 p-3 bg-light border rounded file-preview-container';
+                fileInput.parentNode.insertBefore(previewElement, fileInput.nextSibling);
+            }
+
+            const isImage = file.type.startsWith('image/');
+            const fileIcon = getFileTypeIcon(file.type, fileInfo.extension);
+
+            previewElement.innerHTML = `
+                <div class="d-flex align-items-start">
+                    <div class="file-icon me-3">
+                        <i class="${fileIcon.icon} fa-2x ${fileIcon.color}"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="fw-bold text-dark">${fileInfo.name}</div>
+                        <div class="small text-muted mb-2">
+                            <span class="badge bg-secondary me-1">${fileInfo.extension.toUpperCase()}</span>
+                            ${fileInfo.sizeFormatted} • ${fileInfo.type || 'Unknown type'}
+                        </div>
+                        ${isImage ? `
+                            <div class="image-preview mt-2">
+                                <img id="img-${fileInput.id}" src="" alt="Preview" 
+                                     class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+                                <div class="small text-muted mt-1" id="img-info-${fileInput.id}">Loading dimensions...</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="file-actions">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" 
+                                onclick="clearFileSelection('${fileInput.id}')" title="Remove file">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Load image preview
+            if (isImage) {
+                loadImagePreview(file, fileInput.id);
+            }
+        }
+
+        function loadImagePreview(file, inputId) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const imgElement = document.getElementById(`img-${inputId}`);
+                    const infoElement = document.getElementById(`img-info-${inputId}`);
+                    
+                    if (imgElement) {
+                        imgElement.src = e.target.result;
+                    }
+                    
+                    if (infoElement) {
+                        infoElement.textContent = `${this.naturalWidth} × ${this.naturalHeight} pixels`;
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearFileSelection(inputId) {
+            const fileInput = document.getElementById(inputId);
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            clearFilePreview(inputId);
+        }
+
+        function clearFilePreview(inputId) {
+            const preview = document.getElementById(`preview-${inputId}`);
+            if (preview) {
+                preview.remove();
+            }
+        }
+
+        function getFileTypeIcon(mimeType, extension) {
+            const ext = extension.toLowerCase();
+            
+            if (mimeType.startsWith('image/')) {
+                return { icon: 'fas fa-image', color: 'text-info' };
+            } else if (mimeType === 'application/pdf') {
+                return { icon: 'fas fa-file-pdf', color: 'text-danger' };
+            } else if (mimeType.startsWith('video/')) {
+                return { icon: 'fas fa-video', color: 'text-warning' };
+            } else if (mimeType.startsWith('audio/')) {
+                return { icon: 'fas fa-music', color: 'text-success' };
+            } else {
+                return { icon: 'fas fa-file', color: 'text-secondary' };
+            }
+        }
+
+        function showNotification(type, message) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px; max-width: 500px;';
+            
+            const icon = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
+            notification.innerHTML = `
+                <i class="fas ${icon} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        function logTestResult(testId, fileName, result) {
+            const resultsDiv = document.getElementById('test-results');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const resultHtml = `
+                <div class="alert ${result.valid ? 'alert-success' : 'alert-danger'} mb-2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <strong>${testId}:</strong> ${fileName}
+                            <div class="small">
+                                ${result.valid ? 
+                                    '<i class="fas fa-check-circle me-1"></i>Valid - File accepted' : 
+                                    '<i class="fas fa-times-circle me-1"></i>Invalid - ' + result.errors.join(', ')
+                                }
+                            </div>
+                        </div>
+                        <small class="text-muted">${timestamp}</small>
+                    </div>
+                </div>
+            `;
+            
+            if (resultsDiv.innerHTML.includes('Upload files to see test results')) {
+                resultsDiv.innerHTML = resultHtml;
+            } else {
+                resultsDiv.insertAdjacentHTML('afterbegin', resultHtml);
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupFileInputHandling();
+            console.log('Enhanced file input test page loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,576 @@
+/**
+ * Button Component Styles
+ * 
+ * This file defines the button component styling standards for the design system.
+ * It includes base button styles, gradient backgrounds, icon styling, hover effects,
+ * and all button variants (primary, success, danger, warning, info, secondary).
+ * 
+ * Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6
+ */
+
+/* ========================================
+   BASE BUTTON STYLES
+   ======================================== */
+
+/**
+ * Base button class that applies the design system standards
+ * - Subtle gradient backgrounds (white to light tint)
+ * - Colored icons with muted tones
+ * - 0.875rem vertical padding and 1.25rem horizontal padding
+ * - 1px solid subtle gray borders
+ * - Smooth transitions for hover effects
+ */
+.btn-design-system {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--button-padding-vertical) var(--button-padding-horizontal);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s var(--transition-cubic);
+    box-shadow: var(--shadow-sm);
+    white-space: nowrap;
+}
+
+.btn-design-system:focus {
+    outline: none;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-design-system:disabled,
+.btn-design-system.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ========================================
+   BUTTON ICON STYLES
+   ======================================== */
+
+/**
+ * Icon styling within buttons
+ * - Colored icons with muted tones (opacity: 0.8)
+ * - Proper spacing from button text
+ * - Smooth transitions for hover effects
+ */
+.btn-design-system i,
+.btn-design-system .icon {
+    font-size: 1.125rem;
+    margin-right: 0.75rem;
+    opacity: 0.8;
+    transition: all var(--transition-base);
+}
+
+.btn-design-system i:last-child,
+.btn-design-system .icon:last-child {
+    margin-right: 0;
+    margin-left: 0.75rem;
+}
+
+.btn-design-system i:only-child,
+.btn-design-system .icon:only-child {
+    margin: 0;
+}
+
+/* ========================================
+   BUTTON HOVER EFFECTS
+   ======================================== */
+
+/**
+ * Hover effects for all buttons
+ * - translateY(-1px) transformation
+ * - Elevated shadow
+ * - Border color matches icon color
+ * - Icon opacity increases to full
+ */
+.btn-design-system:hover:not(:disabled):not(.disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+    text-decoration: none;
+}
+
+.btn-design-system:hover:not(:disabled):not(.disabled) i,
+.btn-design-system:hover:not(:disabled):not(.disabled) .icon {
+    opacity: 1;
+}
+
+.btn-design-system:active:not(:disabled):not(.disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ========================================
+   PRIMARY BUTTON VARIANT
+   ======================================== */
+
+/**
+ * Primary button variant
+ * - Indigo icon with blue-tinted gradient
+ * - Border color matches icon on hover
+ */
+.btn-design-system.btn-primary {
+    background: var(--gradient-primary);
+    border-color: var(--border-color);
+}
+
+.btn-design-system.btn-primary i,
+.btn-design-system.btn-primary .icon {
+    color: var(--admin-primary);
+}
+
+.btn-design-system.btn-primary:hover:not(:disabled):not(.disabled) {
+    border-color: var(--admin-primary);
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+}
+
+.btn-design-system.btn-primary:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ========================================
+   SUCCESS BUTTON VARIANT
+   ======================================== */
+
+/**
+ * Success button variant
+ * - Emerald icon with green-tinted gradient
+ * - Border color matches icon on hover
+ */
+.btn-design-system.btn-success {
+    background: var(--gradient-success);
+    border-color: var(--border-color);
+}
+
+.btn-design-system.btn-success i,
+.btn-design-system.btn-success .icon {
+    color: var(--admin-success);
+}
+
+.btn-design-system.btn-success:hover:not(:disabled):not(.disabled) {
+    border-color: var(--admin-success);
+    background: linear-gradient(135deg, #ffffff 0%, #d1fae5 100%);
+}
+
+.btn-design-system.btn-success:focus {
+    border-color: var(--admin-success);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* ========================================
+   DANGER BUTTON VARIANT
+   ======================================== */
+
+/**
+ * Danger button variant
+ * - Red icon with red-tinted gradient
+ * - Border color matches icon on hover
+ */
+.btn-design-system.btn-danger {
+    background: var(--gradient-danger);
+    border-color: var(--border-color);
+}
+
+.btn-design-system.btn-danger i,
+.btn-design-system.btn-danger .icon {
+    color: var(--admin-danger);
+}
+
+.btn-design-system.btn-danger:hover:not(:disabled):not(.disabled) {
+    border-color: var(--admin-danger);
+    background: linear-gradient(135deg, #ffffff 0%, #fee2e2 100%);
+}
+
+.btn-design-system.btn-danger:focus {
+    border-color: var(--admin-danger);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* ========================================
+   WARNING BUTTON VARIANT
+   ======================================== */
+
+/**
+ * Warning button variant
+ * - Amber icon with amber-tinted gradient
+ * - Border color matches icon on hover
+ */
+.btn-design-system.btn-warning {
+    background: var(--gradient-warning);
+    border-color: var(--border-color);
+}
+
+.btn-design-system.btn-warning i,
+.btn-design-system.btn-warning .icon {
+    color: var(--admin-warning);
+}
+
+.btn-design-system.btn-warning:hover:not(:disabled):not(.disabled) {
+    border-color: var(--admin-warning);
+    background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
+}
+
+.btn-design-system.btn-warning:focus {
+    border-color: var(--admin-warning);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* ========================================
+   INFO BUTTON VARIANT
+   ======================================== */
+
+/**
+ * Info button variant
+ * - Blue icon with blue-tinted gradient
+ * - Border color matches icon on hover
+ */
+.btn-design-system.btn-info {
+    background: var(--gradient-info);
+    border-color: var(--border-color);
+}
+
+.btn-design-system.btn-info i,
+.btn-design-system.btn-info .icon {
+    color: var(--admin-info);
+}
+
+.btn-design-system.btn-info:hover:not(:disabled):not(.disabled) {
+    border-color: var(--admin-info);
+    background: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
+}
+
+.btn-design-system.btn-info:focus {
+    border-color: var(--admin-info);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ========================================
+   SECONDARY BUTTON VARIANT
+   ======================================== */
+
+/**
+ * Secondary button variant
+ * - Gray icon with gray-tinted gradient
+ * - Border color matches icon on hover
+ */
+.btn-design-system.btn-secondary {
+    background: var(--gradient-secondary);
+    border-color: var(--border-color);
+}
+
+.btn-design-system.btn-secondary i,
+.btn-design-system.btn-secondary .icon {
+    color: var(--admin-secondary);
+}
+
+.btn-design-system.btn-secondary:hover:not(:disabled):not(.disabled) {
+    border-color: var(--admin-secondary);
+    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+}
+
+.btn-design-system.btn-secondary:focus {
+    border-color: var(--admin-secondary);
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+}
+
+/* ========================================
+   BUTTON SIZE VARIANTS
+   ======================================== */
+
+/**
+ * Small button variant
+ * - Reduced padding for compact layouts
+ */
+.btn-design-system.btn-sm {
+    padding: 0.625rem 1rem;
+    font-size: var(--font-size-sm);
+}
+
+.btn-design-system.btn-sm i,
+.btn-design-system.btn-sm .icon {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+}
+
+.btn-design-system.btn-sm i:last-child,
+.btn-design-system.btn-sm .icon:last-child {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+/**
+ * Large button variant
+ * - Increased padding for emphasis
+ */
+.btn-design-system.btn-lg {
+    padding: 1rem 1.5rem;
+    font-size: var(--font-size-lg);
+}
+
+.btn-design-system.btn-lg i,
+.btn-design-system.btn-lg .icon {
+    font-size: 1.25rem;
+    margin-right: 0.875rem;
+}
+
+.btn-design-system.btn-lg i:last-child,
+.btn-design-system.btn-lg .icon:last-child {
+    margin-right: 0;
+    margin-left: 0.875rem;
+}
+
+/* ========================================
+   BUTTON BLOCK VARIANT
+   ======================================== */
+
+/**
+ * Block button variant
+ * - Full width button for mobile layouts
+ */
+.btn-design-system.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+/* ========================================
+   BUTTON GROUP STYLES
+   ======================================== */
+
+/**
+ * Button group styling
+ * - Removes spacing between adjacent buttons
+ * - Adjusts border radius for grouped appearance
+ */
+.btn-group-design-system {
+    display: inline-flex;
+    gap: 0;
+}
+
+.btn-group-design-system .btn-design-system {
+    border-radius: 0;
+    margin-left: -1px;
+}
+
+.btn-group-design-system .btn-design-system:first-child {
+    border-top-left-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-sm);
+    margin-left: 0;
+}
+
+.btn-group-design-system .btn-design-system:last-child {
+    border-top-right-radius: var(--radius-sm);
+    border-bottom-right-radius: var(--radius-sm);
+}
+
+.btn-group-design-system .btn-design-system:hover:not(:disabled):not(.disabled) {
+    z-index: 1;
+}
+
+/* ========================================
+   BOOTSTRAP BUTTON OVERRIDES
+   ======================================== */
+
+/**
+ * Override Bootstrap button classes to use design system styles
+ * This ensures consistency when using standard Bootstrap button classes
+ */
+.btn.btn-primary:not(.btn-design-system) {
+    background: var(--gradient-primary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn.btn-primary:not(.btn-design-system):hover {
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+    border-color: var(--admin-primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn.btn-success:not(.btn-design-system) {
+    background: var(--gradient-success);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn.btn-success:not(.btn-design-system):hover {
+    background: linear-gradient(135deg, #ffffff 0%, #d1fae5 100%);
+    border-color: var(--admin-success);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn.btn-danger:not(.btn-design-system) {
+    background: var(--gradient-danger);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn.btn-danger:not(.btn-design-system):hover {
+    background: linear-gradient(135deg, #ffffff 0%, #fee2e2 100%);
+    border-color: var(--admin-danger);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn.btn-warning:not(.btn-design-system) {
+    background: var(--gradient-warning);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn.btn-warning:not(.btn-design-system):hover {
+    background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
+    border-color: var(--admin-warning);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn.btn-info:not(.btn-design-system) {
+    background: var(--gradient-info);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn.btn-info:not(.btn-design-system):hover {
+    background: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
+    border-color: var(--admin-info);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn.btn-secondary:not(.btn-design-system) {
+    background: var(--gradient-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn.btn-secondary:not(.btn-design-system):hover {
+    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+    border-color: var(--admin-secondary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ========================================
+   ICON-ONLY BUTTONS
+   ======================================== */
+
+/**
+ * Icon-only button variant
+ * - Square aspect ratio
+ * - Centered icon
+ */
+.btn-design-system.btn-icon {
+    padding: var(--button-padding-vertical);
+    width: calc(var(--button-padding-vertical) * 2 + 1.125rem);
+    height: calc(var(--button-padding-vertical) * 2 + 1.125rem);
+    justify-content: center;
+}
+
+.btn-design-system.btn-icon i,
+.btn-design-system.btn-icon .icon {
+    margin: 0;
+}
+
+.btn-design-system.btn-icon.btn-sm {
+    padding: 0.625rem;
+    width: calc(0.625rem * 2 + 1rem);
+    height: calc(0.625rem * 2 + 1rem);
+}
+
+.btn-design-system.btn-icon.btn-lg {
+    padding: 1rem;
+    width: calc(1rem * 2 + 1.25rem);
+    height: calc(1rem * 2 + 1.25rem);
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+/**
+ * Loading state for buttons
+ * - Shows spinner icon
+ * - Disables interaction
+ */
+.btn-design-system.btn-loading {
+    position: relative;
+    pointer-events: none;
+    color: transparent;
+}
+
+.btn-design-system.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.5rem;
+    margin-top: -0.5rem;
+    border: 2px solid var(--text-muted);
+    border-radius: 50%;
+    border-top-color: var(--admin-primary);
+    animation: btn-loading-spinner 0.6s linear infinite;
+}
+
+@keyframes btn-loading-spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+/**
+ * Mobile-specific button adjustments
+ * - Slightly larger touch targets
+ * - Full width on extra small screens
+ */
+@media (max-width: 576px) {
+    .btn-design-system {
+        padding: 0.9375rem 1.375rem;
+    }
+    
+    .btn-design-system.btn-mobile-block {
+        display: flex;
+        width: 100%;
+    }
+}
+
+/**
+ * Tablet-specific button adjustments
+ * - Standard sizing maintained
+ */
+@media (min-width: 577px) and (max-width: 992px) {
+    .btn-design-system {
+        /* Standard sizing maintained */
+    }
+}
+
+/**
+ * Desktop-specific button adjustments
+ * - Standard sizing maintained
+ */
+@media (min-width: 993px) {
+    .btn-design-system {
+        /* Standard sizing maintained */
+    }
+}

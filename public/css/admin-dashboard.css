@@ -1,0 +1,683 @@
+/* ============================================
+   Admin Dashboard - Professional UI Refinements
+   ============================================ */
+
+/* Color Palette - Muted & Professional */
+:root {
+    --admin-primary: #4f46e5;
+    --admin-primary-light: #6366f1;
+    --admin-primary-dark: #4338ca;
+    --admin-success: #10b981;
+    --admin-warning: #f59e0b;
+    --admin-danger: #ef4444;
+    --admin-info: #3b82f6;
+    --admin-secondary: #6b7280;
+
+    --bg-subtle: #f9fafb;
+    --bg-card: #ffffff;
+    --border-color: #e5e7eb;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 12px 20px -5px rgba(0, 0, 0, 0.12), 0 6px 8px -3px rgba(0, 0, 0, 0.08);
+
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+}
+
+/* ============================================
+   Overall Dashboard Improvements
+   ============================================ */
+
+/* Page Title */
+.admin-dashboard h1.h3 {
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+}
+
+.admin-dashboard h1.h3 i {
+    color: var(--admin-primary);
+    opacity: 0.9;
+}
+
+/* ============================================
+   System Overview Cards (Top Stats)
+   ============================================ */
+
+.admin-dashboard .system-overview-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.admin-dashboard .system-overview-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.admin-dashboard .system-overview-card .card-body {
+    padding: 1.5rem;
+}
+
+.admin-dashboard .system-overview-card i {
+    font-size: 2rem;
+    opacity: 0.85;
+    margin-bottom: 0.75rem;
+}
+
+.admin-dashboard .system-overview-card h5 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.025em;
+}
+
+.admin-dashboard .system-overview-card .card-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.admin-dashboard .system-overview-card small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Icon Colors - Muted */
+.admin-dashboard .system-overview-card .text-primary {
+    color: var(--admin-primary) !important;
+}
+
+.admin-dashboard .system-overview-card .text-success {
+    color: var(--admin-success) !important;
+}
+
+.admin-dashboard .system-overview-card .text-info {
+    color: var(--admin-info) !important;
+}
+
+.admin-dashboard .system-overview-card .text-warning {
+    color: var(--admin-warning) !important;
+}
+
+/* ============================================
+   User Statistics Card
+   ============================================ */
+
+.admin-dashboard .user-stats-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+}
+
+.admin-dashboard .user-stats-card .card-header {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.admin-dashboard .user-stats-card .card-header h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.admin-dashboard .user-stats-card .card-body {
+    padding: 1.5rem;
+}
+
+.admin-dashboard .user-stats-card .stat-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.admin-dashboard .user-stats-card .stat-box:hover {
+    background: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-dashboard .user-stats-card .stat-box h4 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.025em;
+}
+
+.admin-dashboard .user-stats-card .stat-box p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ============================================
+   Recent Activity Card
+   ============================================ */
+
+.admin-dashboard .activity-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-dashboard .activity-card .card-header {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.admin-dashboard .activity-card .card-header h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.admin-dashboard .activity-card .table {
+    margin-bottom: 0;
+}
+
+.admin-dashboard .activity-card .table thead th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+}
+
+.admin-dashboard .activity-card .table tbody td {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    padding: 0.875rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.admin-dashboard .activity-card .table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-dashboard .activity-card .table tbody tr:hover {
+    background-color: var(--bg-subtle);
+}
+
+/* ============================================
+   System Alerts Card
+   ============================================ */
+
+.admin-dashboard .alerts-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+}
+
+.admin-dashboard .alerts-card .card-header {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.admin-dashboard .alerts-card .card-header h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.admin-dashboard .alerts-card .card-body {
+    padding: 1rem;
+}
+
+.admin-dashboard .alerts-card .alert {
+    border-radius: var(--radius-md);
+    border: 1px solid;
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.admin-dashboard .alerts-card .alert:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   Quick Actions Section (PRIMARY FOCUS)
+   ============================================ */
+
+.admin-dashboard .quick-actions-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+}
+
+.admin-dashboard .quick-actions-card .card-header {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.admin-dashboard .quick-actions-card .card-header h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.admin-dashboard .quick-actions-card .card-body {
+    padding: 1.25rem;
+}
+
+/* Quick Action Buttons - Professional & Muted */
+.admin-dashboard .quick-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 0.75rem;
+}
+
+.admin-dashboard .quick-action-btn:last-child {
+    margin-bottom: 0;
+}
+
+.admin-dashboard .quick-action-btn i {
+    font-size: 1.125rem;
+    margin-right: 0.75rem;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+/* Individual Button Styles - Subtle Colored Icons */
+.admin-dashboard .quick-action-btn.action-add-user {
+    background: linear-gradient(135deg, #fefefe 0%, #f8f9fb 100%);
+}
+
+.admin-dashboard .quick-action-btn.action-add-user i {
+    color: var(--admin-primary);
+}
+
+.admin-dashboard .quick-action-btn.action-add-user:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #eef2ff 100%);
+    border-color: var(--admin-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.admin-dashboard .quick-action-btn.action-create-course {
+    background: linear-gradient(135deg, #fefefe 0%, #f8faf9 100%);
+}
+
+.admin-dashboard .quick-action-btn.action-create-course i {
+    color: var(--admin-success);
+}
+
+.admin-dashboard .quick-action-btn.action-create-course:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
+    border-color: var(--admin-success);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.admin-dashboard .quick-action-btn.action-announcement {
+    background: linear-gradient(135deg, #fefefe 0%, #fef9f8 100%);
+}
+
+.admin-dashboard .quick-action-btn.action-announcement i {
+    color: var(--admin-danger);
+}
+
+.admin-dashboard .quick-action-btn.action-announcement:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+    border-color: var(--admin-danger);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.admin-dashboard .quick-action-btn.action-view-logs {
+    background: linear-gradient(135deg, #fefefe 0%, #fefaf8 100%);
+}
+
+.admin-dashboard .quick-action-btn.action-view-logs i {
+    color: var(--admin-warning);
+}
+
+.admin-dashboard .quick-action-btn.action-view-logs:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+    border-color: var(--admin-warning);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.admin-dashboard .quick-action-btn.action-generate-report {
+    background: linear-gradient(135deg, #fefefe 0%, #f8fafe 100%);
+}
+
+.admin-dashboard .quick-action-btn.action-generate-report i {
+    color: var(--admin-info);
+}
+
+.admin-dashboard .quick-action-btn.action-generate-report:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    border-color: var(--admin-info);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.admin-dashboard .quick-action-btn.action-settings {
+    background: linear-gradient(135deg, #fefefe 0%, #f9fafb 100%);
+}
+
+.admin-dashboard .quick-action-btn.action-settings i {
+    color: var(--admin-secondary);
+}
+
+.admin-dashboard .quick-action-btn.action-settings:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+    border-color: var(--admin-secondary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   Storage Usage Card
+   ============================================ */
+
+.admin-dashboard .storage-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-dashboard .storage-card .card-header {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.admin-dashboard .storage-card .card-header h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.admin-dashboard .storage-card .card-body {
+    padding: 1.25rem;
+}
+
+.admin-dashboard .storage-card .progress {
+    height: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: var(--bg-subtle);
+    overflow: hidden;
+}
+
+.admin-dashboard .storage-card .progress-bar {
+    background: linear-gradient(90deg, var(--admin-primary) 0%, var(--admin-primary-light) 100%);
+    transition: width 0.6s ease;
+}
+
+.admin-dashboard .storage-card .progress-bar.bg-info {
+    background: linear-gradient(90deg, var(--admin-info) 0%, #60a5fa 100%);
+}
+
+.admin-dashboard .storage-card small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.admin-dashboard .storage-card .btn-outline-danger {
+    border-color: var(--border-color);
+    color: var(--admin-danger);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.625rem 1rem;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.admin-dashboard .storage-card .btn-outline-danger:hover {
+    background-color: var(--admin-danger);
+    border-color: var(--admin-danger);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.admin-dashboard .btn-sm.btn-outline-primary {
+    border-color: var(--border-color);
+    color: var(--admin-primary);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.admin-dashboard .btn-sm.btn-outline-primary:hover {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+    color: white;
+}
+
+/* Badge Improvements */
+.admin-dashboard .badge {
+    font-weight: 500;
+    padding: 0.375rem 0.625rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+
+@media (max-width: 768px) {
+    .admin-dashboard .system-overview-card .card-body {
+        padding: 1.25rem;
+    }
+
+    .admin-dashboard .quick-action-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .admin-dashboard .quick-action-btn i {
+        font-size: 1rem;
+        margin-right: 0.625rem;
+    }
+}
+
+/* ============================================
+   Editor.js Rich Text Enhancements
+   ============================================ */
+
+/* Custom Editor.js Inline Toolbar Theme (Google Docs / Notion style) */
+.ce-inline-toolbar {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border-radius: 6px !important;
+    color: #374151 !important;
+    padding: 0 4px !important;
+}
+
+.ce-inline-toolbar__buttons {
+    padding: 4px 0 !important;
+}
+
+.ce-inline-tool {
+    color: #4b5563 !important;
+    transition: all 0.2s ease !important;
+    border-radius: 4px !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0 2px !important;
+}
+
+.ce-inline-tool:hover {
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+}
+
+.ce-inline-tool--active {
+    background-color: #eff6ff !important;
+    color: #4f46e5 !important;
+    /* Admin Primary */
+}
+
+/* Custom Text Markers */
+.cdx-font-size {
+    /* Inline styles handle the size, but we can add transitions */
+    transition: font-size 0.2s ease;
+}
+
+/* Tool Icons Adjustment */
+.ce-inline-tool i {
+    font-size: 14px;
+    line-height: 32px;
+}
+
+/* Font Size Tool Indicator */
+.ce-inline-tool span {
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.025em;
+}
+
+/* Ensure FontAwesome icons work in Editor.js context */
+.codex-editor .fa,
+.codex-editor .fas,
+.codex-editor .fab {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+}
+
+/* Alignment Block Tune Styles (if class-based) */
+.ce-paragraph--left {
+    text-align: left;
+}
+
+.ce-paragraph--center {
+    text-align: center;
+}
+
+.ce-paragraph--right {
+    text-align: right;
+}
+
+.ce-paragraph--justify {
+    text-align: justify;
+}
+
+.ce-header--left {
+    text-align: left;
+}
+
+.ce-header--center {
+    text-align: center;
+}
+
+.ce-header--right {
+    text-align: right;
+}
+
+/* ============================================
+   Dark Mode Support for Dashboard
+   ============================================ */
+.dark .admin-dashboard,
+.dark.admin-dashboard {
+    --bg-subtle: #0f172a;
+    --bg-card: #1e293b;
+    --bg-hover: #334155;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+}
+
+.dark .admin-dashboard .system-overview-card,
+.dark .admin-dashboard .user-stats-card,
+.dark .admin-dashboard .activity-card,
+.dark .admin-dashboard .alerts-card,
+.dark .admin-dashboard .quick-actions-card,
+.dark .admin-dashboard .storage-card {
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark .admin-dashboard .user-stats-card .card-header,
+.dark .admin-dashboard .activity-card .card-header,
+.dark .admin-dashboard .alerts-card .card-header,
+.dark .admin-dashboard .quick-actions-card .card-header,
+.dark .admin-dashboard .storage-card .card-header {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-bottom-color: var(--border-color) !important;
+}
+
+.dark .admin-dashboard .user-stats-card .stat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--border-color);
+}
+
+.dark .admin-dashboard .user-stats-card .stat-box:hover {
+    background: var(--bg-hover);
+}
+
+.dark .admin-dashboard .quick-action-btn {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark .admin-dashboard .quick-action-btn:hover {
+    background: var(--bg-hover) !important;
+}
+
+.dark .admin-dashboard .quick-action-btn.action-add-user,
+.dark .admin-dashboard .quick-action-btn.action-create-course,
+.dark .admin-dashboard .quick-action-btn.action-announcement,
+.dark .admin-dashboard .quick-action-btn.action-view-logs,
+.dark .admin-dashboard .quick-action-btn.action-generate-report,
+.dark .admin-dashboard .quick-action-btn.action-settings {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.dark .admin-dashboard .storage-card .progress {
+    background-color: rgba(255, 255, 255, 0.1);
+}

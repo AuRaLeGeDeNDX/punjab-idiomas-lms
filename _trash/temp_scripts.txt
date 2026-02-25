@@ -1,0 +1,114 @@
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+// EMERGENCY FIX: Completely simplified approach to get buttons working
+console.log('=== EMERGENCY CONTENT BUILDER FIX ===');
+
+// Step 1: Verify buttons exist and add click handlers
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, checking for buttons...');
+    
+    const buttons = document.querySelectorAll('[data-add-content]');
+    console.log('Found buttons:', buttons.length);
+    
+    buttons.forEach((btn, i) => {
+        console.log('Button ' + (i+1) + ':', btn.textContent.trim(), 'Section:', btn.dataset.section);
+    });
+    
+    // Step 2: Add simple click handlers
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-add-content]');
+        if (btn) {
+            e.preventDefault();
+            console.log('BUTTON CLICKED!', btn.textContent.trim());
+            
+            // Simple modal opening
+            const modal = document.getElementById('contentTypeModal');
+            if (modal) {
+                console.log('Opening modal...');
+                
+                // Try Bootstrap modal
+                if (window.bootstrap && window.bootstrap.Modal) {
+                    const bsModal = new bootstrap.Modal(modal);
+                    bsModal.show();
+                    console.log('Bootstrap modal opened');
+                } else {
+                    // Fallback: show modal manually
+                    modal.style.display = 'block';
+                    modal.classList.add('show');
+                    console.log('Manual modal opened');
+                }
+            } else {
+                console.error('Modal not found!');
+                alert('Modal not found. Check HTML structure.');
+            }
+        }
+    });
+    
+    console.log('Emergency click handlers attached');
+    
+    // Step 3: Initialize content types in modal
+    const contentTypes = {
+        "text": {
+            "label": "Text Block",
+            "icon": "fas fa-paragraph",
+            "description": "Rich text content with headings, paragraphs, and lists"
+        },
+        "image": {
+            "label": "Image Block", 
+            "icon": "fas fa-image",
+            "description": "Upload and display images"
+        },
+        "pdf": {
+            "label": "PDF Block",
+            "icon": "fas fa-file-pdf", 
+            "description": "Upload PDF documents"
+        },
+        "audio": {
+            "label": "Audio Block",
+            "icon": "fas fa-volume-up",
+            "description": "Upload audio files and voice recordings"
+        },
+        "video": {
+            "label": "Video Block",
+            "icon": "fas fa-video",
+            "description": "Upload videos or embed from external sources"
+        }
+    };
+    
+    console.log('Content types:', contentTypes);
+    
+    const grid = document.getElementById('content-type-grid');
+    if (grid && contentTypes) {
+        let html = '';
+        Object.entries(contentTypes).forEach(function(entry) {
+            const type = entry[0];
+            const config = entry[1];
+            html += '<div class="col-md-4 mb-3">';
+            html += '<div class="content-type-card" data-type="' + type + '" style="border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer;">';
+            html += '<div style="font-size: 2rem; color: #007bff; margin-bottom: 12px;">';
+            html += '<i class="' + config.icon + '"></i>';
+            html += '</div>';
+            html += '<h6>' + config.label + '</h6>';
+            html += '<p class="text-muted small mb-0">' + config.description + '</p>';
+            html += '</div>';
+            html += '</div>';
+        });
+        grid.innerHTML = html;
+        console.log('Content type grid populated');
+        
+        // Add click handlers to content type cards
+        grid.addEventListener('click', function(e) {
+            const card = e.target.closest('.content-type-card');
+            if (card) {
+                const type = card.dataset.type;
+                console.log('Content type selected:', type);
+                alert('Selected: ' + type + '\n\nThis would normally open the edit form.');
+            }
+        });
+    }
+});
+
+console.log('=== EMERGENCY FIX LOADED ===');
+</script>
+@endpush

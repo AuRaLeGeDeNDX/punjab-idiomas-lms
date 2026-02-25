@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Component Test - Design System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="resources/css/design-system.css">
+    <link rel="stylesheet" href="resources/css/components/navigation.css">
+    <style>
+        body {
+            background-color: #f9fafb;
+            padding: 2rem;
+        }
+        .test-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .test-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .test-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #4f46e5;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .test-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 style="font-size: 2rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem;">
+                Navigation Component Test
+            </h1>
+            <p style="color: #6b7280; font-size: 1rem;">
+                Testing navigation links, breadcrumbs, and pagination components
+            </p>
+        </div>
+
+        <!-- Basic Navigation -->
+        <div class="test-section">
+            <h2>Basic Navigation</h2>
+            <p class="test-description">
+                Horizontal navigation with hover states and active indicators
+            </p>
+            
+            <h3>Default Navigation</h3>
+            <ul class="nav-design-system">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Assignments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Grades</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+
+            <h3>Vertical Navigation</h3>
+            <ul class="nav-design-system flex-column" style="max-width: 300px;">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Help</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Pills Navigation -->
+        <div class="test-section">
+            <h2>Pills Navigation</h2>
+            <p class="test-description">
+                Navigation with pill-style active state
+            </p>
+            
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="test-section">
+            <h2>Tabs Navigation</h2>
+            <p class="test-description">
+                Tab-style navigation with border bottom
+            </p>
+            
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Active Tab</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tab 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tab 3</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <div style="padding: 1.5rem; border: 1px solid #e5e7eb; border-top: none; background: white;">
+                <p style="margin: 0; color: #6b7280;">Tab content goes here...</p>
+            </div>
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <div class="test-section">
+            <h2>Breadcrumb Navigation</h2>
+            <p class="test-description">
+                Breadcrumb trail showing current page location
+            </p>
+            
+            <h3>Basic Breadcrumb</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb-design-system">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Courses</a></li>
+                    <li class="breadcrumb-item active">Introduction to Programming</li>
+                </ol>
+            </nav>
+
+            <h3>Long Breadcrumb</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb-design-system">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                    <li class="breadcrumb-item"><a href="#">Courses</a></li>
+                    <li class="breadcrumb-item"><a href="#">Computer Science</a></li>
+                    <li class="breadcrumb-item active">Course Settings</li>
+                </ol>
+            </nav>
+        </div>
+
+        <!-- Pagination -->
+        <div class="test-section">
+            <h2>Pagination</h2>
+            <p class="test-description">
+                Page navigation controls with hover effects
+            </p>
+            
+            <h3>Default Pagination</h3>
+            <nav aria-label="Page navigation">
+                <ul class="pagination-design-system">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h3>Large Pagination</h3>
+            <nav aria-label="Page navigation">
+                <ul class="pagination-design-system pagination-lg">
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h3>Small Pagination</h3>
+            <nav aria-label="Page navigation">
+                <ul class="pagination-design-system pagination-sm">
+                    <li class="page-item">
+                        <a class="page-link" href="#">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <div class="test-section">
+            <h2>Sidebar Navigation</h2>
+            <p class="test-description">
+                Vertical sidebar navigation with icons
+            </p>
+            
+            <div style="max-width: 300px;">
+                <ul class="sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-book"></i>
+                            Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-users"></i>
+                            Students
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-clipboard-list"></i>
+                            Assignments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-chart-bar"></i>
+                            Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Dropdown Navigation -->
+        <div class="test-section">
+            <h2>Dropdown Navigation</h2>
+            <p class="test-description">
+                Dropdown menu with items and dividers
+            </p>
+            
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown Menu
+                </button>
+                <ul class="dropdown-menu-design-system" aria-labelledby="dropdownMenuButton">
+                    <li><h6 class="dropdown-header">Section Header</h6></li>
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item active" href="#">Active Item</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><h6 class="dropdown-header">Another Section</h6></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a class="dropdown-item disabled" href="#">Disabled Item</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Responsive Test -->
+        <div class="test-section">
+            <h2>Responsive Behavior</h2>
+            <p class="test-description">
+                Resize your browser window to test responsive adjustments
+            </p>
+            
+            <div class="alert alert-info" style="border-radius: 0.5rem; border: 1px solid #bfdbfe; background-color: #eff6ff; color: #1e40af; padding: 0.75rem 1rem;">
+                <i class="fas fa-info-circle"></i>
+                Navigation components automatically adjust padding and sizing for mobile, tablet, and desktop viewports.
+            </div>
+        </div>
+
+        <!-- Accessibility Test -->
+        <div class="test-section">
+            <h2>Accessibility Features</h2>
+            <p class="test-description">
+                Test keyboard navigation and focus states
+            </p>
+            
+            <div class="alert alert-success" style="border-radius: 0.5rem; border: 1px solid #a7f3d0; background-color: #ecfdf5; color: #065f46; padding: 0.75rem 1rem;">
+                <i class="fas fa-check-circle"></i>
+                <strong>Keyboard Navigation:</strong> Use Tab to navigate through links, Enter to activate. Focus states are clearly visible.
+            </div>
+            
+            <a href="#main-content" class="skip-to-content">Skip to main content</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

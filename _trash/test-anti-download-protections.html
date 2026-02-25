@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Download Protection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        
+        .test-item {
+            padding: 10px;
+            margin: 10px 0;
+            background: #ecf0f1;
+            border-left: 4px solid #3498db;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .status.pass {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .status.fail {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        #test-canvas {
+            border: 2px solid #3498db;
+            background: white;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .log {
+            background: #1a1a1a;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+        }
+        
+        .log-entry.warning {
+            color: #ff6b6b;
+        }
+        
+        .log-entry.info {
+            color: #4dabf7;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔒 Anti-Download Protection Test Suite</h1>
+    
+    <div class="instructions">
+        <strong>📋 Test Instructions:</strong>
+        <ol>
+            <li>Try right-clicking on the canvas below</li>
+            <li>Try pressing Ctrl+S (or Cmd+S on Mac)</li>
+            <li>Try pressing Ctrl+P (or Cmd+P on Mac)</li>
+            <li>Try pressing Ctrl+C (or Cmd+C on Mac)</li>
+            <li>Try dragging the canvas</li>
+            <li>Try selecting text on the canvas</li>
+            <li>Open Developer Tools (F12) and watch the console</li>
+        </ol>
+        <p><strong>Expected Result:</strong> All actions should be blocked with alerts or console warnings.</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Protection Status</h2>
+        <div id="protection-status"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Canvas</h2>
+        <p>Try to interact with this canvas using the methods listed above:</p>
+        <canvas id="test-canvas" width="600" height="300">
+            Your browser does not support the canvas element.
+        </canvas>
+    </div>
+
+    <div class="test-section">
+        <h2>Event Log</h2>
+        <div id="event-log" class="log"></div>
+    </div>
+
+    <script>
+        // Event logging
+        const eventLog = document.getElementById('event-log');
+        
+        function logEvent(message, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            eventLog.insertBefore(entry, eventLog.firstChild);
+            
+            // Also log to console
+            if (type === 'warning') {
+                console.warn(message);
+            } else {
+                console.log(message);
+            }
+        }
+
+        // Initialize canvas
+        const canvas = document.getElementById('test-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Draw some content on canvas
+        ctx.fillStyle = '#3498db';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.font = '24px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Try to interact with this canvas', canvas.width / 2, canvas.height / 2 - 20);
+        ctx.fillText('(Right-click, Drag, Select, etc.)', canvas.width / 2, canvas.height / 2 + 20);
+
+        // ============================================
+        // ANTI-DOWNLOAD PROTECTIONS
+        // ============================================
+
+        let protectionTests = {
+            rightClick: false,
+            ctrlS: false,
+            ctrlP: false,
+            ctrlC: false,
+            dragDrop: false,
+            textSelection: false,
+            devTools: false
+        };
+
+        // 1. Disable right-click context menu
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            logEvent('✓ Right-click blocked successfully', 'warning');
+            protectionTests.rightClick = true;
+            updateProtectionStatus();
+            return false;
+        });
+
+        // 2. Disable keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Disable Ctrl+S (Save)
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                alert('Downloading is disabled for this document.');
+                logEvent('✓ Ctrl+S (Save) blocked successfully', 'warning');
+                protectionTests.ctrlS = true;
+                updateProtectionStatus();
+                return false;
+            }
+            
+            // Disable Ctrl+P (Print)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                alert('Printing is disabled for this document.');
+                logEvent('✓ Ctrl+P (Print) blocked successfully', 'warning');
+                protectionTests.ctrlP = true;
+                updateProtectionStatus();
+                return false;
+            }
+            
+            // Disable Ctrl+C (Copy)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                e.preventDefault();
+                alert('Copying is disabled for this document.');
+                logEvent('✓ Ctrl+C (Copy) blocked successfully', 'warning');
+                protectionTests.ctrlC = true;
+                updateProtectionStatus();
+                return false;
+            }
+            
+            // Disable F12 (DevTools)
+            if (e.key === 'F12') {
+                e.preventDefault();
+                logEvent('✓ F12 (DevTools) key blocked', 'warning');
+                return false;
+            }
+        });
+
+        // 3. Disable text selection on canvas
+        canvas.style.userSelect = 'none';
+        canvas.style.webkitUserSelect = 'none';
+        canvas.style.mozUserSelect = 'none';
+        canvas.style.msUserSelect = 'none';
+        protectionTests.textSelection = true;
+
+        // 4. Prevent drag and drop
+        canvas.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+            logEvent('✓ Drag-and-drop blocked successfully', 'warning');
+            protectionTests.dragDrop = true;
+            updateProtectionStatus();
+            return false;
+        });
+
+        // 5. Developer tools detection
+        let devToolsWarningShown = false;
+        
+        function detectDevTools() {
+            const threshold = 160;
+            const widthDiff = window.outerWidth - window.innerWidth;
+            const heightDiff = window.outerHeight - window.innerHeight;
+            
+            if (widthDiff > threshold || heightDiff > threshold) {
+                if (!devToolsWarningShown) {
+                    logEvent('⚠️ SECURITY WARNING: Developer tools detected!', 'warning');
+                    devToolsWarningShown = true;
+                    protectionTests.devTools = true;
+                    updateProtectionStatus();
+                }
+            } else {
+                devToolsWarningShown = false;
+            }
+        }
+        
+        // Check for DevTools every second
+        setInterval(detectDevTools, 1000);
+        detectDevTools();
+
+        // ============================================
+        // STATUS DISPLAY
+        // ============================================
+
+        function updateProtectionStatus() {
+            const statusDiv = document.getElementById('protection-status');
+            statusDiv.innerHTML = `
+                <div class="test-item">
+                    Right-Click Blocking: 
+                    <span class="status ${protectionTests.rightClick ? 'pass' : 'fail'}">
+                        ${protectionTests.rightClick ? 'TESTED ✓' : 'NOT TESTED'}
+                    </span>
+                </div>
+                <div class="test-item">
+                    Ctrl+S Blocking: 
+                    <span class="status ${protectionTests.ctrlS ? 'pass' : 'fail'}">
+                        ${protectionTests.ctrlS ? 'TESTED ✓' : 'NOT TESTED'}
+                    </span>
+                </div>
+                <div class="test-item">
+                    Ctrl+P Blocking: 
+                    <span class="status ${protectionTests.ctrlP ? 'pass' : 'fail'}">
+                        ${protectionTests.ctrlP ? 'TESTED ✓' : 'NOT TESTED'}
+                    </span>
+                </div>
+                <div class="test-item">
+                    Ctrl+C Blocking: 
+                    <span class="status ${protectionTests.ctrlC ? 'pass' : 'fail'}">
+                        ${protectionTests.ctrlC ? 'TESTED ✓' : 'NOT TESTED'}
+                    </span>
+                </div>
+                <div class="test-item">
+                    Drag-and-Drop Blocking: 
+                    <span class="status ${protectionTests.dragDrop ? 'pass' : 'fail'}">
+                        ${protectionTests.dragDrop ? 'TESTED ✓' : 'NOT TESTED'}
+                    </span>
+                </div>
+                <div class="test-item">
+                    Text Selection Disabled: 
+                    <span class="status pass">ACTIVE ✓</span>
+                </div>
+                <div class="test-item">
+                    Developer Tools Detection: 
+                    <span class="status ${protectionTests.devTools ? 'pass' : 'fail'}">
+                        ${protectionTests.devTools ? 'DETECTED ✓' : 'NOT DETECTED'}
+                    </span>
+                </div>
+            `;
+        }
+
+        // Initial status display
+        updateProtectionStatus();
+        logEvent('Anti-download protection test suite initialized', 'info');
+        logEvent('Try interacting with the canvas to test protections', 'info');
+    </script>
+</body>
+</html>

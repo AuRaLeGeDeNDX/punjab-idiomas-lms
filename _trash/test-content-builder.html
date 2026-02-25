@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Builder Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Content Builder Button Test</h1>
+        
+        <!-- Test buttons with data-add-content attribute -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Test Buttons</h5>
+            </div>
+            <div class="card-body">
+                <button type="button" class="btn btn-primary me-2" data-add-content data-section="main_content">
+                    <i class="fas fa-plus"></i> Add Content Block
+                </button>
+                
+                <button type="button" class="btn btn-outline-primary me-2" data-add-content data-section="sidebar">
+                    <i class="fas fa-plus"></i> Add Sidebar Block
+                </button>
+                
+                <button type="button" class="btn btn-success" data-add-content data-section="footer">
+                    <i class="fas fa-plus"></i> Add Footer Block
+                </button>
+            </div>
+        </div>
+        
+        <!-- Test modal -->
+        <div class="modal fade" id="contentTypeModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Choose Content Type</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" id="content-type-grid">
+                            <!-- Content types will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Console output -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Console Output</h5>
+            </div>
+            <div class="card-body">
+                <div id="console-output" style="background: #000; color: #0f0; padding: 10px; font-family: monospace; height: 200px; overflow-y: auto;">
+                    <!-- Console messages will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Capture console.log messages
+        const consoleOutput = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        function addToConsole(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#f00' : '#0f0';
+            consoleOutput.innerHTML += `<div style="color: ${color}">[${timestamp}] ${message}</div>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToConsole(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToConsole(args.join(' '), 'error');
+        };
+
+        console.log('=== CONTENT BUILDER TEST INITIALIZATION ===');
+
+        // STEP 1: GLOBAL EVENT DELEGATION FOR ADD CONTENT BUTTONS
+        document.addEventListener('click', function(e) {
+            const addBtn = e.target.closest('[data-add-content]');
+            if (addBtn) {
+                e.preventDefault();
+                console.log('✓ Add Content Block button clicked: ' + addBtn.textContent.trim());
+                console.log('✓ Section: ' + addBtn.dataset.section);
+                
+                // Store the section for later use
+                window.currentContentSection = addBtn.dataset.section || 'main_content';
+                
+                // Open the content type selection modal
+                openContentTypeModal();
+                return;
+            }
+        });
+
+        // STEP 2: MODAL MANAGEMENT FUNCTIONS
+        function openContentTypeModal() {
+            console.log('Opening content type modal...');
+            
+            const modal = document.getElementById('contentTypeModal');
+            if (!modal) {
+                console.error('Content type modal not found!');
+                alert('Modal not found. Check HTML structure.');
+                return;
+            }
+            
+            // Populate content types if not already done
+            populateContentTypes();
+            
+            // Open modal using Bootstrap
+            if (window.bootstrap && window.bootstrap.Modal) {
+                const bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+                console.log('✓ Modal opened successfully');
+            } else {
+                console.error('Bootstrap Modal not available');
+                alert('Bootstrap not loaded. Please refresh the page.');
+            }
+        }
+
+        // STEP 3: POPULATE CONTENT TYPES IN MODAL
+        function populateContentTypes() {
+            const grid = document.getElementById('content-type-grid');
+            if (!grid) {
+                console.error('Content type grid not found');
+                return;
+            }
+            
+            // Check if already populated
+            if (grid.children.length > 0) {
+                console.log('Content types already populated');
+                return;
+            }
+            
+            // Test content types
+            const contentTypes = {
+                "text": {
+                    "label": "Text Block",
+                    "icon": "fas fa-paragraph",
+                    "description": "Rich text content with headings, paragraphs, and lists"
+                },
+                "image": {
+                    "label": "Image Block", 
+                    "icon": "fas fa-image",
+                    "description": "Upload and display images"
+                },
+                "pdf": {
+                    "label": "PDF Block",
+                    "icon": "fas fa-file-pdf", 
+                    "description": "Upload PDF documents"
+                }
+            };
+            
+            console.log('Content types: ' + Object.keys(contentTypes).join(', '));
+            
+            // Generate content type cards
+            let html = '';
+            Object.entries(contentTypes).forEach(([type, config]) => {
+                html += `
+                    <div class="col-md-4 mb-3">
+                        <div class="content-type-card" data-type="${type}" style="border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2rem; color: #007bff; margin-bottom: 12px;">
+                                <i class="${config.icon}"></i>
+                            </div>
+                            <h6>${config.label}</h6>
+                            <p class="text-muted small mb-0">${config.description}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+            console.log('✓ Content type cards populated');
+            
+            // Add click handlers to content type cards
+            grid.addEventListener('click', function(e) {
+                const card = e.target.closest('.content-type-card');
+                if (card) {
+                    const type = card.dataset.type;
+                    console.log('✓ Content type selected: ' + type);
+                    
+                    // Close the modal
+                    const modal = document.getElementById('contentTypeModal');
+                    const bsModal = bootstrap.Modal.getInstance(modal);
+                    if (bsModal) {
+                        bsModal.hide();
+                    }
+                    
+                    // Show success message
+                    alert('SUCCESS! Selected: ' + type + ' for section: ' + window.currentContentSection);
+                }
+            });
+        }
+
+        // STEP 4: INITIALIZATION
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✓ DOM loaded, Content Builder ready');
+            
+            // Debug: Check for buttons
+            const buttons = document.querySelectorAll('[data-add-content]');
+            console.log('✓ Found ' + buttons.length + ' Add Content buttons');
+            
+            buttons.forEach((btn, i) => {
+                console.log('  Button ' + (i+1) + ': ' + btn.textContent.trim() + ' Section: ' + btn.dataset.section);
+            });
+            
+            // Check for modals
+            const typeModal = document.getElementById('contentTypeModal');
+            console.log('✓ Content type modal: ' + (typeModal ? 'Found' : 'Missing'));
+            
+            // Check Bootstrap availability
+            console.log('✓ Bootstrap available: ' + (typeof window.bootstrap !== 'undefined'));
+            console.log('✓ Bootstrap Modal available: ' + (typeof window.bootstrap?.Modal !== 'undefined'));
+            
+            console.log('=== CONTENT BUILDER READY ===');
+        });
+    </script>
+</body>
+</html>

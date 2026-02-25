@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System Test</title>
+    <link rel="stylesheet" href="public/build/assets/design-system-2KcbaGNN.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 2rem;
+            background-color: var(--bg-subtle);
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-bottom: var(--section-margin);
+            box-shadow: var(--shadow-sm);
+        }
+        .test-section h2 {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            letter-spacing: var(--letter-spacing-tight);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .color-box {
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+        }
+        .primary { background-color: var(--admin-primary); color: white; }
+        .success { background-color: var(--admin-success); color: white; }
+        .warning { background-color: var(--admin-warning); color: white; }
+        .danger { background-color: var(--admin-danger); color: white; }
+        .info { background-color: var(--admin-info); color: white; }
+        .secondary { background-color: var(--admin-secondary); color: white; }
+        
+        .shadow-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .shadow-box {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--text-secondary);
+        }
+        .shadow-box.sm { box-shadow: var(--shadow-sm); }
+        .shadow-box.md { box-shadow: var(--shadow-md); }
+        .shadow-box.lg { box-shadow: var(--shadow-lg); }
+        .shadow-box.hover { box-shadow: var(--shadow-hover); }
+        
+        .radius-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .radius-box {
+            background: var(--admin-primary);
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+        }
+        .radius-box.sm { border-radius: var(--radius-sm); }
+        .radius-box.md { border-radius: var(--radius-md); }
+        .radius-box.lg { border-radius: var(--radius-lg); }
+        .radius-box.xl { border-radius: var(--radius-xl); }
+        
+        .text-demo p {
+            margin: 0.5rem 0;
+        }
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .text-muted { color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 style="color: var(--text-primary); font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); margin-bottom: 2rem;">
+            Design System Test
+        </h1>
+        
+        <!-- Color Palette Test -->
+        <div class="test-section">
+            <h2>Color Palette</h2>
+            <div class="color-grid">
+                <div class="color-box primary">Primary<br>#4f46e5</div>
+                <div class="color-box success">Success<br>#10b981</div>
+                <div class="color-box warning">Warning<br>#f59e0b</div>
+                <div class="color-box danger">Danger<br>#ef4444</div>
+                <div class="color-box info">Info<br>#3b82f6</div>
+                <div class="color-box secondary">Secondary<br>#6b7280</div>
+            </div>
+        </div>
+        
+        <!-- Shadow System Test -->
+        <div class="test-section">
+            <h2>Shadow System</h2>
+            <div class="shadow-demo">
+                <div class="shadow-box sm">Small<br>shadow-sm</div>
+                <div class="shadow-box md">Medium<br>shadow-md</div>
+                <div class="shadow-box lg">Large<br>shadow-lg</div>
+                <div class="shadow-box hover">Hover<br>shadow-hover</div>
+            </div>
+        </div>
+        
+        <!-- Border Radius Test -->
+        <div class="test-section">
+            <h2>Border Radius System</h2>
+            <div class="radius-demo">
+                <div class="radius-box sm">Small<br>0.375rem</div>
+                <div class="radius-box md">Medium<br>0.5rem</div>
+                <div class="radius-box lg">Large<br>0.75rem</div>
+                <div class="radius-box xl">XL<br>1rem</div>
+            </div>
+        </div>
+        
+        <!-- Text Hierarchy Test -->
+        <div class="test-section">
+            <h2>Text Color Hierarchy</h2>
+            <div class="text-demo">
+                <p class="text-primary" style="font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold);">
+                    Primary Text - #111827 (Main headings and important content)
+                </p>
+                <p class="text-secondary" style="font-size: var(--font-size-base);">
+                    Secondary Text - #6b7280 (Supporting text and descriptions)
+                </p>
+                <p class="text-muted" style="font-size: var(--font-size-sm);">
+                    Muted Text - #9ca3af (Subtle hints and metadata)
+                </p>
+            </div>
+        </div>
+        
+        <!-- Utility Classes Test -->
+        <div class="test-section">
+            <h2>Utility Classes</h2>
+            <div style="display: grid; gap: 1rem;">
+                <div class="bg-primary-subtle p-card rounded-lg">
+                    <p class="text-primary-brand font-semibold">Primary Subtle Background</p>
+                </div>
+                <div class="bg-success-subtle p-card rounded-lg">
+                    <p class="text-success font-semibold">Success Subtle Background</p>
+                </div>
+                <div class="bg-warning-subtle p-card rounded-lg">
+                    <p class="text-warning font-semibold">Warning Subtle Background</p>
+                </div>
+                <div class="bg-danger-subtle p-card rounded-lg">
+                    <p class="text-danger font-semibold">Danger Subtle Background</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Spacing Test -->
+        <div class="test-section">
+            <h2>Spacing System</h2>
+            <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="background: var(--admin-primary); color: white; padding: var(--button-padding-vertical) var(--button-padding-horizontal); border-radius: var(--radius-sm); display: inline-block; margin-bottom: var(--section-margin);">
+                    Button Padding (0.875rem × 1.25rem)
+                </div>
+                <div style="background: var(--bg-card); padding: var(--card-padding); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+                    Card Padding (1.5rem)
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

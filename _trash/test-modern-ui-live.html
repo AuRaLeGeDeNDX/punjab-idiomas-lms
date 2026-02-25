@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern UI Test - Live Preview</title>
+    <link rel="stylesheet" href="/build/assets/modern-design-system-CXvkUvA_.css">
+    <link rel="stylesheet" href="/build/assets/modern-components-cakeskeb.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section {
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Animated Hero Section -->
+    <div class="animated-gradient-bg" style="padding: 5rem 2rem; text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 4.5rem; font-weight: 900; color: white; margin: 0 0 1rem 0; text-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+            🚀 Modern Creative UI
+        </h1>
+        <p style="font-size: 1.5rem; color: rgba(255,255,255,0.95); margin: 0; font-weight: 500;">
+            Bold, Dramatic, Visible Changes - Immediately Noticeable!
+        </p>
+    </div>
+
+    <div class="container">
+        
+        <!-- Stat Cards Section -->
+        <div class="section">
+            <h2 class="section-title">📊 Animated Stat Cards</h2>
+            <div class="grid grid-3">
+                <div class="modern-stat-card animate-fade-in-up">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <div class="number">1,234</div>
+                    <div class="label">Total Users</div>
+                    <div class="subtitle">856 active this month</div>
+                </div>
+                
+                <div class="modern-stat-card variant-success animate-fade-in-up stagger-1">
+                    <div class="icon"><i class="fas fa-book"></i></div>
+                    <div class="number">45</div>
+                    <div class="label">Courses</div>
+                    <div class="subtitle">38 published</div>
+                </div>
+                
+                <div class="modern-stat-card variant-warning animate-fade-in-up stagger-2">
+                    <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="number">3,456</div>
+                    <div class="label">Enrollments</div>
+                    <div class="subtitle">2,890 active</div>
+                </div>
+                
+                <div class="modern-stat-card variant-info animate-fade-in-up stagger-3">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="number">98%</div>
+                    <div class="label">Completion Rate</div>
+                    <div class="subtitle">+5% from last month</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Glassmorphism Cards -->
+        <div class="section">
+            <h2 class="section-title">✨ Glassmorphism Cards</h2>
+            <div class="grid grid-2">
+                <div class="glass-card animate-scale-in">
+                    <div class="glass-card-header">
+                        <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                    </div>
+                    <div class="glass-card-body">
+                        <button class="modern-btn" style="width: 100%; margin-bottom: 1rem;">
+                            <i class="fas fa-user-plus"></i> Add New User
+                        </button>
+                        <button class="modern-btn btn-success" style="width: 100%; margin-bottom: 1rem;">
+                            <i class="fas fa-plus"></i> Create Course
+                        </button>
+                        <button class="modern-btn btn-warning" style="width: 100%;">
+                            <i class="fas fa-bullhorn"></i> Send Announcement
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card animate-scale-in stagger-1">
+                    <div class="glass-card-header">
+                        <h3><i class="fas fa-fire"></i> Recent Activity</h3>
+                    </div>
+                    <div class="glass-card-body">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: rgba(102, 126, 234, 0.1); border-radius: 12px;">
+                            <i class="fas fa-user-check" style="font-size: 2rem; color: var(--color-success);"></i>
+                            <div>
+                                <div style="font-weight: 600;">New Enrollment</div>
+                                <div style="font-size: 0.875rem; color: rgba(0,0,0,0.6);">John Doe enrolled in Web Development</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: rgba(56, 239, 125, 0.1); border-radius: 12px;">
+                            <i class="fas fa-trophy" style="font-size: 2rem; color: var(--color-warning);"></i>
+                            <div>
+                                <div style="font-weight: 600;">Course Completed</div>
+                                <div style="font-size: 0.875rem; color: rgba(0,0,0,0.6);">Sarah Smith finished Python Basics</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(79, 172, 254, 0.1); border-radius: 12px;">
+                            <i class="fas fa-star" style="font-size: 2rem; color: var(--color-info);"></i>
+                            <div>
+                                <div style="font-weight: 600;">New Review</div>
+                                <div style="font-size: 0.875rem; color: rgba(0,0,0,0.6);">5-star rating on JavaScript Course</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modern Buttons -->
+        <div class="section">
+            <h2 class="section-title">🎨 Modern Gradient Buttons</h2>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="modern-btn"><i class="fas fa-save"></i> Primary Action</button>
+                <button class="modern-btn btn-success"><i class="fas fa-check"></i> Success</button>
+                <button class="modern-btn btn-warning"><i class="fas fa-exclamation"></i> Warning</button>
+                <button class="modern-btn btn-danger"><i class="fas fa-trash"></i> Danger</button>
+                <button class="modern-btn btn-info"><i class="fas fa-info-circle"></i> Info</button>
+                <button class="modern-btn-lg"><i class="fas fa-rocket"></i> Large Button</button>
+                <button class="modern-btn-sm"><i class="fas fa-cog"></i> Small</button>
+            </div>
+        </div>
+
+        <!-- Gradient Text -->
+        <div class="section">
+            <h2 class="section-title">🌈 Gradient Text Effects</h2>
+            <h1 class="gradient-text" style="font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem;">
+                Beautiful Gradient Headings
+            </h1>
+            <h2 class="gradient-text-pink" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">
+                Multiple Color Schemes Available
+            </h2>
+            <h3 class="gradient-text-green" style="font-size: 2rem; font-weight: 700;">
+                Instantly Eye-Catching Design
+            </h3>
+        </div>
+
+        <!-- Modern Badges -->
+        <div class="section">
+            <h2 class="section-title">🏷️ Modern Badges</h2>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                <span class="modern-badge badge-success"><i class="fas fa-check"></i> Active</span>
+                <span class="modern-badge badge-warning"><i class="fas fa-clock"></i> Pending</span>
+                <span class="modern-badge badge-danger"><i class="fas fa-times"></i> Inactive</span>
+                <span class="modern-badge badge-info"><i class="fas fa-info"></i> New</span>
+            </div>
+        </div>
+
+        <!-- Modern Table -->
+        <div class="section">
+            <h2 class="section-title">📋 Modern Table Design</h2>
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Instructor</th>
+                        <th>Students</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Web Development Fundamentals</strong></td>
+                        <td>John Smith</td>
+                        <td>245</td>
+                        <td><span class="modern-badge badge-success">Active</span></td>
+                        <td>
+                            <button class="modern-btn-sm"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Python for Beginners</strong></td>
+                        <td>Sarah Johnson</td>
+                        <td>189</td>
+                        <td><span class="modern-badge badge-success">Active</span></td>
+                        <td>
+                            <button class="modern-btn-sm"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Advanced JavaScript</strong></td>
+                        <td>Mike Davis</td>
+                        <td>156</td>
+                        <td><span class="modern-badge badge-warning">Pending</span></td>
+                        <td>
+                            <button class="modern-btn-sm"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Success Message -->
+        <div class="section">
+            <div class="glass-card" style="background: linear-gradient(135deg, rgba(56, 239, 125, 0.2), rgba(17, 153, 142, 0.2)); border: 2px solid rgba(56, 239, 125, 0.3);">
+                <div style="display: flex; align-items: center; gap: 1.5rem;">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--color-success);"></i>
+                    <div>
+                        <h3 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: 700;">Modern UI Successfully Applied! 🎉</h3>
+                        <p style="margin: 0; font-size: 1rem; color: rgba(0,0,0,0.7);">
+                            Your LMS now has a bold, dramatic, and creative design that's immediately visible to all users.
+                            All functionality remains exactly the same - only the visual appearance has been transformed!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Add count-up animation to numbers
+        document.querySelectorAll('.modern-stat-card .number').forEach(el => {
+            const target = parseInt(el.textContent.replace(/[^0-9]/g, ''));
+            if (isNaN(target)) return;
+            
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    el.textContent = el.textContent.replace(/[0-9,]+/, target.toLocaleString());
+                    clearInterval(timer);
+                } else {
+                    el.textContent = el.textContent.replace(/[0-9,]+/, Math.floor(current).toLocaleString());
+                }
+            }, 30);
+        });
+    </script>
+
+</body>
+</html>

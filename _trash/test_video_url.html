@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video URL Test</title>
+</head>
+<body>
+    <h1>Video URL Diagnostic</h1>
+    
+    <h2>Instructions:</h2>
+    <ol>
+        <li>Open your browser console (F12)</li>
+        <li>Go to the page with the video</li>
+        <li>Run this in console: <code>document.querySelector('video source').src</code></li>
+        <li>Copy the full URL and paste it here</li>
+    </ol>
+    
+    <h2>What to check:</h2>
+    <ul>
+        <li>Does the URL have <code>signature=</code> and <code>expires=</code> parameters?</li>
+        <li>Is the content ID a simple number (like <code>/secure/video/3</code>)?</li>
+        <li>Or is it malformed (like <code>/secure/video/3..6a3bba5aca3cb899e:1</code>)?</li>
+    </ul>
+    
+    <h2>Quick Fix Test:</h2>
+    <p>Try accessing this URL directly in your browser (replace 3 with your actual content ID):</p>
+    <pre>http://localhost:8000/secure/video/3?signature=test&expires=9999999999</pre>
+    
+    <p>This should give you a more specific error message about what's wrong.</p>
+</body>
+</html>

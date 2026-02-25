@@ -1,0 +1,573 @@
+/**
+ * Card Component Styles
+ * 
+ * This file defines the card component styling standards for the design system.
+ * It includes card borders, backgrounds, shadows, headers, body padding, and hover effects.
+ * 
+ * Requirements: 6.1, 6.2, 6.3, 6.4
+ */
+
+/* ========================================
+   BASE CARD STYLES
+   ======================================== */
+
+/**
+ * Base card class that applies the design system standards
+ * - 1px solid border with color #e5e7eb
+ * - Pure white background (#ffffff)
+ * - Minimal elevation shadow
+ * - 0.75rem border radius
+ * - Smooth transitions for hover effects
+ */
+.card-design-system {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-slow);
+    margin-bottom: var(--section-margin);
+    overflow: hidden;
+}
+
+.card-design-system:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   CARD HEADER STYLES
+   ======================================== */
+
+/**
+ * Card header styling
+ * - Subtle background color
+ * - Bottom border for separation
+ * - Consistent padding
+ * - Typography standards (1rem size, 600 weight)
+ */
+.card-design-system .card-header {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.card-design-system .card-header h1,
+.card-design-system .card-header h2,
+.card-design-system .card-header h3,
+.card-design-system .card-header h4,
+.card-design-system .card-header h5,
+.card-design-system .card-header h6 {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin: 0;
+    line-height: var(--line-height-tight);
+}
+
+.card-design-system .card-header .card-title {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin: 0;
+    line-height: var(--line-height-tight);
+}
+
+/* Card header with icon */
+.card-design-system .card-header i,
+.card-design-system .card-header .icon {
+    margin-right: 0.625rem;
+    color: var(--admin-primary);
+    opacity: 0.8;
+}
+
+/* Card header actions (buttons, links) */
+.card-design-system .card-header .card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+/* ========================================
+   CARD BODY STYLES
+   ======================================== */
+
+/**
+ * Card body styling
+ * - 1.5rem padding for consistent spacing
+ * - Proper text color hierarchy
+ */
+.card-design-system .card-body {
+    padding: var(--card-padding);
+}
+
+.card-design-system .card-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   CARD FOOTER STYLES
+   ======================================== */
+
+/**
+ * Card footer styling
+ * - Subtle background color
+ * - Top border for separation
+ * - Consistent padding
+ */
+.card-design-system .card-footer {
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.card-design-system .card-footer:last-child {
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+}
+
+/* ========================================
+   INTERACTIVE CARD HOVER EFFECTS
+   ======================================== */
+
+/**
+ * Hover effects for interactive cards
+ * - Slight lift transformation (translateY(-2px))
+ * - Increased shadow for depth
+ * - Only applies to cards with .card-interactive class
+ */
+.card-design-system.card-interactive {
+    cursor: pointer;
+    transition: all var(--transition-slow);
+}
+
+.card-design-system.card-interactive:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card-design-system.card-interactive:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ========================================
+   CARD VARIANTS
+   ======================================== */
+
+/**
+ * Primary card variant
+ * - Indigo accent border
+ */
+.card-design-system.card-primary {
+    border-color: var(--admin-primary);
+}
+
+.card-design-system.card-primary .card-header {
+    background: var(--bg-primary-subtle);
+    border-bottom-color: var(--admin-primary);
+}
+
+/**
+ * Success card variant
+ * - Emerald accent border
+ */
+.card-design-system.card-success {
+    border-color: var(--admin-success);
+}
+
+.card-design-system.card-success .card-header {
+    background: var(--bg-success-subtle);
+    border-bottom-color: var(--admin-success);
+}
+
+/**
+ * Warning card variant
+ * - Amber accent border
+ */
+.card-design-system.card-warning {
+    border-color: var(--admin-warning);
+}
+
+.card-design-system.card-warning .card-header {
+    background: var(--bg-warning-subtle);
+    border-bottom-color: var(--admin-warning);
+}
+
+/**
+ * Danger card variant
+ * - Red accent border
+ */
+.card-design-system.card-danger {
+    border-color: var(--admin-danger);
+}
+
+.card-design-system.card-danger .card-header {
+    background: var(--bg-danger-subtle);
+    border-bottom-color: var(--admin-danger);
+}
+
+/**
+ * Info card variant
+ * - Blue accent border
+ */
+.card-design-system.card-info {
+    border-color: var(--admin-info);
+}
+
+.card-design-system.card-info .card-header {
+    background: var(--bg-info-subtle);
+    border-bottom-color: var(--admin-info);
+}
+
+/**
+ * Secondary card variant
+ * - Gray accent border
+ */
+.card-design-system.card-secondary {
+    border-color: var(--admin-secondary);
+}
+
+.card-design-system.card-secondary .card-header {
+    background: var(--bg-secondary-subtle);
+    border-bottom-color: var(--admin-secondary);
+}
+
+/* ========================================
+   CARD WITHOUT HEADER
+   ======================================== */
+
+/**
+ * Card without header styling
+ * - Maintains consistent padding throughout
+ */
+.card-design-system.card-no-header .card-body {
+    padding: var(--card-padding);
+}
+
+/* ========================================
+   CARD WITH IMAGE
+   ======================================== */
+
+/**
+ * Card with image styling
+ * - Image spans full width
+ * - Proper border radius on top
+ */
+.card-design-system .card-img-top {
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    width: 100%;
+    height: auto;
+}
+
+.card-design-system .card-img-bottom {
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+    width: 100%;
+    height: auto;
+}
+
+/* ========================================
+   STAT CARD STYLES
+   ======================================== */
+
+/**
+ * Stat card styling for dashboard statistics
+ * - Compact layout
+ * - Prominent numeric display
+ * - Icon with semantic color
+ */
+.card-design-system.card-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-design-system.card-stat .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem;
+}
+
+.card-design-system.card-stat .stat-content {
+    flex: 1;
+}
+
+.card-design-system.card-stat .stat-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wider);
+    margin-bottom: 0.25rem;
+}
+
+.card-design-system.card-stat .stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    letter-spacing: var(--letter-spacing-tight);
+    line-height: var(--line-height-tight);
+}
+
+.card-design-system.card-stat .stat-icon {
+    font-size: 2.5rem;
+    opacity: 0.2;
+    margin-left: 1rem;
+}
+
+.card-design-system.card-stat.card-primary .stat-icon {
+    color: var(--admin-primary);
+}
+
+.card-design-system.card-stat.card-success .stat-icon {
+    color: var(--admin-success);
+}
+
+.card-design-system.card-stat.card-warning .stat-icon {
+    color: var(--admin-warning);
+}
+
+.card-design-system.card-stat.card-danger .stat-icon {
+    color: var(--admin-danger);
+}
+
+.card-design-system.card-stat.card-info .stat-icon {
+    color: var(--admin-info);
+}
+
+.card-design-system.card-stat.card-secondary .stat-icon {
+    color: var(--admin-secondary);
+}
+
+/* ========================================
+   CARD LIST GROUP
+   ======================================== */
+
+/**
+ * List group within cards
+ * - Removes default margins
+ * - Proper border handling
+ */
+.card-design-system .list-group {
+    margin: 0;
+}
+
+.card-design-system .list-group-item:first-child {
+    border-top: none;
+}
+
+.card-design-system .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.card-design-system .list-group-flush .list-group-item {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+/* ========================================
+   CARD GRID LAYOUT
+   ======================================== */
+
+/**
+ * Card grid layout utilities
+ * - Responsive grid for card collections
+ */
+.card-grid {
+    display: grid;
+    gap: var(--spacing-2xl);
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.card-grid-2 {
+    display: grid;
+    gap: var(--spacing-2xl);
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid-3 {
+    display: grid;
+    gap: var(--spacing-2xl);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card-grid-4 {
+    display: grid;
+    gap: var(--spacing-2xl);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* ========================================
+   BOOTSTRAP CARD OVERRIDES
+   ======================================== */
+
+/**
+ * Override Bootstrap card classes to use design system styles
+ * This ensures consistency when using standard Bootstrap card classes
+ */
+.card:not(.card-design-system) {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-slow);
+}
+
+.card:not(.card-design-system) .card-header {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.card:not(.card-design-system) .card-header h1,
+.card:not(.card-design-system) .card-header h2,
+.card:not(.card-design-system) .card-header h3,
+.card:not(.card-design-system) .card-header h4,
+.card:not(.card-design-system) .card-header h5,
+.card:not(.card-design-system) .card-header h6,
+.card:not(.card-design-system) .card-header .card-title {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.card:not(.card-design-system) .card-body {
+    padding: var(--card-padding);
+}
+
+.card:not(.card-design-system) .card-footer {
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+/* ========================================
+   CARD LOADING STATE
+   ======================================== */
+
+/**
+ * Loading state for cards
+ * - Shows skeleton loader
+ * - Indicates content is being fetched
+ */
+.card-design-system.card-loading {
+    position: relative;
+    min-height: 200px;
+}
+
+.card-design-system.card-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: card-loading-shimmer 1.5s infinite;
+}
+
+@keyframes card-loading-shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ========================================
+   CARD COLLAPSE
+   ======================================== */
+
+/**
+ * Collapsible card styling
+ * - Clickable header to toggle content
+ * - Smooth collapse animation
+ */
+.card-design-system.card-collapsible .card-header {
+    cursor: pointer;
+    user-select: none;
+}
+
+.card-design-system.card-collapsible .card-header::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    float: right;
+    transition: transform var(--transition-base);
+}
+
+.card-design-system.card-collapsible.collapsed .card-header::after {
+    transform: rotate(-90deg);
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+/**
+ * Mobile-specific card adjustments
+ * - Reduced padding for smaller screens
+ * - Single column grid layouts
+ */
+@media (max-width: 576px) {
+    .card-design-system .card-header {
+        padding: 0.875rem 1rem;
+    }
+    
+    .card-design-system .card-body {
+        padding: 1.25rem;
+    }
+    
+    .card-design-system .card-footer {
+        padding: 0.875rem 1rem;
+    }
+    
+    .card-grid,
+    .card-grid-2,
+    .card-grid-3,
+    .card-grid-4 {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .card-design-system.card-stat .card-body {
+        padding: 1rem;
+    }
+    
+    .card-design-system.card-stat .stat-value {
+        font-size: var(--font-size-xl);
+    }
+    
+    .card-design-system.card-stat .stat-icon {
+        font-size: 2rem;
+    }
+}
+
+/**
+ * Tablet-specific card adjustments
+ * - Two column grid layouts
+ */
+@media (min-width: 577px) and (max-width: 992px) {
+    .card-grid-3,
+    .card-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/**
+ * Desktop-specific card adjustments
+ * - Standard sizing maintained
+ * - Full grid layouts enabled
+ */
+@media (min-width: 993px) {
+    /* Standard sizing maintained */
+}

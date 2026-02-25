@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Visibility Test</title>
+    <link rel="stylesheet" href="/build/assets/creative-professional-C6OYFjoZ.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 2rem;
+            background-color: #f9fafb;
+        }
+        .test-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Button Visibility Test</h1>
+    
+    <div class="test-container">
+        <h3>Quick Actions Test</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <a href="#" class="creative-btn creative-btn-primary" style="width: 100%; text-decoration: none;">
+                <i class="fas fa-user-plus"></i> Add User
+            </a>
+            <button class="creative-btn creative-btn-success" style="width: 100%;">
+                <i class="fas fa-plus"></i> Create Course
+            </button>
+            <a href="#" class="creative-btn creative-btn-outline" style="width: 100%; text-decoration: none;">
+                <i class="fas fa-bullhorn"></i> Send Announcement
+            </a>
+        </div>
+    </div>
+    
+    <div style="margin-top: 2rem; padding: 1rem; background: #fff3cd; border-radius: 8px;">
+        <strong>Expected Result:</strong>
+        <ul>
+            <li>"Add User" button should have purple gradient background with white text</li>
+            <li>"Create Course" button should have green gradient background with white text</li>
+            <li>"Send Announcement" button should have white background with purple border and text</li>
+        </ul>
+    </div>
+</body>
+</html>

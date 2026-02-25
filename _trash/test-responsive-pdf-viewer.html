@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive PDF Viewer Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .test-section h2 {
+            color: #34495e;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .viewport-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .viewport-info p {
+            margin: 5px 0;
+            font-family: monospace;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .test-item {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .test-item.pass {
+            background: #27ae60;
+        }
+        
+        .test-item.fail {
+            background: #e74c3c;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 5px 0;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        .breakpoint-indicator {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 20px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Responsive PDF Viewer Test</h1>
+    
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li>Resize your browser window to different widths</li>
+            <li>Check that the viewport information updates correctly</li>
+            <li>Verify the breakpoint indicator shows the correct device category</li>
+            <li>Open the actual PDF viewer and verify:
+                <ul>
+                    <li>Toolbar adapts to screen size</li>
+                    <li>Watermark pattern adjusts for viewport</li>
+                    <li>PDF canvas fits within viewport without horizontal scrolling</li>
+                    <li>All controls remain accessible and usable</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h2>Current Viewport Information</h2>
+        <div class="viewport-info">
+            <p><strong>Width:</strong> <span id="viewport-width">--</span>px</p>
+            <p><strong>Height:</strong> <span id="viewport-height">--</span>px</p>
+            <p><strong>Orientation:</strong> <span id="orientation">--</span></p>
+            <p><strong>Device Pixel Ratio:</strong> <span id="dpr">--</span></p>
+        </div>
+        <div class="breakpoint-indicator" id="breakpoint">--</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Responsive Breakpoints</h2>
+        <div class="test-grid">
+            <div class="test-item" id="bp-large-desktop">
+                <strong>Large Desktop</strong><br>
+                ≥ 1920px
+            </div>
+            <div class="test-item" id="bp-desktop">
+                <strong>Standard Desktop</strong><br>
+                1200px - 1919px
+            </div>
+            <div class="test-item" id="bp-small-desktop">
+                <strong>Small Desktop</strong><br>
+                992px - 1199px
+            </div>
+            <div class="test-item" id="bp-tablet">
+                <strong>Tablet Portrait</strong><br>
+                768px - 991px
+            </div>
+            <div class="test-item" id="bp-small-tablet">
+                <strong>Small Tablet</strong><br>
+                &lt; 768px
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Responsive Features Checklist</h2>
+        <div class="test-grid">
+            <div class="test-item">
+                <strong>✓ Full-width Layout</strong><br>
+                Adapts to viewport
+            </div>
+            <div class="test-item">
+                <strong>✓ Toolbar Responsive</strong><br>
+                Adjusts spacing & size
+            </div>
+            <div class="test-item">
+                <strong>✓ Watermark Pattern</strong><br>
+                Scales with viewport
+            </div>
+            <div class="test-item">
+                <strong>✓ Canvas Sizing</strong><br>
+                No horizontal scroll
+            </div>
+            <div class="test-item">
+                <strong>✓ Touch-Friendly</strong><br>
+                Buttons sized for tablets
+            </div>
+            <div class="test-item">
+                <strong>✓ Landscape Mode</strong><br>
+                Optimized layout
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test Actions</h2>
+        <button onclick="testResize(1920, 1080)">Test Large Desktop (1920x1080)</button>
+        <button onclick="testResize(1366, 768)">Test Standard Desktop (1366x768)</button>
+        <button onclick="testResize(1024, 768)">Test Small Desktop (1024x768)</button>
+        <button onclick="testResize(768, 1024)">Test Tablet Portrait (768x1024)</button>
+        <button onclick="testResize(600, 800)">Test Small Tablet (600x800)</button>
+        <p style="margin-top: 10px; color: #7f8c8d; font-size: 12px;">
+            Note: Browser window resizing via JavaScript may be restricted. Manually resize your browser window to test.
+        </p>
+    </div>
+    
+    <script>
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const orientation = width > height ? 'Landscape' : 'Portrait';
+            const dpr = window.devicePixelRatio || 1;
+            
+            document.getElementById('viewport-width').textContent = width;
+            document.getElementById('viewport-height').textContent = height;
+            document.getElementById('orientation').textContent = orientation;
+            document.getElementById('dpr').textContent = dpr;
+            
+            // Determine breakpoint
+            let breakpoint = '';
+            let activeId = '';
+            
+            if (width >= 1920) {
+                breakpoint = '📱 Large Desktop (≥ 1920px)';
+                activeId = 'bp-large-desktop';
+            } else if (width >= 1200) {
+                breakpoint = '💻 Standard Desktop (1200px - 1919px)';
+                activeId = 'bp-desktop';
+            } else if (width >= 992) {
+                breakpoint = '🖥️ Small Desktop / Large Tablet (992px - 1199px)';
+                activeId = 'bp-small-desktop';
+            } else if (width >= 768) {
+                breakpoint = '📱 Tablet Portrait (768px - 991px)';
+                activeId = 'bp-tablet';
+            } else {
+                breakpoint = '📱 Small Tablet / Mobile (< 768px)';
+                activeId = 'bp-small-tablet';
+            }
+            
+            document.getElementById('breakpoint').textContent = breakpoint;
+            
+            // Highlight active breakpoint
+            document.querySelectorAll('.test-item').forEach(item => {
+                item.classList.remove('pass');
+            });
+            
+            if (activeId) {
+                document.getElementById(activeId).classList.add('pass');
+            }
+        }
+        
+        function testResize(width, height) {
+            alert(`Manual resize required: Please resize your browser window to approximately ${width}x${height} pixels.\n\nNote: Most browsers restrict JavaScript from resizing windows for security reasons.`);
+        }
+        
+        // Update on load
+        updateViewportInfo();
+        
+        // Update on resize
+        window.addEventListener('resize', updateViewportInfo);
+        
+        // Update every second to catch any changes
+        setInterval(updateViewportInfo, 1000);
+    </script>
+</body>
+</html>

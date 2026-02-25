@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Component Test - Design System</title>
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="public/build/assets/design-system-2KcbaGNN.css">
+    
+    <!-- Button Component CSS -->
+    <link rel="stylesheet" href="public/build/assets/buttons-C9LjsVvp.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            padding: 2rem;
+            background-color: #f9fafb;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .test-section h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="margin-bottom: 2rem; font-size: 2rem; font-weight: 700; color: #111827;">
+        Button Component Test - Design System
+    </h1>
+    
+    <!-- Button Variants Section -->
+    <div class="test-section">
+        <h2>Button Variants</h2>
+        
+        <div class="test-label">Primary Button</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-primary">
+                <i class="fas fa-plus"></i>
+                Create New
+            </button>
+            <button class="btn-design-system btn-primary">
+                <i class="fas fa-save"></i>
+                Save Changes
+            </button>
+            <button class="btn-design-system btn-primary">
+                <i class="fas fa-check"></i>
+                Confirm
+            </button>
+        </div>
+        
+        <div class="test-label">Success Button</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-success">
+                <i class="fas fa-check-circle"></i>
+                Approve
+            </button>
+            <button class="btn-design-system btn-success">
+                <i class="fas fa-thumbs-up"></i>
+                Accept
+            </button>
+            <button class="btn-design-system btn-success">
+                <i class="fas fa-paper-plane"></i>
+                Submit
+            </button>
+        </div>
+        
+        <div class="test-label">Danger Button</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-danger">
+                <i class="fas fa-trash"></i>
+                Delete
+            </button>
+            <button class="btn-design-system btn-danger">
+                <i class="fas fa-times-circle"></i>
+                Cancel
+            </button>
+            <button class="btn-design-system btn-danger">
+                <i class="fas fa-ban"></i>
+                Block
+            </button>
+        </div>
+        
+        <div class="test-label">Warning Button</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                Warning
+            </button>
+            <button class="btn-design-system btn-warning">
+                <i class="fas fa-pause"></i>
+                Pause
+            </button>
+            <button class="btn-design-system btn-warning">
+                <i class="fas fa-clock"></i>
+                Pending
+            </button>
+        </div>
+        
+        <div class="test-label">Info Button</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-info">
+                <i class="fas fa-info-circle"></i>
+                Information
+            </button>
+            <button class="btn-design-system btn-info">
+                <i class="fas fa-eye"></i>
+                View Details
+            </button>
+            <button class="btn-design-system btn-info">
+                <i class="fas fa-download"></i>
+                Download
+            </button>
+        </div>
+        
+        <div class="test-label">Secondary Button</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-secondary">
+                <i class="fas fa-cog"></i>
+                Settings
+            </button>
+            <button class="btn-design-system btn-secondary">
+                <i class="fas fa-filter"></i>
+                Filter
+            </button>
+            <button class="btn-design-system btn-secondary">
+                <i class="fas fa-search"></i>
+                Search
+            </button>
+        </div>
+    </div>
+    
+    <!-- Button Sizes Section -->
+    <div class="test-section">
+        <h2>Button Sizes</h2>
+        
+        <div class="button-row">
+            <button class="btn-design-system btn-primary btn-sm">
+                <i class="fas fa-plus"></i>
+                Small Button
+            </button>
+            <button class="btn-design-system btn-primary">
+                <i class="fas fa-plus"></i>
+                Default Button
+            </button>
+            <button class="btn-design-system btn-primary btn-lg">
+                <i class="fas fa-plus"></i>
+                Large Button
+            </button>
+        </div>
+    </div>
+    
+    <!-- Icon-Only Buttons Section -->
+    <div class="test-section">
+        <h2>Icon-Only Buttons</h2>
+        
+        <div class="button-row">
+            <button class="btn-design-system btn-primary btn-icon btn-sm">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn-design-system btn-success btn-icon">
+                <i class="fas fa-check"></i>
+            </button>
+            <button class="btn-design-system btn-danger btn-icon">
+                <i class="fas fa-trash"></i>
+            </button>
+            <button class="btn-design-system btn-info btn-icon btn-lg">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Button States Section -->
+    <div class="test-section">
+        <h2>Button States</h2>
+        
+        <div class="test-label">Disabled State</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-primary" disabled>
+                <i class="fas fa-plus"></i>
+                Disabled Button
+            </button>
+            <button class="btn-design-system btn-success" disabled>
+                <i class="fas fa-check"></i>
+                Disabled Button
+            </button>
+            <button class="btn-design-system btn-danger" disabled>
+                <i class="fas fa-trash"></i>
+                Disabled Button
+            </button>
+        </div>
+        
+        <div class="test-label">Loading State</div>
+        <div class="button-row">
+            <button class="btn-design-system btn-primary btn-loading">
+                <i class="fas fa-plus"></i>
+                Loading...
+            </button>
+            <button class="btn-design-system btn-success btn-loading">
+                <i class="fas fa-check"></i>
+                Processing...
+            </button>
+        </div>
+    </div>
+    
+    <!-- Button Group Section -->
+    <div class="test-section">
+        <h2>Button Groups</h2>
+        
+        <div class="btn-group-design-system">
+            <button class="btn-design-system btn-secondary">
+                <i class="fas fa-align-left"></i>
+                Left
+            </button>
+            <button class="btn-design-system btn-secondary">
+                <i class="fas fa-align-center"></i>
+                Center
+            </button>
+            <button class="btn-design-system btn-secondary">
+                <i class="fas fa-align-right"></i>
+                Right
+            </button>
+        </div>
+    </div>
+    
+    <!-- Block Button Section -->
+    <div class="test-section">
+        <h2>Block Buttons</h2>
+        
+        <button class="btn-design-system btn-primary btn-block">
+            <i class="fas fa-plus"></i>
+            Full Width Button
+        </button>
+    </div>
+    
+    <!-- Hover Effect Test Section -->
+    <div class="test-section">
+        <h2>Hover Effects Test</h2>
+        <p style="color: #6b7280; margin-bottom: 1rem;">
+            Hover over the buttons below to see the effects:
+            <br>• translateY(-1px) transformation
+            <br>• Elevated shadow
+            <br>• Border color matches icon color
+            <br>• Icon opacity increases to full
+        </p>
+        
+        <div class="button-row">
+            <button class="btn-design-system btn-primary">
+                <i class="fas fa-rocket"></i>
+                Hover Me
+            </button>
+            <button class="btn-design-system btn-success">
+                <i class="fas fa-star"></i>
+                Hover Me
+            </button>
+            <button class="btn-design-system btn-danger">
+                <i class="fas fa-fire"></i>
+                Hover Me
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Add console log to verify CSS is loaded
+        console.log('Button Component Test Page Loaded');
+        console.log('Testing button hover effects and styling...');
+        
+        // Add click handlers to test interactivity
+        document.querySelectorAll('.btn-design-system').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!this.disabled && !this.classList.contains('disabled')) {
+                    console.log('Button clicked:', this.textContent.trim());
+                }
+            });
+        });
+    </script>
+</body>
+</html>

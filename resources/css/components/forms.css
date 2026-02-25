@@ -1,0 +1,804 @@
+/**
+ * Form Component Styles
+ * 
+ * This file defines the form component styling standards for the design system.
+ * It includes input, select, textarea, label, and focus state styles with consistent
+ * spacing, borders, and visual feedback.
+ * 
+ * Requirements: 11.3, 3.4
+ */
+
+/* ========================================
+   BASE FORM STYLES
+   ======================================== */
+
+/**
+ * Form group spacing
+ * - Consistent spacing between form fields
+ */
+.form-group-design-system {
+    margin-bottom: var(--form-field-spacing);
+}
+
+.form-group-design-system:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   FORM LABEL STYLES
+   ======================================== */
+
+/**
+ * Form label styling
+ * - Clear hierarchy with medium weight
+ * - Secondary text color for subtle appearance
+ * - Consistent spacing below label
+ */
+.form-label-design-system,
+.form-group-design-system label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    line-height: var(--line-height-tight);
+}
+
+.form-label-design-system.required::after,
+.form-group-design-system label.required::after {
+    content: '*';
+    color: var(--admin-danger);
+    margin-left: 0.25rem;
+}
+
+/* ========================================
+   TEXT INPUT STYLES
+   ======================================== */
+
+/**
+ * Text input styling
+ * - 1px solid border with subtle gray color
+ * - Medium border radius (0.5rem)
+ * - Consistent padding (0.625rem vertical, 0.875rem horizontal)
+ * - Smooth transitions for focus states
+ */
+.form-control-design-system,
+.form-group-design-system .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    background-clip: padding-box;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    appearance: none;
+}
+
+.form-control-design-system::placeholder,
+.form-group-design-system .form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+.form-control-design-system:disabled,
+.form-control-design-system[readonly],
+.form-group-design-system .form-control:disabled,
+.form-group-design-system .form-control[readonly] {
+    background-color: var(--bg-subtle);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   FOCUS STATES
+   ======================================== */
+
+/**
+ * Focus state styling
+ * - Primary color border
+ * - Subtle shadow ring for emphasis
+ * - Removes default outline
+ */
+.form-control-design-system:focus,
+.form-group-design-system .form-control:focus {
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    border-color: var(--admin-primary);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ========================================
+   SELECT DROPDOWN STYLES
+   ======================================== */
+
+/**
+ * Select dropdown styling
+ * - Consistent with text inputs
+ * - Custom dropdown arrow
+ */
+.form-select-design-system,
+.form-group-design-system select.form-control,
+.form-group-design-system .form-select {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 2.5rem 0.625rem 0.875rem;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    appearance: none;
+}
+
+.form-select-design-system:focus,
+.form-group-design-system select.form-control:focus,
+.form-group-design-system .form-select:focus {
+    border-color: var(--admin-primary);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-select-design-system:disabled,
+.form-group-design-system select.form-control:disabled,
+.form-group-design-system .form-select:disabled {
+    background-color: var(--bg-subtle);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   TEXTAREA STYLES
+   ======================================== */
+
+/**
+ * Textarea styling
+ * - Consistent with text inputs
+ * - Minimum height for usability
+ * - Resizable vertically only
+ */
+.form-textarea-design-system,
+.form-group-design-system textarea.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-textarea-design-system:focus,
+.form-group-design-system textarea.form-control:focus {
+    border-color: var(--admin-primary);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-textarea-design-system:disabled,
+.form-textarea-design-system[readonly],
+.form-group-design-system textarea.form-control:disabled,
+.form-group-design-system textarea.form-control[readonly] {
+    background-color: var(--bg-subtle);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   CHECKBOX AND RADIO STYLES
+   ======================================== */
+
+/**
+ * Checkbox and radio button styling
+ * - Custom appearance with design system colors
+ * - Proper alignment with labels
+ */
+.form-check-design-system {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    min-height: 1.5rem;
+}
+
+.form-check-design-system:last-child {
+    margin-bottom: 0;
+}
+
+.form-check-design-system .form-check-input {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: 0;
+    margin-right: 0.5rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.form-check-design-system .form-check-input[type="checkbox"] {
+    border-radius: var(--radius-sm);
+}
+
+.form-check-design-system .form-check-input[type="radio"] {
+    border-radius: var(--radius-full);
+}
+
+.form-check-design-system .form-check-input:checked {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+.form-check-design-system .form-check-input:focus {
+    border-color: var(--admin-primary);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-check-design-system .form-check-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-check-design-system .form-check-label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    color: var(--text-primary);
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.form-check-design-system .form-check-input:disabled ~ .form-check-label {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   FORM VALIDATION STATES
+   ======================================== */
+
+/**
+ * Success validation state
+ * - Green border and focus ring
+ * - Success icon indicator
+ */
+.form-control-design-system.is-valid,
+.form-group-design-system .form-control.is-valid,
+.form-select-design-system.is-valid,
+.form-group-design-system .form-select.is-valid,
+.form-textarea-design-system.is-valid,
+.form-group-design-system textarea.form-control.is-valid {
+    border-color: var(--admin-success);
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%2310b981' d='M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem 1rem;
+}
+
+.form-control-design-system.is-valid:focus,
+.form-group-design-system .form-control.is-valid:focus,
+.form-select-design-system.is-valid:focus,
+.form-group-design-system .form-select.is-valid:focus,
+.form-textarea-design-system.is-valid:focus,
+.form-group-design-system textarea.form-control.is-valid:focus {
+    border-color: var(--admin-success);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.valid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--admin-success);
+}
+
+/**
+ * Error validation state
+ * - Red border and focus ring
+ * - Error icon indicator
+ */
+.form-control-design-system.is-invalid,
+.form-group-design-system .form-control.is-invalid,
+.form-select-design-system.is-invalid,
+.form-group-design-system .form-select.is-invalid,
+.form-textarea-design-system.is-invalid,
+.form-group-design-system textarea.form-control.is-invalid {
+    border-color: var(--admin-danger);
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%23ef4444' d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/%3e%3cpath fill='%23ef4444' d='M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem 1rem;
+}
+
+.form-control-design-system.is-invalid:focus,
+.form-group-design-system .form-control.is-invalid:focus,
+.form-select-design-system.is-invalid:focus,
+.form-group-design-system .form-select.is-invalid:focus,
+.form-textarea-design-system.is-invalid:focus,
+.form-group-design-system textarea.form-control.is-invalid:focus {
+    border-color: var(--admin-danger);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.invalid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--admin-danger);
+}
+
+/* ========================================
+   FORM TEXT / HELP TEXT
+   ======================================== */
+
+/**
+ * Form help text styling
+ * - Muted color for secondary information
+ * - Small font size
+ */
+.form-text-design-system,
+.form-group-design-system .form-text {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    line-height: var(--line-height-normal);
+}
+
+/* ========================================
+   INPUT GROUP STYLES
+   ======================================== */
+
+/**
+ * Input group styling for combined inputs with addons
+ * - Seamless connection between elements
+ * - Proper border radius handling
+ */
+.input-group-design-system {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group-design-system > .form-control-design-system,
+.input-group-design-system > .form-select-design-system {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group-design-system > .form-control-design-system:not(:first-child),
+.input-group-design-system > .form-select-design-system:not(:first-child) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group-design-system > .form-control-design-system:not(:last-child),
+.input-group-design-system > .form-select-design-system:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group-text-design-system {
+    display: flex;
+    align-items: center;
+    padding: 0.625rem 0.875rem;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--text-secondary);
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.input-group-design-system > .input-group-text-design-system:not(:first-child) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group-design-system > .input-group-text-design-system:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* ========================================
+   FILE INPUT STYLES
+   ======================================== */
+
+/**
+ * File input styling
+ * - Custom appearance consistent with other inputs
+ * - Clear file selection indicator
+ */
+.form-file-design-system {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.form-file-design-system input[type="file"] {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(2.5rem + 2px);
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.form-file-design-system .form-file-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    height: calc(2.5rem + 2px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-card);
+}
+
+.form-file-design-system .form-file-text {
+    display: block;
+    flex-grow: 1;
+    padding: 0.625rem 0.875rem;
+    overflow: hidden;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--text-muted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-right: 1px solid var(--border-color);
+}
+
+.form-file-design-system .form-file-button {
+    display: block;
+    flex-shrink: 0;
+    padding: 0.625rem 0.875rem;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-normal);
+    color: var(--text-primary);
+    background-color: var(--bg-subtle);
+    border-left: inherit;
+}
+
+.form-file-design-system input[type="file"]:focus ~ .form-file-label {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ========================================
+   FORM SWITCH STYLES
+   ======================================== */
+
+/**
+ * Toggle switch styling
+ * - Modern switch appearance
+ * - Smooth animation
+ */
+.form-switch-design-system {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.form-switch-design-system:last-child {
+    margin-bottom: 0;
+}
+
+.form-switch-design-system .form-switch-input {
+    position: relative;
+    width: 2.5rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    background-color: var(--border-color);
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background-color var(--transition-base);
+    appearance: none;
+    flex-shrink: 0;
+}
+
+.form-switch-design-system .form-switch-input::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-switch-design-system .form-switch-input:checked {
+    background-color: var(--admin-primary);
+}
+
+.form-switch-design-system .form-switch-input:checked::before {
+    transform: translateX(1.25rem);
+}
+
+.form-switch-design-system .form-switch-input:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-switch-design-system .form-switch-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-switch-design-system .form-switch-label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    color: var(--text-primary);
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.form-switch-design-system .form-switch-input:disabled ~ .form-switch-label {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   FORM RANGE SLIDER STYLES
+   ======================================== */
+
+/**
+ * Range slider styling
+ * - Custom track and thumb appearance
+ * - Design system colors
+ */
+.form-range-design-system {
+    width: 100%;
+    height: 1.5rem;
+    padding: 0;
+    background-color: transparent;
+    appearance: none;
+}
+
+.form-range-design-system:focus {
+    outline: 0;
+}
+
+.form-range-design-system::-webkit-slider-track {
+    width: 100%;
+    height: 0.5rem;
+    background-color: var(--border-color);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+
+.form-range-design-system::-webkit-slider-thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: -0.375rem;
+    background-color: var(--admin-primary);
+    border: 2px solid var(--bg-card);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    appearance: none;
+    transition: background-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-range-design-system::-webkit-slider-thumb:hover {
+    background-color: var(--admin-primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.form-range-design-system::-moz-range-track {
+    width: 100%;
+    height: 0.5rem;
+    background-color: var(--border-color);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+
+.form-range-design-system::-moz-range-thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: var(--admin-primary);
+    border: 2px solid var(--bg-card);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-range-design-system::-moz-range-thumb:hover {
+    background-color: var(--admin-primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.form-range-design-system:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-range-design-system:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ========================================
+   BOOTSTRAP FORM OVERRIDES
+   ======================================== */
+
+/**
+ * Override Bootstrap form classes to use design system styles
+ * This ensures consistency when using standard Bootstrap form classes
+ */
+.form-group:not(.form-group-design-system) {
+    margin-bottom: var(--form-field-spacing);
+}
+
+.form-control:not(.form-control-design-system) {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.625rem 0.875rem;
+    font-size: var(--font-size-base);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-control:not(.form-control-design-system):focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-select:not(.form-select-design-system) {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.625rem 2.5rem 0.625rem 0.875rem;
+    font-size: var(--font-size-base);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-select:not(.form-select-design-system):focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ========================================
+   INLINE FORM LAYOUT
+   ======================================== */
+
+/**
+ * Inline form layout
+ * - Horizontal arrangement of form elements
+ * - Proper spacing between elements
+ */
+.form-inline-design-system {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.form-inline-design-system .form-group-design-system {
+    margin-bottom: 0;
+}
+
+.form-inline-design-system .form-control-design-system,
+.form-inline-design-system .form-select-design-system {
+    width: auto;
+}
+
+/* ========================================
+   HORIZONTAL FORM LAYOUT
+   ======================================== */
+
+/**
+ * Horizontal form layout
+ * - Label and input side by side
+ * - Proper alignment
+ */
+.form-horizontal-design-system .form-group-design-system {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--form-field-spacing);
+}
+
+.form-horizontal-design-system .form-label-design-system {
+    flex: 0 0 200px;
+    margin-bottom: 0;
+    margin-right: var(--spacing-lg);
+    text-align: right;
+}
+
+.form-horizontal-design-system .form-control-design-system,
+.form-horizontal-design-system .form-select-design-system,
+.form-horizontal-design-system .form-textarea-design-system {
+    flex: 1;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+/**
+ * Mobile-specific form adjustments
+ * - Larger touch targets
+ * - Stacked horizontal forms
+ */
+@media (max-width: 576px) {
+    .form-control-design-system,
+    .form-select-design-system,
+    .form-textarea-design-system {
+        padding: 0.75rem 1rem;
+        font-size: var(--font-size-md);
+    }
+    
+    .form-horizontal-design-system .form-group-design-system {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .form-horizontal-design-system .form-label-design-system {
+        flex: 1;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        text-align: left;
+    }
+    
+    .form-inline-design-system {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .form-inline-design-system .form-control-design-system,
+    .form-inline-design-system .form-select-design-system {
+        width: 100%;
+    }
+}
+
+/**
+ * Tablet-specific form adjustments
+ * - Standard sizing maintained
+ */
+@media (min-width: 577px) and (max-width: 992px) {
+    .form-horizontal-design-system .form-label-design-system {
+        flex: 0 0 150px;
+    }
+}
+
+/**
+ * Desktop-specific form adjustments
+ * - Standard sizing maintained
+ */
+@media (min-width: 993px) {
+    /* Standard sizing maintained */
+}

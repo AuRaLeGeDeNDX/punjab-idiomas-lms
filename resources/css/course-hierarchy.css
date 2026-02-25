@@ -1,0 +1,286 @@
+/* Course Hierarchy Management Styles */
+
+.course-hierarchy-manager {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Drag and Drop Styles */
+.drag-handle {
+    cursor: grab;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.drag-handle:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Module Styles */
+.module-item {
+    border: 1px solid #dee2e6;
+    transition: all 0.2s ease;
+}
+
+.module-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.module-drag-item.dragging {
+    transform: rotate(5deg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.modules-container.drag-over {
+    background-color: rgba(0, 123, 255, 0.05);
+    border: 2px dashed #007bff;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+/* Subpage Styles */
+.subpage-item {
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+    background-color: #fff;
+}
+
+.subpage-item:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.subpage-drag-item.dragging {
+    transform: rotate(3deg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+}
+
+.subpages-container.drag-over {
+    background-color: rgba(40, 167, 69, 0.05);
+    border: 2px dashed #28a745;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+/* Button Styles */
+.btn-ghost {
+    background: none;
+    border: none;
+    color: #6c757d;
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-ghost:hover {
+    color: #495057;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Badge Styles */
+.badge {
+    font-size: 0.75em;
+}
+
+/* Empty State Styles */
+.text-center.py-5 {
+    color: #6c757d;
+}
+
+.text-center.py-4 {
+    color: #6c757d;
+}
+
+/* Modal Styles */
+.modal-content {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+/* Form Styles */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+
+/* Alert Styles */
+.alert {
+    border: none;
+    border-radius: 8px;
+}
+
+.alert-success {
+    background-color: #d1edff;
+    color: #0c5460;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+}
+
+.spinner-border-sm {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    /* Course hierarchy container: prevent overflow */
+    .course-hierarchy-manager,
+    #course-hierarchy-app {
+        overflow-x: hidden;
+    }
+
+    #course-hierarchy-app .creative-card {
+        overflow: hidden;
+    }
+
+    /* Module accordion header: wrap buttons below title */
+    .accordion-header .d-flex.align-items-center.w-100 {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .accordion-header .accordion-button {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    /* Module action buttons: row under the title */
+    .accordion-header .creative-btn.btn-sm {
+        flex: 0 0 auto;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    /* Subpages header: wrap title and add button */
+    .accordion-body .d-flex.justify-content-between.align-items-center.mb-3 {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    /* Subpage list items: stack vertically */
+    .list-group-item.d-flex.justify-content-between.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    /* Subpage action buttons container: full width, wrap */
+    .list-group-item .d-flex.align-items-center.gap-2 {
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    /* Subpage action buttons: compact */
+    .list-group-item .creative-btn.btn-sm {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+
+    /* Subpage "Edit Content" button: flex grow to fill space */
+    .list-group-item .creative-btn.creative-btn-primary.btn-sm {
+        flex: 1 1 auto;
+    }
+
+    /* Module card header: stack */
+    #course-hierarchy-app .creative-card-header.d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.75rem;
+    }
+
+    /* Module description text: truncate */
+    .accordion-button small.text-muted {
+        display: none;
+    }
+
+    /* Subpage description in list: truncate */
+    .list-group-item small.text-muted {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 0 !important;
+    }
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.module-item,
+.subpage-item {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Focus styles for accessibility */
+.drag-handle:focus,
+.btn:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+
+    .module-item,
+    .subpage-item {
+        border-width: 2px;
+    }
+
+    .drag-handle:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}

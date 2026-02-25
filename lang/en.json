@@ -1,0 +1,18 @@
+{
+    "nav": {
+        "about": "About Us",
+        "courses": "Courses",
+        "dele": "DELE",
+        "contact": "Contact",
+        "login": "Login",
+        "register": "Register",
+        "dashboard": "Dashboard"
+    },
+    "hero": {
+        "title1": "MASTER",
+        "title2": "SPANISH",
+        "description": "Structured teaching and real support for official DELE A1-B2 exams. Your success in Barcelona starts here.",
+        "cta_primary": "ENROLL NOW",
+        "cta_secondary": "MORE INFO"
+    }
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Module Creation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Module Creation Diagnostic Tool</h1>
+    
+    <div class="test-section">
+        <h2>Step 1: Check if React Component is Loaded</h2>
+        <button onclick="checkReactComponent()">Check React Component</button>
+        <div id="react-check-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 2: Check CSRF Token</h2>
+        <button onclick="checkCSRFToken()">Check CSRF Token</button>
+        <div id="csrf-check-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 3: Test API Endpoint</h2>
+        <p>Course ID: <input type="number" id="courseId" placeholder="Enter course ID" value="1"></p>
+        <p>Module Title: <input type="text" id="moduleTitle" placeholder="Enter module title" value="Test Module"></p>
+        <button onclick="testModuleCreation()">Test Module Creation</button>
+        <div id="api-test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 4: Check Browser Console</h2>
+        <p>Open your browser's developer console (F12) and look for any JavaScript errors.</p>
+        <button onclick="triggerConsoleLog()">Trigger Console Log</button>
+    </div>
+
+    <script>
+        function checkReactComponent() {
+            const element = document.getElementById('course-hierarchy-app');
+            const resultDiv = document.getElementById('react-check-result');
+            
+            if (element) {
+                resultDiv.innerHTML = '<p class="success">✓ React component element found!</p>';
+                resultDiv.innerHTML += '<pre>' + JSON.stringify({
+                    courseId: element.dataset.courseId,
+                    csrfToken: element.dataset.csrfToken ? 'Present' : 'Missing',
+                    userRole: element.dataset.userRole
+                }, null, 2) + '</pre>';
+            } else {
+                resultDiv.innerHTML = '<p class="error">✗ React component element NOT found. The component may not be rendering.</p>';
+            }
+        }
+
+        function checkCSRFToken() {
+            const resultDiv = document.getElementById('csrf-check-result');
+            const metaToken = document.querySelector('meta[name="csrf-token"]');
+            const element = document.getElementById('course-hierarchy-app');
+            
+            let html = '';
+            
+            if (metaToken) {
+                html += '<p class="success">✓ CSRF token found in meta tag</p>';
+                html += '<pre>Token: ' + metaToken.content.substring(0, 20) + '...</pre>';
+            } else {
+                html += '<p class="error">✗ CSRF token NOT found in meta tag</p>';
+            }
+            
+            if (element && element.dataset.csrfToken) {
+                html += '<p class="success">✓ CSRF token found in component data</p>';
+            } else {
+                html += '<p class="error">✗ CSRF token NOT found in component data</p>';
+            }
+            
+            resultDiv.innerHTML = html;
+        }
+
+        async function testModuleCreation() {
+            const resultDiv = document.getElementById('api-test-result');
+            const courseId = document.getElementById('courseId').value;
+            const moduleTitle = document.getElementById('moduleTitle').value;
+            
+            if (!courseId || !moduleTitle) {
+                resultDiv.innerHTML = '<p class="error">Please enter both course ID and module title</p>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<p>Testing API endpoint...</p>';
+            
+            try {
+                const metaToken = document.querySelector('meta[name="csrf-token"]');
+                const csrfToken = metaToken ? metaToken.content : '';
+                
+                const response = await fetch(`/api/courses/${courseId}/modules`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: moduleTitle,
+                        description: 'Test module created via diagnostic tool'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = '<p class="success">✓ Module created successfully!</p>';
+                    resultDiv.innerHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    resultDiv.innerHTML = '<p class="error">✗ Failed to create module</p>';
+                    resultDiv.innerHTML += '<pre>Status: ' + response.status + '\n' + JSON.stringify(data, null, 2) + '</pre>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">✗ Error: ' + error.message + '</p>';
+                resultDiv.innerHTML += '<pre>' + error.stack + '</pre>';
+            }
+        }
+
+        function triggerConsoleLog() {
+            console.log('%c[Diagnostic] Console is working!', 'color: green; font-weight: bold; font-size: 16px;');
+            console.log('[Diagnostic] Checking for course-hierarchy-app element:', document.getElementById('course-hierarchy-app'));
+            console.log('[Diagnostic] Checking for React:', typeof React !== 'undefined' ? 'React is loaded' : 'React is NOT loaded');
+            console.log('[Diagnostic] Checking for ReactDOM:', typeof ReactDOM !== 'undefined' ? 'ReactDOM is loaded' : 'ReactDOM is NOT loaded');
+            alert('Check your browser console (F12) for diagnostic information');
+        }
+    </script>
+</body>
+</html>

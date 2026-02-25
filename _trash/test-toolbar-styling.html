@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toolbar Styling Test - Secure PDF Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .test-section {
+            background: #1a1a1a;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+
+        .test-section h2 {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .test-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        #toolbar {
+            background: linear-gradient(180deg, #1f1f1f 0%, #1a1a1a 100%);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #444;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        #toolbar-left, #toolbar-center, #toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toolbar-button {
+            background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+            border: 1px solid #555;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toolbar-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .toolbar-button:hover:not(:disabled)::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .toolbar-button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #4a4a4a 0%, #3d3d3d 100%);
+            border-color: #666;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .toolbar-button:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toolbar-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #2a2a2a;
+            box-shadow: none;
+        }
+
+        #page-input {
+            background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+            border: 1px solid #555;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 60px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #page-input:hover {
+            border-color: #666;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #page-input:focus {
+            outline: none;
+            border-color: #777;
+            box-shadow: 0 0 0 3px rgba(119, 119, 119, 0.2);
+            background: linear-gradient(135deg, #4a4a4a 0%, #3d3d3d 100%);
+        }
+
+        #zoom-select {
+            background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);
+            border: 1px solid #555;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #zoom-select:hover {
+            background: linear-gradient(135deg, #4a4a4a 0%, #3d3d3d 100%);
+            border-color: #666;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #zoom-select:focus {
+            outline: none;
+            border-color: #777;
+            box-shadow: 0 0 0 3px rgba(119, 119, 119, 0.2);
+        }
+
+        #page-info {
+            color: #ccc;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .document-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        #loading-indicator {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 20, 0.95) 100%);
+            padding: 40px 60px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: inline-block;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loading-indicator > div:last-child {
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .demo-canvas {
+            background: #34495e;
+            width: 400px;
+            height: 300px;
+            margin: 20px auto;
+            border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .demo-canvas.rendering {
+            opacity: 0.6;
+            transform: scale(0.98);
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            color: #ccc;
+            border-bottom: 1px solid #333;
+        }
+
+        .feature-list li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .code-block {
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            color: #58a6ff;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 30px; font-size: 28px;">
+        🎨 Secure PDF Viewer - Modern Toolbar Styling Test
+    </h1>
+
+    <!-- Test Section 1: Toolbar Demo -->
+    <div class="test-section">
+        <h2>1. Modern Toolbar with Enhanced Styling</h2>
+        <p>Hover over buttons to see ripple effects. Click to see scale feedback.</p>
+        
+        <div id="toolbar">
+            <div id="toolbar-left">
+                <span class="document-title">Sample Document.pdf</span>
+            </div>
+            
+            <div id="toolbar-center">
+                <button class="toolbar-button" id="prev-page">← Previous</button>
+                <span id="page-info">
+                    Page 
+                    <input type="number" id="page-input" min="1" value="1" max="10" />
+                    of <span id="total-pages">10</span>
+                </span>
+                <button class="toolbar-button" id="next-page">Next →</button>
+            </div>
+            
+            <div id="toolbar-right">
+                <select id="zoom-select" class="toolbar-button">
+                    <option value="0.5">50%</option>
+                    <option value="0.75">75%</option>
+                    <option value="1" selected>100%</option>
+                    <option value="1.25">125%</option>
+                    <option value="1.5">150%</option>
+                    <option value="2">200%</option>
+                    <option value="fit">Fit Width</option>
+                </select>
+                <button class="toolbar-button" id="zoom-in">Zoom In</button>
+                <button class="toolbar-button" id="zoom-out">Zoom Out</button>
+            </div>
+        </div>
+
+        <div class="test-controls">
+            <button class="toolbar-button" onclick="toggleDisabled()">Toggle Disabled State</button>
+            <button class="toolbar-button" onclick="simulateRendering()">Simulate Page Transition</button>
+        </div>
+    </div>
+
+    <!-- Test Section 2: Loading Indicator -->
+    <div class="test-section">
+        <h2>2. Enhanced Loading Indicator</h2>
+        <p>Modern spinner with backdrop blur and glow effects.</p>
+        
+        <div style="text-align: center; padding: 40px;">
+            <div id="loading-indicator">
+                <div class="spinner"></div>
+                <div>Loading PDF...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Section 3: Canvas Transitions -->
+    <div class="test-section">
+        <h2>3. Smooth Canvas Transitions</h2>
+        <p>Click "Simulate Rendering" to see smooth opacity and scale transitions.</p>
+        
+        <div class="demo-canvas" id="demo-canvas">
+            PDF Canvas Demo
+        </div>
+    </div>
+
+    <!-- Test Section 4: Features List -->
+    <div class="test-section">
+        <h2>4. Implemented Features</h2>
+        <ul class="feature-list">
+            <li>Gradient backgrounds on all interactive elements</li>
+            <li>Ripple hover effects on buttons</li>
+            <li>Smooth cubic-bezier transitions (0.3s)</li>
+            <li>Scale feedback on button clicks</li>
+            <li>Enhanced box shadows for depth</li>
+            <li>Focus glow effects on inputs</li>
+            <li>Modern loading indicator with backdrop blur</li>
+            <li>Smooth zoom transitions with visual feedback</li>
+            <li>Professional disabled states</li>
+            <li>GPU-accelerated animations</li>
+        </ul>
+    </div>
+
+    <!-- Test Section 5: CSS Details -->
+    <div class="test-section">
+        <h2>5. Key CSS Enhancements</h2>
+        
+        <h3 style="color: #fff; margin: 20px 0 10px;">Button Gradient:</h3>
+        <div class="code-block">
+            <code>background: linear-gradient(135deg, #3a3a3a 0%, #2d2d2d 100%);</code>
+        </div>
+
+        <h3 style="color: #fff; margin: 20px 0 10px;">Smooth Transitions:</h3>
+        <div class="code-block">
+            <code>transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);</code>
+        </div>
+
+        <h3 style="color: #fff; margin: 20px 0 10px;">Ripple Effect:</h3>
+        <div class="code-block">
+            <code>.toolbar-button::before {<br>
+                &nbsp;&nbsp;background: rgba(255, 255, 255, 0.1);<br>
+                &nbsp;&nbsp;transition: width 0.6s, height 0.6s;<br>
+            }</code>
+        </div>
+
+        <h3 style="color: #fff; margin: 20px 0 10px;">Focus Glow:</h3>
+        <div class="code-block">
+            <code>box-shadow: 0 0 0 3px rgba(119, 119, 119, 0.2);</code>
+        </div>
+    </div>
+
+    <script>
+        let isDisabled = false;
+        let currentPage = 1;
+
+        // Add click feedback to all buttons
+        document.querySelectorAll('.toolbar-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.disabled) {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                }
+            });
+        });
+
+        // Navigation functionality
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                document.getElementById('page-input').value = currentPage;
+                updateButtons();
+            }
+        });
+
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (currentPage < 10) {
+                currentPage++;
+                document.getElementById('page-input').value = currentPage;
+                updateButtons();
+            }
+        });
+
+        document.getElementById('page-input').addEventListener('change', (e) => {
+            currentPage = Math.max(1, Math.min(10, parseInt(e.target.value) || 1));
+            e.target.value = currentPage;
+            updateButtons();
+        });
+
+        function updateButtons() {
+            document.getElementById('prev-page').disabled = currentPage <= 1;
+            document.getElementById('next-page').disabled = currentPage >= 10;
+        }
+
+        function toggleDisabled() {
+            isDisabled = !isDisabled;
+            document.querySelectorAll('.toolbar-button').forEach(button => {
+                if (button.textContent !== 'Toggle Disabled State' && 
+                    button.textContent !== 'Simulate Page Transition') {
+                    button.disabled = isDisabled;
+                }
+            });
+        }
+
+        function simulateRendering() {
+            const canvas = document.getElementById('demo-canvas');
+            canvas.classList.add('rendering');
+            setTimeout(() => {
+                canvas.classList.remove('rendering');
+            }, 400);
+        }
+
+        // Initial button state
+        updateButtons();
+
+        // Zoom controls
+        document.getElementById('zoom-in').addEventListener('click', () => {
+            const select = document.getElementById('zoom-select');
+            const currentIndex = select.selectedIndex;
+            if (currentIndex < select.options.length - 1) {
+                select.selectedIndex = currentIndex + 1;
+            }
+        });
+
+        document.getElementById('zoom-out').addEventListener('click', () => {
+            const select = document.getElementById('zoom-select');
+            const currentIndex = select.selectedIndex;
+            if (currentIndex > 0) {
+                select.selectedIndex = currentIndex - 1;
+            }
+        });
+    </script>
+</body>
+</html>

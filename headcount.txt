@@ -1,0 +1,11 @@
+﻿about.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=0,endforeach=0
+faq.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=1,endforeach=1
+features.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=1,endforeach=1
+footer.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=0,endforeach=0
+hero.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=0,endforeach=0
+map.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=0,endforeach=0
+navbar.blade.php: if=9,endif=9,auth=1,endauth=1,foreach=0,endforeach=0
+stats.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=0,endforeach=0
+testimonials.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=1,endforeach=1
+landing.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=0,endforeach=0
+landing.blade.php: if=0,endif=0,auth=0,endauth=0,foreach=0,endforeach=0

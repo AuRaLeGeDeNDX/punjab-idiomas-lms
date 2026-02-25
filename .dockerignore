@@ -1,0 +1,17 @@
+vendor
+node_modules
+.git
+.env
+storage/*.key
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*.php
+storage/logs/*.log
+public/hot
+public/storage
+tests
+phpunit.xml
+.phpunit.result.cache
+docker
+docker-compose.yml
+.dockerignore

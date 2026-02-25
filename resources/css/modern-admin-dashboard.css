@@ -1,0 +1,343 @@
+/**
+ * MODERN ADMIN DASHBOARD
+ * BOLD, DRAMATIC, IMMEDIATELY VISIBLE
+ */
+
+/* ========================================
+   ANIMATED HERO SECTION
+   ======================================== */
+.modern-dashboard-hero {
+    background: linear-gradient(270deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 800% 800%;
+    animation: gradient-shift 15s ease infinite;
+    padding: 3rem 2rem;
+    border-radius: var(--radius-xl);
+    margin-bottom: 2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-dashboard-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+.modern-dashboard-hero h1 {
+    font-size: 3.5rem;
+    font-weight: var(--font-weight-black);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.modern-dashboard-hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   STAT CARDS GRID
+   ======================================== */
+.modern-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Individual stat card animations */
+.modern-stats-grid .modern-stat-card:nth-child(1) {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.modern-stats-grid .modern-stat-card:nth-child(2) {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.modern-stats-grid .modern-stat-card:nth-child(3) {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.modern-stats-grid .modern-stat-card:nth-child(4) {
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+/* ========================================
+   GLASSMORPHISM CONTENT CARDS
+   ======================================== */
+.modern-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.modern-activity-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--glass-shadow);
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+}
+
+.modern-activity-card h3 {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 1.5rem;
+    background: var(--gradient-purple-blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modern-sidebar-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.modern-quick-actions {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--glass-shadow);
+    animation: fadeInUp 0.6s ease-out 0.6s both;
+}
+
+.modern-quick-actions h3 {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 1.5rem;
+    background: var(--gradient-orange-pink);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modern-quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.75rem;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.modern-quick-action-btn:hover {
+    transform: translateX(8px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.modern-quick-action-btn i {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--gradient-purple-blue);
+    color: white;
+}
+
+.modern-quick-action-btn:nth-child(2) i {
+    background: var(--gradient-green-teal);
+}
+
+.modern-quick-action-btn:nth-child(3) i {
+    background: var(--gradient-orange-pink);
+}
+
+.modern-quick-action-btn:nth-child(4) i {
+    background: var(--gradient-blue-cyan);
+}
+
+.modern-quick-action-btn:nth-child(5) i {
+    background: var(--gradient-yellow-orange);
+}
+
+.modern-quick-action-btn:nth-child(6) i {
+    background: var(--gradient-pink-purple);
+}
+
+/* ========================================
+   MODERN ACTIVITY LIST
+   ======================================== */
+.modern-activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modern-activity-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+}
+
+.modern-activity-item:hover {
+    transform: translateX(8px);
+    box-shadow: var(--shadow-md);
+}
+
+.modern-activity-item .icon {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--gradient-purple-blue);
+    color: white;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.modern-activity-item .content {
+    flex: 1;
+}
+
+.modern-activity-item .title {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 0.25rem;
+}
+
+.modern-activity-item .meta {
+    font-size: 0.875rem;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* ========================================
+   MODERN ALERTS CARD
+   ======================================== */
+.modern-alerts-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--glass-shadow);
+    animation: fadeInUp 0.6s ease-out 0.7s both;
+}
+
+.modern-alerts-card h3 {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 1.5rem;
+    background: var(--gradient-yellow-orange);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modern-alert-item {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid;
+    background: white;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+}
+
+.modern-alert-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+}
+
+.modern-alert-item.alert-warning {
+    border-left-color: #fee140;
+}
+
+.modern-alert-item.alert-danger {
+    border-left-color: #f5576c;
+}
+
+.modern-alert-item.alert-info {
+    border-left-color: #4facfe;
+}
+
+.modern-alert-item .alert-title {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 0.25rem;
+}
+
+.modern-alert-item .alert-message {
+    font-size: 0.875rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.modern-alert-item .alert-time {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: 0.5rem;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 1024px) {
+    .modern-content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modern-dashboard-hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .modern-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .modern-dashboard-hero {
+        padding: 2rem 1.5rem;
+    }
+    
+    .modern-dashboard-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .modern-dashboard-hero p {
+        font-size: 1rem;
+    }
+    
+    .modern-quick-action-btn {
+        padding: 0.875rem 1.25rem;
+    }
+}

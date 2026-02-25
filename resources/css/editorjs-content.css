@@ -1,0 +1,458 @@
+/* Editor.js Content Rendering Styles */
+
+.editorjs-content {
+    line-height: 1.7;
+    font-size: 1.05rem;
+    color: #333;
+}
+
+/* Headers */
+.editorjs-content h1,
+.editorjs-content h2,
+.editorjs-content h3,
+.editorjs-content h4,
+.editorjs-content h5,
+.editorjs-content h6 {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    color: #1a1a1a;
+}
+
+.editorjs-content h1 {
+    font-size: 2.25rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+}
+
+.editorjs-content h2 {
+    font-size: 1.875rem;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 0.4rem;
+}
+
+.editorjs-content h3 {
+    font-size: 1.5rem;
+}
+
+.editorjs-content h4 {
+    font-size: 1.25rem;
+}
+
+.editorjs-content h5 {
+    font-size: 1.125rem;
+}
+
+.editorjs-content h6 {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+/* Paragraphs */
+.editorjs-content p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.editorjs-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Lists */
+.editorjs-content ul,
+.editorjs-content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.editorjs-content ul {
+    list-style-type: disc;
+}
+
+.editorjs-content ol {
+    list-style-type: decimal;
+}
+
+.editorjs-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.editorjs-content li:last-child {
+    margin-bottom: 0;
+}
+
+/* Nested lists */
+.editorjs-content ul ul,
+.editorjs-content ol ol,
+.editorjs-content ul ol,
+.editorjs-content ol ul {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Blockquotes */
+.editorjs-content blockquote {
+    border-left: 4px solid #007bff;
+    background-color: #f8f9fa;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #495057;
+}
+
+.editorjs-content blockquote p {
+    margin-bottom: 0.5rem;
+}
+
+.editorjs-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.editorjs-content blockquote cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-style: normal;
+}
+
+.editorjs-content blockquote cite::before {
+    content: "— ";
+}
+
+/* Code blocks */
+.editorjs-content pre {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+.editorjs-content pre code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #212529;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+}
+
+/* Inline code */
+.editorjs-content code {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.375rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    color: #e83e8c;
+}
+
+/* Inline formatting */
+.editorjs-content strong,
+.editorjs-content b {
+    font-weight: 600;
+}
+
+.editorjs-content em,
+.editorjs-content i {
+    font-style: italic;
+}
+
+.editorjs-content u {
+    text-decoration: underline;
+}
+
+.editorjs-content mark {
+    background-color: #fff3cd;
+    padding: 0.125rem 0.25rem;
+}
+
+/* Links */
+.editorjs-content a {
+    color: #007bff;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.editorjs-content a:hover {
+    border-bottom-color: #007bff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .editorjs-content {
+        font-size: 1rem;
+    }
+    
+    .editorjs-content h1 {
+        font-size: 1.875rem;
+    }
+    
+    .editorjs-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .editorjs-content h3 {
+        font-size: 1.25rem;
+    }
+    
+    .editorjs-content h4 {
+        font-size: 1.125rem;
+    }
+    
+    .editorjs-content ul,
+    .editorjs-content ol {
+        padding-left: 1.5rem;
+    }
+    
+    .editorjs-content blockquote {
+        padding: 0.75rem 1rem;
+        margin: 1rem 0;
+    }
+    
+    .editorjs-content pre {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .editorjs-content {
+        font-size: 12pt;
+        line-height: 1.6;
+    }
+    
+    .editorjs-content h1,
+    .editorjs-content h2,
+    .editorjs-content h3,
+    .editorjs-content h4,
+    .editorjs-content h5,
+    .editorjs-content h6 {
+        page-break-after: avoid;
+    }
+    
+    .editorjs-content pre,
+    .editorjs-content blockquote {
+        page-break-inside: avoid;
+    }
+}
+
+/* High-Quality Image Display Styles */
+.content-image-display {
+    /* High-quality rendering - optimized for clarity */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: auto;
+    -ms-interpolation-mode: bicubic;
+    
+    /* Smooth scaling with GPU acceleration */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+    
+    /* Anti-aliasing for crisp text and edges */
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    
+    /* Size constraints - prevent oversized images */
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 120px !important;
+    
+    /* Visual styling - enhanced shadows */
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    
+    /* Smooth transitions */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Prevent dragging artifacts */
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    pointer-events: auto;
+    
+    /* Display properties */
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+    object-position: center;
+    
+    /* Background for transparent images */
+    background-color: #ffffff;
+    background-image: 
+        linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
+        linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
+        linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Hover effect for images */
+.content-image-display:hover {
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2), 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+/* Image container */
+.image-container {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 1.5rem auto;
+    transition: all 0.4s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(102, 126, 234, 0.08);
+    max-width: 100% !important;
+    max-height: 160px !important;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container:hover {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.12);
+    border-color: rgba(102, 126, 234, 0.15);
+}
+
+/* Loading state for images */
+.content-image-display[loading="lazy"] {
+    background: linear-gradient(90deg, #f8f9fa 25%, #e9ecef 50%, #f8f9fa 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite ease-in-out;
+    min-height: 200px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Fade in animation when image loads */
+.content-image-display {
+    animation: fadeInImage 0.6s ease-in-out;
+}
+
+@keyframes fadeInImage {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive image adjustments */
+@media (max-width: 768px) {
+    .content-image-display {
+        max-width: 100% !important;
+        max-height: 100px !important;
+        border-radius: 10px;
+    }
+    
+    .image-container {
+        padding: 12px;
+        border-radius: 12px;
+        max-height: 140px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .content-image-display {
+        max-width: 100% !important;
+        max-height: 90px !important;
+        border-radius: 8px;
+    }
+    
+    .image-container {
+        padding: 8px;
+        border-radius: 10px;
+        max-height: 130px !important;
+    }
+}
+
+/* Content image wrapper - ensure proper containment */
+.content-image {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.content-image .image-container {
+    max-width: 100%;
+}
+
+/* Print optimization */
+@media print {
+    .content-image-display {
+        max-height: none;
+        page-break-inside: avoid;
+        box-shadow: none;
+    }
+    
+    .image-container {
+        background: none;
+        padding: 0;
+    }
+}
+
+/* High DPI display optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .content-image-display {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: auto;
+        -ms-interpolation-mode: bicubic;
+    }
+}
+
+/* Additional quality improvements for modern browsers */
+@supports (image-rendering: -webkit-optimize-contrast) {
+    .content-image-display {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Ensure images are crisp on all displays */
+.content-image {
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Alt text styling when image fails to load */
+.content-image-display[alt]:after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 12px;
+    content: "📷 " attr(alt);
+    padding: 20px;
+    text-align: center;
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.5;
+}

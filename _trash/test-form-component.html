@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Component Test - Design System</title>
+    
+    <!-- Bootstrap CSS (for base styles) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="resources/css/design-system.css">
+    <link rel="stylesheet" href="resources/css/components/forms.css">
+    
+    <style>
+        body {
+            background-color: #f9fafb;
+            padding: 2rem 0;
+        }
+        .test-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .test-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .test-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #4f46e5;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 style="font-size: 2rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem;">
+                Form Component Test
+            </h1>
+            <p style="color: #6b7280; font-size: 1rem;">
+                Testing form component styles from the design system
+            </p>
+        </div>
+
+        <!-- Text Inputs Section -->
+        <div class="test-section">
+            <h2>Text Inputs</h2>
+            
+            <h3>Standard Text Input</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Email Address</label>
+                <input type="email" class="form-control-design-system" placeholder="Enter your email">
+                <div class="form-text-design-system">We'll never share your email with anyone else.</div>
+            </div>
+            
+            <h3>Required Field</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system required">Username</label>
+                <input type="text" class="form-control-design-system" placeholder="Enter username">
+            </div>
+            
+            <h3>Disabled Input</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Disabled Field</label>
+                <input type="text" class="form-control-design-system" value="This field is disabled" disabled>
+            </div>
+            
+            <h3>Readonly Input</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Readonly Field</label>
+                <input type="text" class="form-control-design-system" value="This field is readonly" readonly>
+            </div>
+        </div>
+
+        <!-- Validation States Section -->
+        <div class="test-section">
+            <h2>Validation States</h2>
+            
+            <div class="test-grid">
+                <div>
+                    <h3>Valid Input</h3>
+                    <div class="form-group-design-system">
+                        <label class="form-label-design-system">Valid Email</label>
+                        <input type="email" class="form-control-design-system is-valid" value="user@example.com">
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Invalid Input</h3>
+                    <div class="form-group-design-system">
+                        <label class="form-label-design-system">Invalid Email</label>
+                        <input type="email" class="form-control-design-system is-invalid" value="invalid-email">
+                        <div class="invalid-feedback">Please provide a valid email address.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Select Dropdowns Section -->
+        <div class="test-section">
+            <h2>Select Dropdowns</h2>
+            
+            <div class="test-grid">
+                <div>
+                    <h3>Standard Select</h3>
+                    <div class="form-group-design-system">
+                        <label class="form-label-design-system">Choose an option</label>
+                        <select class="form-select-design-system">
+                            <option selected>Select one...</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Disabled Select</h3>
+                    <div class="form-group-design-system">
+                        <label class="form-label-design-system">Disabled Select</label>
+                        <select class="form-select-design-system" disabled>
+                            <option selected>Cannot select</option>
+                            <option value="1">Option 1</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Textarea Section -->
+        <div class="test-section">
+            <h2>Textarea</h2>
+            
+            <h3>Standard Textarea</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Message</label>
+                <textarea class="form-textarea-design-system" placeholder="Enter your message here..."></textarea>
+                <div class="form-text-design-system">Maximum 500 characters.</div>
+            </div>
+            
+            <h3>Textarea with Validation</h3>
+            <div class="test-grid">
+                <div>
+                    <div class="form-group-design-system">
+                        <label class="form-label-design-system">Valid Message</label>
+                        <textarea class="form-textarea-design-system is-valid">This is a valid message.</textarea>
+                        <div class="valid-feedback">Message looks good!</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group-design-system">
+                        <label class="form-label-design-system">Invalid Message</label>
+                        <textarea class="form-textarea-design-system is-invalid"></textarea>
+                        <div class="invalid-feedback">Message is required.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkboxes and Radios Section -->
+        <div class="test-section">
+            <h2>Checkboxes and Radio Buttons</h2>
+            
+            <div class="test-grid">
+                <div>
+                    <h3>Checkboxes</h3>
+                    <div class="form-check-design-system">
+                        <input class="form-check-input" type="checkbox" id="check1" checked>
+                        <label class="form-check-label" for="check1">
+                            Option 1 (checked)
+                        </label>
+                    </div>
+                    <div class="form-check-design-system">
+                        <input class="form-check-input" type="checkbox" id="check2">
+                        <label class="form-check-label" for="check2">
+                            Option 2
+                        </label>
+                    </div>
+                    <div class="form-check-design-system">
+                        <input class="form-check-input" type="checkbox" id="check3" disabled>
+                        <label class="form-check-label" for="check3">
+                            Option 3 (disabled)
+                        </label>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Radio Buttons</h3>
+                    <div class="form-check-design-system">
+                        <input class="form-check-input" type="radio" name="radio" id="radio1" checked>
+                        <label class="form-check-label" for="radio1">
+                            Option 1 (selected)
+                        </label>
+                    </div>
+                    <div class="form-check-design-system">
+                        <input class="form-check-input" type="radio" name="radio" id="radio2">
+                        <label class="form-check-label" for="radio2">
+                            Option 2
+                        </label>
+                    </div>
+                    <div class="form-check-design-system">
+                        <input class="form-check-input" type="radio" name="radio" id="radio3" disabled>
+                        <label class="form-check-label" for="radio3">
+                            Option 3 (disabled)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toggle Switches Section -->
+        <div class="test-section">
+            <h2>Toggle Switches</h2>
+            
+            <div class="test-grid">
+                <div>
+                    <h3>Standard Switches</h3>
+                    <div class="form-switch-design-system">
+                        <input class="form-switch-input" type="checkbox" id="switch1" checked>
+                        <label class="form-switch-label" for="switch1">
+                            Enable notifications (on)
+                        </label>
+                    </div>
+                    <div class="form-switch-design-system">
+                        <input class="form-switch-input" type="checkbox" id="switch2">
+                        <label class="form-switch-label" for="switch2">
+                            Enable dark mode (off)
+                        </label>
+                    </div>
+                    <div class="form-switch-design-system">
+                        <input class="form-switch-input" type="checkbox" id="switch3" disabled>
+                        <label class="form-switch-label" for="switch3">
+                            Disabled switch
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Groups Section -->
+        <div class="test-section">
+            <h2>Input Groups</h2>
+            
+            <h3>Input with Prefix</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Website URL</label>
+                <div class="input-group-design-system">
+                    <span class="input-group-text-design-system">https://</span>
+                    <input type="text" class="form-control-design-system" placeholder="www.example.com">
+                </div>
+            </div>
+            
+            <h3>Input with Suffix</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Email</label>
+                <div class="input-group-design-system">
+                    <input type="text" class="form-control-design-system" placeholder="username">
+                    <span class="input-group-text-design-system">@example.com</span>
+                </div>
+            </div>
+            
+            <h3>Input with Both</h3>
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Price</label>
+                <div class="input-group-design-system">
+                    <span class="input-group-text-design-system">$</span>
+                    <input type="text" class="form-control-design-system" placeholder="0.00">
+                    <span class="input-group-text-design-system">.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Range Slider Section -->
+        <div class="test-section">
+            <h2>Range Slider</h2>
+            
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Volume Level</label>
+                <input type="range" class="form-range-design-system" min="0" max="100" value="50">
+                <div class="form-text-design-system">Adjust the volume from 0 to 100.</div>
+            </div>
+        </div>
+
+        <!-- Form Layouts Section -->
+        <div class="test-section">
+            <h2>Form Layouts</h2>
+            
+            <h3>Inline Form</h3>
+            <form class="form-inline-design-system">
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Name</label>
+                    <input type="text" class="form-control-design-system" placeholder="Enter name">
+                </div>
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Email</label>
+                    <input type="email" class="form-control-design-system" placeholder="Enter email">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            
+            <h3>Horizontal Form</h3>
+            <form class="form-horizontal-design-system">
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Full Name</label>
+                    <input type="text" class="form-control-design-system" placeholder="Enter full name">
+                </div>
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Email Address</label>
+                    <input type="email" class="form-control-design-system" placeholder="Enter email">
+                </div>
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Message</label>
+                    <textarea class="form-textarea-design-system" placeholder="Enter message"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Complete Form Example -->
+        <div class="test-section">
+            <h2>Complete Form Example</h2>
+            
+            <form>
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system required">Full Name</label>
+                    <input type="text" class="form-control-design-system" placeholder="John Doe">
+                </div>
+                
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system required">Email Address</label>
+                    <input type="email" class="form-control-design-system" placeholder="john@example.com">
+                    <div class="form-text-design-system">We'll never share your email with anyone else.</div>
+                </div>
+                
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system required">Password</label>
+                    <input type="password" class="form-control-design-system" placeholder="Enter password">
+                </div>
+                
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Country</label>
+                    <select class="form-select-design-system">
+                        <option selected>Choose...</option>
+                        <option value="us">United States</option>
+                        <option value="ca">Canada</option>
+                        <option value="uk">United Kingdom</option>
+                    </select>
+                </div>
+                
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Bio</label>
+                    <textarea class="form-textarea-design-system" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                
+                <div class="form-check-design-system">
+                    <input class="form-check-input" type="checkbox" id="terms">
+                    <label class="form-check-label" for="terms">
+                        I agree to the terms and conditions
+                    </label>
+                </div>
+                
+                <div class="form-switch-design-system">
+                    <input class="form-switch-input" type="checkbox" id="newsletter" checked>
+                    <label class="form-switch-label" for="newsletter">
+                        Subscribe to newsletter
+                    </label>
+                </div>
+                
+                <div style="margin-top: 1.5rem;">
+                    <button type="submit" class="btn btn-primary" style="margin-right: 0.5rem;">Submit Form</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Focus State Testing -->
+        <div class="test-section">
+            <h2>Focus State Testing</h2>
+            <p style="color: #6b7280; margin-bottom: 1rem;">
+                Click on any input field to see the focus state with primary color border and subtle shadow ring.
+            </p>
+            
+            <div class="test-grid">
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Text Input Focus</label>
+                    <input type="text" class="form-control-design-system" placeholder="Click to focus">
+                </div>
+                
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Select Focus</label>
+                    <select class="form-select-design-system">
+                        <option>Click to focus</option>
+                    </select>
+                </div>
+                
+                <div class="form-group-design-system">
+                    <label class="form-label-design-system">Textarea Focus</label>
+                    <textarea class="form-textarea-design-system" placeholder="Click to focus"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spacing Consistency Test -->
+        <div class="test-section">
+            <h2>Spacing Consistency Test</h2>
+            <p style="color: #6b7280; margin-bottom: 1rem;">
+                All form fields should have consistent 1rem spacing between them (Requirements 3.4).
+            </p>
+            
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Field 1</label>
+                <input type="text" class="form-control-design-system" placeholder="First field">
+            </div>
+            
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Field 2</label>
+                <input type="text" class="form-control-design-system" placeholder="Second field">
+            </div>
+            
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Field 3</label>
+                <input type="text" class="form-control-design-system" placeholder="Third field">
+            </div>
+            
+            <div class="form-group-design-system">
+                <label class="form-label-design-system">Field 4</label>
+                <input type="text" class="form-control-design-system" placeholder="Fourth field">
+            </div>
+        </div>
+
+        <div class="text-center mt-5" style="padding: 2rem; background: #f9fafb; border-radius: 0.75rem;">
+            <p style="color: #6b7280; margin: 0;">
+                <strong>Test Complete!</strong> All form components are styled according to the design system standards.
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional, for interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Input Loop Fix Test</title>
+    <style>
+        .file-drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            margin: 20px;
+        }
+        
+        .file-input-hidden {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .file-drop-zone:hover {
+            border-color: #007bff;
+            background-color: #f0f8ff;
+        }
+        
+        .test-results {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Input Loop Fix Test</h1>
+    
+    <div class="test-results">
+        <h3>Test Results:</h3>
+        <div id="test-log"></div>
+    </div>
+    
+    <h2>BEFORE FIX (Problematic Version):</h2>
+    <div class="file-drop-zone" onclick="document.getElementById('block-file-before').click()">
+        <input type="file" class="file-input-hidden" id="block-file-before" name="file">
+        <div>
+            <i>📁</i><br>
+            Click to select a file (BEFORE FIX - May cause loop)
+        </div>
+    </div>
+    
+    <h2>AFTER FIX (Fixed Version):</h2>
+    <div class="file-drop-zone" onclick="document.getElementById('block-file-after').click()">
+        <input type="file" class="file-input-hidden" id="block-file-after" name="file" onclick="event.stopPropagation()">
+        <div>
+            <i>📁</i><br>
+            Click to select a file (AFTER FIX - Should work correctly)
+        </div>
+    </div>
+    
+    <script>
+        let clickCount = 0;
+        const testLog = document.getElementById('test-log');
+        
+        function logEvent(message) {
+            clickCount++;
+            const timestamp = new Date().toLocaleTimeString();
+            testLog.innerHTML += `<div>${clickCount}. [${timestamp}] ${message}</div>`;
+            console.log(`${clickCount}. [${timestamp}] ${message}`);
+        }
+        
+        // Monitor file input changes
+        document.getElementById('block-file-before').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                logEvent(`BEFORE FIX: File selected - ${e.target.files[0].name}`);
+            }
+        });
+        
+        document.getElementById('block-file-after').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                logEvent(`AFTER FIX: File selected - ${e.target.files[0].name}`);
+            }
+        });
+        
+        // Monitor clicks on drop zones
+        document.querySelector('.file-drop-zone:first-of-type').addEventListener('click', function() {
+            logEvent('BEFORE FIX: Drop zone clicked');
+        });
+        
+        document.querySelector('.file-drop-zone:last-of-type').addEventListener('click', function() {
+            logEvent('AFTER FIX: Drop zone clicked');
+        });
+        
+        // Monitor file input clicks
+        document.getElementById('block-file-before').addEventListener('click', function() {
+            logEvent('BEFORE FIX: File input clicked directly');
+        });
+        
+        document.getElementById('block-file-after').addEventListener('click', function() {
+            logEvent('AFTER FIX: File input clicked directly (with stopPropagation)');
+        });
+        
+        logEvent('Test page loaded - Try selecting files with both versions');
+    </script>
+</body>
+</html>

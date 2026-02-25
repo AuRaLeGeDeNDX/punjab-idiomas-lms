@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Secure Video Playback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .video-container {
+            margin: 30px 0;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin: 20px 0;
+        }
+        .success {
+            background: #e8f5e9;
+            border-left-color: #4CAF50;
+        }
+        .error {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎥 Secure Video Streaming Test</h1>
+        
+        <div class="info">
+            <strong>Test Instructions:</strong>
+            <ol>
+                <li>Make sure you're logged in to the LMS</li>
+                <li>Make sure you're enrolled in the course (or are the teacher/admin)</li>
+                <li>Click "Generate Signed URL" to get a fresh URL</li>
+                <li>The video should load and play automatically</li>
+                <li>Test seeking/scrubbing by clicking different parts of the timeline</li>
+            </ol>
+        </div>
+
+        <div class="controls">
+            <button onclick="generateSignedUrl()">🔄 Generate Signed URL</button>
+            <button onclick="testVideoLoad()">▶️ Test Video Load</button>
+            <button onclick="checkVideoStatus()">📊 Check Status</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="video-container">
+            <video id="testVideo" controls controlsList="nodownload" oncontextmenu="return false;">
+                <source id="videoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="info">
+            <strong>Current Video URL:</strong><br>
+            <code id="currentUrl">No URL generated yet</code>
+        </div>
+
+        <div class="info">
+            <strong>Video Details:</strong>
+            <ul>
+                <li>Content ID: <code>37</code></li>
+                <li>Title: <code>v,hvhsrf</code></li>
+                <li>Storage Disk: <code>protected</code></li>
+                <li>File Path: <code>content_blocks/video/2026/01/23/...</code></li>
+            </ul>
+        </div>
+
+        <div id="logs" style="margin-top: 30px;">
+            <h3>Event Log:</h3>
+            <div id="logContent" style="background: #f5f5f5; padding: 15px; border-radius: 4px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const contentId = 37;
+        const baseUrl = 'http://127.0.0.1:8000';
+        let currentSignedUrl = null;
+
+        function log(message, type = 'info') {
+            const logContent = document.getElementById('logContent');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'red' : type === 'success' ? 'green' : 'blue';
+            logContent.innerHTML += `<div style="color: ${color};">[${timestamp}] ${message}</div>`;
+            logContent.scrollTop = logContent.scrollHeight;
+        }
+
+        async function generateSignedUrl() {
+            log('Generating signed URL for content ID ' + contentId + '...');
+            
+            try {
+                // In a real scenario, you'd call your Laravel backend to generate the signed URL
+                // For now, we'll construct it manually (you need to be logged in)
+                const response = await fetch(`${baseUrl}/api/content/${contentId}/signed-url`, {
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to generate signed URL: ' + response.statusText);
+                }
+
+                const data = await response.json();
+                currentSignedUrl = data.url;
+                
+                document.getElementById('currentUrl').textContent = currentSignedUrl;
+                document.getElementById('videoSource').src = currentSignedUrl;
+                document.getElementById('testVideo').load();
+                
+                log('✅ Signed URL generated successfully', 'success');
+                log('URL: ' + currentSignedUrl);
+                
+                showStatus('Signed URL generated! Video should load now.', 'success');
+            } catch (error) {
+                log('❌ Error: ' + error.message, 'error');
+                showStatus('Error generating signed URL. Make sure you\'re logged in!', 'error');
+                
+                // Fallback: Try to construct URL manually
+                log('Attempting fallback URL construction...');
+                const fallbackUrl = `${baseUrl}/secure/video/${contentId}`;
+                log('Fallback URL: ' + fallbackUrl);
+                log('⚠️ Note: This URL needs a valid signature. Please generate it from the Laravel app.');
+            }
+        }
+
+        function testVideoLoad() {
+            const video = document.getElementById('testVideo');
+            const source = document.getElementById('videoSource');
+            
+            if (!source.src) {
+                showStatus('Please generate a signed URL first!', 'error');
+                log('❌ No video URL set', 'error');
+                return;
+            }
+
+            log('Testing video load...');
+            video.load();
+            
+            video.addEventListener('loadstart', () => {
+                log('📡 Video loading started...');
+            });
+
+            video.addEventListener('loadedmetadata', () => {
+                log('✅ Video metadata loaded', 'success');
+                log(`Duration: ${video.duration.toFixed(2)}s, Size: ${video.videoWidth}x${video.videoHeight}`);
+            });
+
+            video.addEventListener('canplay', () => {
+                log('✅ Video can play', 'success');
+                showStatus('Video loaded successfully! You can play it now.', 'success');
+            });
+
+            video.addEventListener('error', (e) => {
+                log('❌ Video error: ' + (video.error ? video.error.message : 'Unknown error'), 'error');
+                showStatus('Video failed to load. Check console for details.', 'error');
+            });
+
+            video.play().then(() => {
+                log('▶️ Video playing', 'success');
+            }).catch(err => {
+                log('❌ Play error: ' + err.message, 'error');
+            });
+        }
+
+        function checkVideoStatus() {
+            const video = document.getElementById('testVideo');
+            const source = document.getElementById('videoSource');
+            
+            log('=== Video Status ===');
+            log('Source URL: ' + (source.src || 'Not set'));
+            log('Ready State: ' + video.readyState + ' (0=nothing, 1=metadata, 2=current, 3=future, 4=enough)');
+            log('Network State: ' + video.networkState + ' (0=empty, 1=idle, 2=loading, 3=no source)');
+            log('Paused: ' + video.paused);
+            log('Current Time: ' + video.currentTime.toFixed(2) + 's');
+            log('Duration: ' + (video.duration || 'Unknown'));
+            log('Error: ' + (video.error ? video.error.message : 'None'));
+            
+            if (video.error) {
+                showStatus('Video has errors. Check the log.', 'error');
+            } else if (video.readyState >= 2) {
+                showStatus('Video is ready to play!', 'success');
+            } else {
+                showStatus('Video is loading...', 'info');
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status ' + type;
+        }
+
+        // Initialize
+        log('Test page loaded. Ready to test secure video streaming.');
+        log('Content ID: ' + contentId);
+        log('Base URL: ' + baseUrl);
+    </script>
+</body>
+</html>

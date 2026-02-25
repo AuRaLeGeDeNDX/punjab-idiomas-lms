@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct PDF Load Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <h1>Direct PDF Load Test</h1>
+    <div id="status">Loading...</div>
+    <div id="details"></div>
+    <canvas id="pdf-canvas"></canvas>
+
+    <script>
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        const statusDiv = document.getElementById('status');
+        const detailsDiv = document.getElementById('details');
+        const canvas = document.getElementById('pdf-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // REPLACE THIS WITH YOUR ACTUAL SIGNED URL FROM THE BROWSER
+        // Open the secure PDF viewer, check the Network tab, and copy the PDF stream URL
+        const PDF_URL = 'PASTE_YOUR_SIGNED_URL_HERE';
+        
+        async function testLoad() {
+            try {
+                statusDiv.textContent = 'Loading PDF...';
+                statusDiv.style.color = 'blue';
+                
+                console.log('PDF URL:', PDF_URL);
+                
+                // Test 1: Fetch the URL directly
+                statusDiv.textContent = 'Test 1: Fetching URL directly...';
+                const fetchResponse = await fetch(PDF_URL);
+                console.log('Fetch response status:', fetchResponse.status);
+                console.log('Fetch response headers:', [...fetchResponse.headers.entries()]);
+                
+                if (fetchResponse.status === 204) {
+                    statusDiv.textContent = '❌ ERROR: Fetch returned 204 No Content';
+                    statusDiv.style.color = 'red';
+                    detailsDiv.innerHTML = `
+                        <p>The server returned 204 (No Content) when fetching the PDF.</p>
+                        <p>This means the request reached the server but no content was returned.</p>
+                        <p><strong>Possible causes:</strong></p>
+                        <ul>
+                            <li>Middleware is intercepting and returning empty response</li>
+                            <li>Route is not matching correctly</li>
+                            <li>Controller method is returning early without content</li>
+                        </ul>
+                    `;
+                    return;
+                }
+                
+                if (fetchResponse.status !== 200) {
+                    statusDiv.textContent = `❌ ERROR: Fetch returned ${fetchResponse.status}`;
+                    statusDiv.style.color = 'red';
+                    const body = await fetchResponse.text();
+                    detailsDiv.innerHTML = `<pre>${body}</pre>`;
+                    return;
+                }
+                
+                const blob = await fetchResponse.blob();
+                console.log('Blob size:', blob.size);
+                console.log('Blob type:', blob.type);
+                
+                statusDiv.textContent = `✅ Fetch successful! Size: ${(blob.size / 1024 / 1024).toFixed(2)} MB`;
+                statusDiv.style.color = 'green';
+                
+                // Test 2: Load with PDF.js
+                statusDiv.textContent = 'Test 2: Loading with PDF.js...';
+                statusDiv.style.color = 'blue';
+                
+                const loadingTask = pdfjsLib.getDocument({
+                    url: PDF_URL,
+                    withCredentials: false,
+                    disableAutoFetch: true,
+                    disableStream: false,
+                    disableRange: false
+                });
+                
+                loadingTask.onProgress = function(progress) {
+                    if (progress.total > 0) {
+                        const percent = Math.round((progress.loaded / progress.total) * 100);
+                        statusDiv.textContent = `Loading PDF... ${percent}%`;
+                    }
+                };
+                
+                const pdfDoc = await loadingTask.promise;
+                console.log('PDF loaded:', pdfDoc.numPages, 'pages');
+                
+                statusDiv.textContent = `✅ PDF.js load successful! ${pdfDoc.numPages} pages`;
+                statusDiv.style.color = 'green';
+                
+                // Render first page
+                const page = await pdfDoc.getPage(1);
+                const viewport = page.getViewport({ scale: 1.0 });
+                
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                await page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                }).promise;
+                
+                detailsDiv.innerHTML = '<p>✅ First page rendered successfully!</p>';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.textContent = '❌ ERROR: ' + error.message;
+                statusDiv.style.color = 'red';
+                detailsDiv.innerHTML = `
+                    <p><strong>Error details:</strong></p>
+                    <pre>${JSON.stringify(error, null, 2)}</pre>
+                    <p><strong>Error name:</strong> ${error.name}</p>
+                    <p><strong>Error message:</strong> ${error.message}</p>
+                    <p><strong>Stack:</strong></p>
+                    <pre>${error.stack}</pre>
+                `;
+            }
+        }
+        
+        // Auto-run if URL is provided
+        if (PDF_URL !== 'PASTE_YOUR_SIGNED_URL_HERE') {
+            testLoad();
+        } else {
+            statusDiv.textContent = '⚠️ Please paste your signed URL in the script';
+            statusDiv.style.color = 'orange';
+            detailsDiv.innerHTML = `
+                <p><strong>Instructions:</strong></p>
+                <ol>
+                    <li>Open the secure PDF viewer in your browser</li>
+                    <li>Open DevTools (F12) and go to the Network tab</li>
+                    <li>Look for the request to <code>/secure-pdf/stream/6?expires=...</code></li>
+                    <li>Copy the full URL</li>
+                    <li>Paste it in this file where it says <code>PASTE_YOUR_SIGNED_URL_HERE</code></li>
+                    <li>Refresh this page</li>
+                </ol>
+            `;
+        }
+    </script>
+</body>
+</html>

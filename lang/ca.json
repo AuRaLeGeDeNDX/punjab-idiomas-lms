@@ -1,0 +1,18 @@
+{
+    "nav": {
+        "about": "Sobre Nosaltres",
+        "courses": "Cursos",
+        "dele": "DELE",
+        "contact": "Contacte",
+        "login": "Inicia sessió",
+        "register": "Inscriu-te",
+        "dashboard": "Panell"
+    },
+    "hero": {
+        "title1": "DOMINA L'",
+        "title2": "ESPANYOL",
+        "description": "Ensenyament estructurat i suport real per als exàmens oficials DELE A1-B2. El teu èxit a Barcelona comença aquí.",
+        "cta_primary": "INSCRIU-TE ARA",
+        "cta_secondary": "MÉS INFORMACIÓ"
+    }
+}

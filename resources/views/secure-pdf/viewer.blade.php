@@ -174,6 +174,7 @@
             justify-content: center;
             align-items: flex-start;
             padding: 20px;
+            position: relative;
         }
 
         #pdf-canvas {
@@ -228,7 +229,7 @@
         }
 
         #watermark-overlay {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -236,17 +237,20 @@
             pointer-events: none;
             z-index: 9999;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .watermark-item {
-            position: absolute;
-            font-size: 24px;
-            color: #000;
-            opacity: 0.2;
-            transform: rotate(-45deg);
-            white-space: nowrap;
+        .watermark-logo {
+            width: 70%;
+            max-width: 700px;
+            min-width: 300px;
+            height: auto;
+            opacity: 0.22;
             pointer-events: none;
-            font-weight: 600;
+            filter: grayscale(20%);
+            transform: rotate(-35deg);
         }
 
         .security-notice {
@@ -299,8 +303,8 @@
                 padding: 40px;
             }
 
-            .watermark-item {
-                font-size: 28px;
+            .watermark-logo {
+                max-width: 800px;
             }
         }
 
@@ -314,8 +318,8 @@
                 padding: 30px;
             }
 
-            .watermark-item {
-                font-size: 24px;
+            .watermark-logo {
+                max-width: 700px;
             }
         }
 
@@ -338,8 +342,8 @@
                 padding: 20px;
             }
 
-            .watermark-item {
-                font-size: 22px;
+            .watermark-logo {
+                max-width: 550px;
             }
 
             .document-title {
@@ -380,8 +384,8 @@
                 padding: 15px;
             }
 
-            .watermark-item {
-                font-size: 20px;
+            .watermark-logo {
+                max-width: 450px;
             }
 
             .document-title {
@@ -423,8 +427,8 @@
                 padding: 10px;
             }
 
-            .watermark-item {
-                font-size: 18px;
+            .watermark-logo {
+                max-width: 350px;
             }
 
             .document-title {
@@ -470,17 +474,17 @@
             }
 
             /* Reduce watermark size in landscape to avoid obstruction */
-            .watermark-item {
-                font-size: 18px;
-                opacity: 0.15;
+            .watermark-logo {
+                max-width: 400px;
+                opacity: 0.18;
             }
         }
 
         /* High DPI / Retina Display adjustments */
         @media screen and (-webkit-min-device-pixel-ratio: 2),
                screen and (min-resolution: 192dpi) {
-            .watermark-item {
-                font-weight: 500;
+            .watermark-logo {
+                image-rendering: -webkit-optimize-contrast;
             }
 
             #pdf-canvas {
@@ -515,9 +519,6 @@
     <div class="security-notice">
         🔒 This document is protected. Downloading, printing, and copying are disabled for security.
     </div>
-
-    <!-- Watermark Overlay -->
-    <div id="watermark-overlay"></div>
 
     <!-- Viewer Container -->
     <div id="viewer-container">
@@ -555,6 +556,8 @@
         <!-- PDF Canvas Container -->
         <div id="pdf-canvas-container">
             <canvas id="pdf-canvas"></canvas>
+            <!-- Watermark Overlay (inside canvas container to clip to PDF area) -->
+            <div id="watermark-overlay"></div>
         </div>
 
         <!-- Loading Indicator -->
@@ -620,13 +623,11 @@
         const zoomOutButton = document.getElementById('zoom-out');
 
         // ============================================
-        // WATERMARK RENDERING
+        // WATERMARK RENDERING (Logo Watermark)
         // ============================================
 
         /**
-         * Render watermark as a repeating pattern across the viewport
-         * Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9
-         * Requirement 5.7: Responsive viewport adaptation
+         * Render a centered logo watermark over the PDF viewer
          */
         function renderWatermark() {
             const overlay = document.getElementById('watermark-overlay');
@@ -634,70 +635,16 @@
             // Clear existing watermarks
             overlay.innerHTML = '';
             
-            // Build watermark text
-            let watermarkText = WATERMARK_DATA.userName;
-            if (WATERMARK_DATA.userEmail) {
-                watermarkText += ' | ' + WATERMARK_DATA.userEmail;
-            }
-            watermarkText += ' | ' + WATERMARK_DATA.timestamp;
-            if (WATERMARK_DATA.userIp) {
-                watermarkText += ' | ' + WATERMARK_DATA.userIp;
-            }
+            // Create logo watermark image
+            const logo = document.createElement('img');
+            logo.src = '/images/logo.png';
+            logo.className = 'watermark-logo';
+            logo.alt = '';
+            logo.draggable = false;
             
-            // Calculate grid dimensions for repeating pattern
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
+            overlay.appendChild(logo);
             
-            // Responsive spacing based on viewport size
-            let horizontalSpacing, verticalSpacing;
-            
-            if (viewportWidth >= 1920) {
-                // Large desktop
-                horizontalSpacing = 450;
-                verticalSpacing = 220;
-            } else if (viewportWidth >= 1200) {
-                // Standard desktop
-                horizontalSpacing = 400;
-                verticalSpacing = 200;
-            } else if (viewportWidth >= 992) {
-                // Small desktop / Large tablet landscape
-                horizontalSpacing = 350;
-                verticalSpacing = 180;
-            } else if (viewportWidth >= 768) {
-                // Tablet portrait
-                horizontalSpacing = 300;
-                verticalSpacing = 160;
-            } else {
-                // Small tablet / mobile
-                horizontalSpacing = 250;
-                verticalSpacing = 140;
-            }
-            
-            // Adjust for landscape orientation on smaller screens
-            if (viewportHeight < 600 && viewportWidth > viewportHeight) {
-                verticalSpacing = Math.max(verticalSpacing * 0.8, 100);
-            }
-            
-            // Calculate number of rows and columns needed
-            const cols = Math.ceil(viewportWidth / horizontalSpacing) + 2;
-            const rows = Math.ceil(viewportHeight / verticalSpacing) + 2;
-            
-            // Create repeating watermark pattern
-            for (let row = 0; row < rows; row++) {
-                for (let col = 0; col < cols; col++) {
-                    const watermarkItem = document.createElement('div');
-                    watermarkItem.className = 'watermark-item';
-                    watermarkItem.textContent = watermarkText;
-                    
-                    // Position the watermark item
-                    watermarkItem.style.top = (row * verticalSpacing) + 'px';
-                    watermarkItem.style.left = (col * horizontalSpacing) + 'px';
-                    
-                    overlay.appendChild(watermarkItem);
-                }
-            }
-            
-            console.log('Watermark rendered:', rows * cols, 'instances for viewport', viewportWidth + 'x' + viewportHeight);
+            console.log('Logo watermark rendered');
         }
 
         // ============================================

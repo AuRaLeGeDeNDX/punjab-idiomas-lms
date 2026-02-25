@@ -62,6 +62,7 @@ class Content extends Model
     protected $appends = [
         'secure_url',
         'formatted_file_size',
+        'secure_viewer_url',
     ];
 
     /**
@@ -272,6 +273,15 @@ class Content extends Model
 
         // Return signed secure URL
         return $this->getSignedUrl();
+    }
+
+    /**
+     * Get the secure PDF viewer URL for the content.
+     * Appended via $appends array. Returns null for non-PDF content.
+     */
+    public function getSecureViewerUrlAttribute(): ?string
+    {
+        return $this->getSecurePdfViewerUrl();
     }
 
     /**

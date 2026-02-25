@@ -166,13 +166,18 @@ class SecurePdfController extends Controller
             'is_admin' => $isAdmin,
         ]);
 
-        return view('secure-pdf.viewer', [
-            'content' => $content,
-            'pdfDataUrl' => $pdfDataUrl,
-            'watermarkData' => $watermarkData,
-            'sessionToken' => $token,
-            'user' => $userData,
-        ]);
+        // Return view with X-Frame-Options: SAMEORIGIN to allow embedding in iframes
+        // on the same domain (content builder preview, subpage show page).
+        // Without this, PerformanceOptimizationMiddleware sets DENY, blocking the iframe.
+        return response()
+            ->view('secure-pdf.viewer', [
+                'content' => $content,
+                'pdfDataUrl' => $pdfDataUrl,
+                'watermarkData' => $watermarkData,
+                'sessionToken' => $token,
+                'user' => $userData,
+            ])
+            ->header('X-Frame-Options', 'SAMEORIGIN');
     }
 
     /**

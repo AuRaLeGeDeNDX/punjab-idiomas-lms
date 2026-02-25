@@ -912,11 +912,12 @@ export class PageBuilder {
 
     _renderPdfBlock(block) {
         const container = document.createElement('div');
-        container.className = 'w-100 h-100';
-
-        const url = block.secure_url || block.signed_url || block.file_path;
-        // ... (PDF logic same, but remove container classes and _wrapResizableMedia)
-        // For brevity in diff, ensuring structure matches
+        container.className = 'w-100';
+        // Use explicit min-height since CSS height:100% doesn't resolve against parent min-height
+        const pdfHeight = (block.metadata && block.metadata.minHeight) || 600;
+        container.style.minHeight = `${pdfHeight}px`;
+        container.style.height = '100%';
+        container.style.position = 'relative';
 
         const viewerUrl = block.secure_viewer_url;
         const directUrl = block.secure_url || block.signed_url || block.file_path;
@@ -924,13 +925,12 @@ export class PageBuilder {
         if (viewerUrl) {
             const iframe = document.createElement('iframe');
             iframe.src = viewerUrl;
-            // iframe.className = 'w-100 h-100 border-0 rounded shadow-sm';
             iframe.style.border = 'none';
             iframe.style.width = '100%';
             iframe.style.height = '100%';
+            iframe.style.minHeight = `${pdfHeight}px`;
 
             iframe.setAttribute('allow', 'fullscreen');
-            // iframe.style.minHeight = '600px'; // REMOVED
 
             container.appendChild(iframe);
 
@@ -949,7 +949,7 @@ export class PageBuilder {
             obj.type = 'application/pdf';
             obj.style.width = '100%';
             obj.style.height = '100%';
-            // obj.style.height = '600px'; // REMOVED
+            obj.style.minHeight = `${pdfHeight}px`;
 
             obj.innerHTML = `<p>Unable to display PDF. <a href="${directUrl}" target="_blank">Download</a> instead.</p>`;
             container.appendChild(obj);

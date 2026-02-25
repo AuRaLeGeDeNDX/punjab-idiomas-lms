@@ -74,7 +74,11 @@
     <div class="row">
         <div class="col-lg-9">
             {{-- Unified Rendering Container --}}
-            <div id="student-content-container"></div>
+            <div class="card shadow-sm content-preview-card" style="border: none; border-radius: 12px; overflow: hidden;">
+                <div class="card-body p-4" style="background: #ffffff; min-height: 300px;">
+                    <div id="student-content-container"></div>
+                </div>
+            </div>
 
             {{-- Fallback for SEO / No-JS (Hidden by default or used if JS fails) --}}
             <noscript>

@@ -4079,7 +4079,11 @@ function formatTime(seconds) {
                     saveContentBaseUrl: '{{ route('api.content-blocks.store', ['course' => $course->id, 'module' => $module->id, 'subpage' => $subpage->id]) }}',
                     csrfToken: '{{ csrf_token() }}',
                     onEditBlock: (id) => {
-                        if (window.editContentBlock) window.editContentBlock(id);
+                        if (window.editContentBlock) {
+                            // Pass preloaded data from local store to avoid API fetch delay
+                            const localBlock = builder.initialData?.find(b => b.id == id);
+                            window.editContentBlock(id, localBlock || null);
+                        }
                     },
                     onDeleteBlock: (id) => {
                         if (window.deleteContentBlock) window.deleteContentBlock(id);

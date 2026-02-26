@@ -27,8 +27,13 @@
         <div class="col-12">
             <div class="creative-page-header fade-in-up">
                 <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <h1><i class="fas fa-file-alt me-2"></i>{{ $subpage->title }}</h1>
+                    <div class="col-md-8 d-flex align-items-center">
+                        <a href="{{ route('student.courses.modules.subpages.index', [$course, $module]) }}" 
+                           class="mobile-header-back-btn d-md-none" aria-label="Back to module">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <div>
+                            <h1><i class="fas fa-file-alt me-2"></i>{{ $subpage->title }}</h1>
                         @if($subpage->description)
                             <p class="mb-2">{{ $subpage->description }}</p>
                         @endif
@@ -37,6 +42,7 @@
                             <span class="ms-2">
                                 <i class="fas fa-file-alt"></i> {{ $subpage->contents->count() }} content items
                             </span>
+                        </div>
                         </div>
                     </div>
                     <div class="col-md-4 text-md-end">
@@ -244,9 +250,27 @@
     }
 
     /* Compact header */
+    .mobile-header-back-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.05); /* slightly visible on light backgrounds */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: inherit;
+        text-decoration: none;
+        margin-right: 12px;
+        flex-shrink: 0;
+        transition: background 0.2s;
+    }
+    .mobile-header-back-btn:active {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
     .creative-page-header h1 {
         font-size: 18px !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 0 !important; /* Changed from 4px to 0 for better vertical centering with button */
     }
     .creative-page-header p,
     .creative-page-header .small,

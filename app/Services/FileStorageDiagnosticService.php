@@ -615,7 +615,7 @@ class FileStorageDiagnosticService
     private function getStorageDisksToCheck(Content $content): array
     {
         $recordedDisk = $content->storage_disk ?? 'public';
-        $allDisks = ['public', 'protected'];
+        $allDisks = ['public', 'protected','r2'];
         
         // Put recorded disk first, then others
         $disksToCheck = [$recordedDisk];
@@ -636,7 +636,7 @@ class FileStorageDiagnosticService
      */
     private function getAlternativeStorageDisks(string $recordedDisk): array
     {
-        $allDisks = ['public', 'protected'];
+        $allDisks = ['public', 'protected','r2'];
         
         return array_filter($allDisks, fn($disk) => $disk !== $recordedDisk);
     }

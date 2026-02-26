@@ -918,46 +918,54 @@ class Content extends Model
         $path = $actualLocation->getPath();
         
         try {
-            if ($disk === 'protected') {
-                // For protected files, use the secure file controller route
-                try {
+            if ($disk === 'protected' || $disk === 'r2') {
+            // For protected/R2 files, use the secure file controller route
+            try {
+                // For video type, use secure video streaming route
+                if ($this->type === 'video') {
+                    $url = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+                        'secure.video.stream',
+                        now()->addMinutes(10),
+                        ['content' => $this->id]
+                    );
+                } else {
                     $url = route('secure-files.download-content', ['content' => $this->id]);
-                    
-                    \Log::debug('Content generateUrlForActualLocation: Generated secure route URL', [
-                        'correlation_id' => $correlationId,
-                        'content_id' => $this->id,
-                        'disk' => $disk,
-                        'route_name' => 'secure-files.download-content',
-                    ]);
-                    
-                    return $url;
-                } catch (\Exception $e) {
-                    // Fallback if route helper is not available (e.g., in tests)
-                    $fallbackUrl = url("/secure-files/content/{$this->id}");
-                    
-                    \Log::warning('Content generateUrlForActualLocation: Route helper failed, using fallback URL', [
-                        'correlation_id' => $correlationId,
-                        'content_id' => $this->id,
-                        'disk' => $disk,
-                        'route_error' => $e->getMessage(),
-                        'fallback_url' => $fallbackUrl,
-                    ]);
-                    
-                    return $fallbackUrl;
                 }
-            } else {
-                // For public files, use direct asset access
-                $url = asset('storage/' . $path);
                 
-                \Log::debug('Content generateUrlForActualLocation: Generated asset URL', [
+                \Log::debug('Content generateUrlForActualLocation: Generated secure route URL', [
                     'correlation_id' => $correlationId,
                     'content_id' => $this->id,
                     'disk' => $disk,
-                    'asset_path' => 'storage/' . $path,
                 ]);
                 
                 return $url;
+            } catch (\Exception $e) {
+                // Fallback if route helper is not available
+                $fallbackUrl = url("/secure-files/content/{$this->id}");
+                
+                \Log::warning('Content generateUrlForActualLocation: Route helper failed, using fallback URL', [
+                    'correlation_id' => $correlationId,
+                    'content_id' => $this->id,
+                    'disk' => $disk,
+                    'route_error' => $e->getMessage(),
+                    'fallback_url' => $fallbackUrl,
+                ]);
+                
+                return $fallbackUrl;
             }
+        } else {
+            // For public files, use direct asset access
+            $url = asset('storage/' . $path);
+            
+            \Log::debug('Content generateUrlForActualLocation: Generated asset URL', [
+                'correlation_id' => $correlationId,
+                'content_id' => $this->id,
+                'disk' => $disk,
+                'asset_path' => 'storage/' . $path,
+            ]);
+            
+            return $url;
+        } 
         } catch (\Exception $e) {
             \Log::error('Content generateUrlForActualLocation: URL generation failed', [
                 'correlation_id' => $correlationId,
@@ -1109,7 +1117,7 @@ class Content extends Model
         $disksToCheck = [$recordedDisk];
         
         // Add alternative disks
-        $allDisks = ['public', 'protected'];
+        $allDisks = ['public', 'protected','r2'];
         foreach ($allDisks as $disk) {
             if ($disk !== $recordedDisk) {
                 $disksToCheck[] = $disk;

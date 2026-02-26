@@ -336,67 +336,6 @@ if (in_array($actualDisk, ['r2', 's3'])) {
         return $response;
     }
 
-/**
- * Stream cloud file with Range support.
- */
-private function streamCloudWithRange($stream, int $fileSize, string $mimeType, string $rangeHeader)
-{
-    preg_match('/bytes=(\d+)-(\d*)/', $rangeHeader, $matches);
-    
-    if (!$matches) {
-        return $this->streamCloudFull($stream, $fileSize, $mimeType);
-    }
-    
-    $start = (int) $matches[1];
-    $end = !empty($matches[2]) ? (int) $matches[2] : $fileSize - 1;
-    
-    if ($start > $end || $start >= $fileSize || $end >= $fileSize) {
-        fclose($stream);
-        return response('Requested Range Not Satisfiable', 416)
-            ->header('Content-Range', "bytes */{$fileSize}");
-    }
-    $length = $end - $start + 1;
-    $response = new StreamedResponse(function() use ($stream, $start, $length) {
-        fseek($stream, $start);
-        $chunkSize = 8192;
-        $bytesRemaining = $length;
-        while (!feof($stream) && $bytesRemaining > 0) {
-            $data = fread($stream, min($chunkSize, $bytesRemaining));
-            if ($data === false) break;
-            echo $data;
-            flush();
-            $bytesRemaining -= strlen($data);
-        }
-        fclose($stream);
-    }, 206);
-    $response->headers->set('Content-Type', $mimeType);
-    $response->headers->set('Content-Length', $length);
-    $response->headers->set('Content-Range', "bytes {$start}-{$end}/{$fileSize}");
-    $response->headers->set('Accept-Ranges', 'bytes');
-    $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    $response->headers->set('X-Content-Type-Options', 'nosniff');
-    return $response;
-}
-/**
- * Stream entire cloud file.
- */
-private function streamCloudFull($stream, int $fileSize, string $mimeType)
-{
-    $response = new StreamedResponse(function() use ($stream) {
-        $chunkSize = 8192;
-        while (!feof($stream)) {
-            echo fread($stream, $chunkSize);
-            flush();
-        }
-        fclose($stream);
-    }, 200);
-    $response->headers->set('Content-Type', $mimeType);
-    $response->headers->set('Content-Length', $fileSize);
-    $response->headers->set('Accept-Ranges', 'bytes');
-    $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    $response->headers->set('X-Content-Type-Options', 'nosniff');
-    return $response;
-}
 
 
 }

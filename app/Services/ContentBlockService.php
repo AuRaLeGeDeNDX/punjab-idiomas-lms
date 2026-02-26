@@ -1700,30 +1700,16 @@ class ContentBlockService
      * @return string Storage strategy ('secure' or 'public')
      */
     private function determineConsistentStorageStrategy(string $contentType, Subpage $subpage, string $correlationId): string
-    {
-        \Log::info('ContentBlockService: Determining consistent storage strategy', [
-            'correlation_id' => $correlationId,
-            'content_type' => $contentType,
-            'subpage_id' => $subpage->id,
-            'course_id' => $subpage->module->course_id,
-        ]);
-
-        // CONSISTENT STORAGE RULES:
-        // 1. All new uploads use 'protected' storage for security (outside web root)
-        // 2. This ensures consistent behavior across all content types
-        // 3. Files are served through secure controllers with proper access control
-        
-        $strategy = 'secure'; // Always use secure storage for new uploads
-        
-        \Log::info('ContentBlockService: Storage strategy determined', [
-            'correlation_id' => $correlationId,
-            'strategy' => $strategy,
-            'storage_disk' => 'protected',
-            'reasoning' => 'All new uploads use protected storage for security and consistency',
-        ]);
-        
-        return $strategy;
+{
+    // Route videos and large-file types to Cloudflare R2
+    $r2Types = ['video', 'audio', 'pdf'];  // customize as needed
+    
+    if (in_array($contentType, $r2Types)) {
+        return 'r2';
     }
+    
+    return 'secure'; // everything else stays on local protected disk
+}
 
     /**
      * Store file using consistent strategy with normalized paths.
@@ -1751,6 +1737,36 @@ class ContentBlockService
             'storage_strategy' => $storageStrategy,
             'content_type' => $contentType,
         ]);
+
+if ($storageStrategy === 'r2') {
+    $filename = $this->generateConsistentFilename($file, $correlationId);
+    $storagePath = $this->generateConsistentStoragePath($contentType, $context);
+    $fullPath = $storagePath . '/' . $filename;
+
+    $storedPath = $file->storeAs($storagePath, $filename, 'r2');
+
+    // Track for rollback
+    $uploadState->filesCreated[] = [
+        'disk' => 'r2',
+        'path' => $storedPath,
+        'type' => 'main_file',
+        'created_at' => now()->toISOString(),
+    ];
+
+    return [
+        'file_path'         => $storedPath,
+        'original_filename' => $file->getClientOriginalName(),
+        'file_size'         => $file->getSize(),
+        'mime_type'         => $file->getMimeType(),
+        'file_hash'         => hash_file('sha256', $file->getRealPath()),
+        'storage_disk'      => 'r2',
+        'correlation_id'    => $correlationId,
+        'storage_strategy'  => $storageStrategy,
+        'file_name'         => $file->getClientOriginalName(),
+    ];
+}
+
+
 
         if ($storageStrategy === 'secure') {
             // Use SecureFileStorageService for consistent secure storage

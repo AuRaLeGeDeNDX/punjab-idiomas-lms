@@ -1409,11 +1409,7 @@
         // Load PDF on page load
         loadPDF();
 
-        // Warn user before leaving
-        window.addEventListener('beforeunload', (e) => {
-            e.preventDefault();
-            e.returnValue = '';
-        });
+        // beforeunload removed — viewer is read-only, no changes to save
     </script>
 </body>
 </html>

@@ -2854,102 +2854,151 @@ window.saveContentBlock = async function() {
 
 /**
  * Background Upload Worker
+ * Rewritten to use Direct-to-R2 Pre-signed URLs for massive performance improvements.
  */
 function uploadFileInBackground(file, type, correlationId) {
-    return new Promise((resolve, reject) => {
-        const formData = new FormData();
-        formData.append('type', type);
-        formData.append('file', file);
-        
+    return new Promise(async (resolve, reject) => {
         const form = document.getElementById('content-edit-form');
-        if (form) {
-            formData.append('title', form.querySelector('[name="title"]')?.value || '');
-            formData.append('description', form.querySelector('[name="description"]')?.value || '');
-            formData.append('visibility', form.querySelector('[name="visibility"]')?.value || 'student');
-            formData.append('is_active', form.querySelector('[name="is_active"]')?.checked ? '1' : '0');
-            formData.append('section', form.querySelector('[name="section"]')?.value || window.currentContentSection || 'main_content');
-        }
+        
+        // Form Data Collection (Metadata)
+        const title = form ? (form.querySelector('[name="title"]')?.value || '') : '';
+        const description = form ? (form.querySelector('[name="description"]')?.value || '') : '';
+        const visibility = form ? (form.querySelector('[name="visibility"]')?.value || 'student') : 'student';
+        const isActive = form ? (form.querySelector('[name="is_active"]')?.checked ? '1' : '0') : '1';
+        const section = form ? (form.querySelector('[name="section"]')?.value || window.currentContentSection || 'main_content') : 'main_content';
 
         const courseId = @json($course->id ?? 0);
         const moduleId = @json($module->id ?? 0);
         const subpageId = @json($subpage->id ?? 0);
-        const apiUrl = `/api/v1/courses/${courseId}/modules/${moduleId}/subpages/${subpageId}/content-blocks`;
-
-        const xhr = new XMLHttpRequest();
         
-        const timeoutHandle = setTimeout(() => {
-            console.warn(`[ContentBuilder] [AsyncUpload] Upload timed out for ${correlationId}`);
-            xhr.abort();
-            window.pageBuilderInstance.removePendingBlock(correlationId);
-            showAlert('warning', `Upload for ${file.name} timed out.`);
-            reject(new Error('Upload timeout'));
-        }, 60000);
+        const presignedApiUrl = `/api/v1/courses/${courseId}/modules/${moduleId}/subpages/${subpageId}/content-blocks/presigned-url`;
+        const storeApiUrl = `/api/v1/courses/${courseId}/modules/${moduleId}/subpages/${subpageId}/content-blocks`;
 
-        xhr.upload.onprogress = (e) => {
-            if (e.lengthComputable) {
-                const percent = (e.loaded / e.total) * 100;
-                window.pageBuilderInstance._updatePlaceholderProgress(correlationId, percent, 'Uploading...');
+        try {
+            // STEP 1: Request Pre-signed URL from VPS
+            window.pageBuilderInstance._updatePlaceholderProgress(correlationId, 0, 'Preparing...');
+            
+            const presignedPayload = {
+                filename: file.name,
+                content_type: file.type || 'application/octet-stream',
+                file_size: file.size,
+                topic: 'content-blocks',
+                subpage_id: subpageId,
+                block_type: type
+            };
+
+            const presignedResponse = await fetch(presignedApiUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(presignedPayload)
+            });
+
+            const presignedData = await presignedResponse.json();
+            
+            if (!presignedResponse.ok || !presignedData.success) {
+                throw new Error(presignedData.message || 'Failed to generate upload URL.');
             }
-        };
 
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                clearTimeout(timeoutHandle);
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    try {
-                        const data = JSON.parse(xhr.responseText);
-                        if (data.success) {
-                            console.log(`[ContentBuilder] [AsyncUpload] Upload success for correlationId: ${correlationId}`);
-                            window.pageBuilderInstance.updatePendingBlock(correlationId, data.data);
-                            console.log(`[ContentBuilder] [AsyncUpload] Placeholder replaced for: ${correlationId}`);
-                            
-                            // Auto-open edit modal for the newly created block after 20ms
-                            if (data.data && data.data.id && window.editContentBlock) {
-                                setTimeout(() => {
-                                    editContentBlock(data.data.id, data.data);
-                                }, 20);
-                            }
-                            
-                            resolve(data.data);
+            const { upload_url, path: r2_path } = presignedData.data;
+
+            // STEP 2: Direct PUT to Cloudflare R2 Edge using XMLHttpRequest (for progress)
+            window.pageBuilderInstance._updatePlaceholderProgress(correlationId, 5, 'Uploading direct to R2...');
+            
+            await new Promise((resolveUpload, rejectUpload) => {
+                const xhr = new XMLHttpRequest();
+                
+                // 2-hour timeout for absolutely massive video files over slow connections
+                const timeoutHandle = setTimeout(() => {
+                    xhr.abort();
+                    rejectUpload(new Error('Upload to R2 timed out'));
+                }, 7200000);
+
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable) {
+                        // Map R2 upload to 5% -> 90% of the total UI progress bar
+                        const percentRaw = (e.loaded / e.total);
+                        const percentScaled = 5 + (percentRaw * 85); 
+                        window.pageBuilderInstance._updatePlaceholderProgress(correlationId, percentScaled, 'Uploading direct to R2...');
+                    }
+                };
+
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState === 4) {
+                        clearTimeout(timeoutHandle);
+                        // S3/R2 returns 200 on successful PUT
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolveUpload();
                         } else {
-                            throw new Error(data.message || 'Server error');
+                            console.error('R2 Direct Upload Failed:', xhr.status, xhr.responseText);
+                            rejectUpload(new Error(`Cloudflare R2 rejected upload (Status ${xhr.status})`));
                         }
-                    } catch (err) {
-                        console.error('Upload success parsing error:', err);
-                        window.pageBuilderInstance.removePendingBlock(correlationId);
-                        showAlert('danger', `Failed to upload ${file.name}`);
-                        reject(err);
                     }
-                } else {
-                    console.error('XHR Upload Failed:', xhr.status);
-                    try {
-                        const errorData = JSON.parse(xhr.responseText);
-                        console.error('[Upload] Server Error Response:', errorData);
-                        if (errorData.errors) {
-                            console.group('Validation Errors:');
-                            Object.entries(errorData.errors).forEach(([field, messages]) => {
-                                console.error(`${field}:`, messages.join(', '));
-                            });
-                            console.groupEnd();
-                        }
-                        showAlert('danger', errorData.message || `Upload failed for ${file.name}`);
-                    } catch (e) {
-                        console.error('[Upload] Non-JSON error response:', xhr.responseText);
-                        showAlert('danger', `Upload failed for ${file.name}`);
-                    }
-                    
-                    if (window.pageBuilderInstance) {
-                        window.pageBuilderInstance.removePendingBlock(correlationId);
-                    }
-                    reject(new Error('XHR Upload Failed'));
-                }
-            }
-        };
+                };
 
-        xhr.open('POST', apiUrl, true);
-        xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.send(formData);
+                xhr.open('PUT', upload_url, true);
+                
+                // IMPORTANT: The Content-Type must strictly match what was presigned
+                xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+                
+                xhr.send(file);
+            });
+
+            // STEP 3: Final POST to VPS Store Endpoint with `r2_path`
+            window.pageBuilderInstance._updatePlaceholderProgress(correlationId, 95, 'Saving to database...');
+            
+            const storeFormData = new FormData();
+            storeFormData.append('type', type);
+            // Notice: We do NOT append 'file' here anymore. We pass the path.
+            storeFormData.append('r2_path', r2_path);
+            storeFormData.append('original_filename', file.name); // Pass original string for display
+            
+            storeFormData.append('title', title);
+            storeFormData.append('description', description);
+            storeFormData.append('visibility', visibility);
+            storeFormData.append('is_active', isActive);
+            storeFormData.append('section', section);
+
+            const storeResponse = await fetch(storeApiUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: storeFormData
+            });
+
+            const storeData = await storeResponse.json();
+            
+            if (storeResponse.ok && storeData.success) {
+                console.log(`[ContentBuilder] [AsyncUpload] Success for: ${correlationId}`);
+                window.pageBuilderInstance.updatePendingBlock(correlationId, storeData.data);
+                
+                // Auto-open edit modal for the newly created block
+                if (storeData.data && storeData.data.id && window.editContentBlock) {
+                    setTimeout(() => {
+                        editContentBlock(storeData.data.id, storeData.data);
+                    }, 50);
+                }
+                
+                resolve(storeData.data);
+            } else {
+                throw new Error(storeData.message || 'Failed to save block metadata to database.');
+            }
+
+        } catch (error) {
+            console.error('[ContentBuilder] [AsyncUpload] Flow Error:', error);
+            
+            if (window.pageBuilderInstance) {
+                window.pageBuilderInstance.removePendingBlock(correlationId);
+            }
+            
+            showAlert('danger', error.message || `Upload workflow failed for ${file.name}`);
+            reject(error);
+        }
     });
 }
     

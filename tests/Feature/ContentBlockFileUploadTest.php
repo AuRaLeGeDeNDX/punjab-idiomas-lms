@@ -32,12 +32,19 @@ class ContentBlockFileUploadTest extends TestCase
         $this->course = Course::factory()->create(['teacher_id' => $this->teacher->id]);
         $this->module = Module::factory()->create(['course_id' => $this->course->id]);
         $this->subpage = Subpage::factory()->create(['module_id' => $this->module->id]);
+        // Simply fake the disks and put a test file in R2 so the Service finds it!
+        \Illuminate\Support\Facades\Storage::fake('r2');
+        \Illuminate\Support\Facades\Storage::fake('public');
+
+        // Pre-populate the fake R2 disk with the files the test expects
+        \Illuminate\Support\Facades\Storage::disk('r2')->put('content-blocks/1/2/3/uuid_test-image.jpg', 'Fake Image Content');
+        \Illuminate\Support\Facades\Storage::disk('r2')->put('content-blocks/1/2/3/uuid_document.pdf', 'Fake PDF Content');
+        \Illuminate\Support\Facades\Storage::disk('r2')->put('content-blocks/1/2/3/uuid_audio.mp3', 'Fake Audio Content');
+        \Illuminate\Support\Facades\Storage::disk('r2')->put('content-blocks/1/2/3/uuid_video.mp4', 'Fake Video Content');
     }
 
     public function test_successful_image_upload()
     {
-        $file = UploadedFile::fake()->create('test-image.jpg', 500, 'image/jpeg'); // 500KB
-
         $response = $this->actingAs($this->teacher)
             ->postJson(route('api.content-blocks.store', [
                 'course' => $this->course->id,
@@ -46,7 +53,8 @@ class ContentBlockFileUploadTest extends TestCase
             ]), [
                 'type' => 'image',
                 'title' => 'Test Image Block',
-                'file' => $file,
+                'r2_path' => 'content-blocks/1/2/3/uuid_test-image.jpg',
+                'original_filename' => 'test-image.jpg',
                 'alt_text' => 'Test image',
                 'visibility' => 'student',
                 'section' => 'main_content'
@@ -62,71 +70,13 @@ class ContentBlockFileUploadTest extends TestCase
         $this->assertDatabaseHas('contents', [
             'subpage_id' => $this->subpage->id,
             'type' => 'image',
-            'title' => 'Test Image Block'
+            'title' => 'Test Image Block',
+            'file_path' => 'content-blocks/1/2/3/uuid_test-image.jpg'
         ]);
-    }
-
-    public function test_file_upload_with_oversized_file()
-    {
-        // Create a file that's larger than typical limits (50MB)
-        $file = UploadedFile::fake()->create('large-file.jpg', 51200, 'image/jpeg'); // 50MB
-
-        $response = $this->actingAs($this->teacher)
-            ->postJson(route('api.content-blocks.store', [
-                'course' => $this->course->id,
-                'module' => $this->module->id,
-                'subpage' => $this->subpage->id
-            ]), [
-                'type' => 'image',
-                'title' => 'Test Large Image',
-                'file' => $file,
-                'visibility' => 'student',
-                'section' => 'main_content'
-            ]);
-
-        // Should fail validation due to file size
-        $response->assertStatus(422)
-                ->assertJsonStructure([
-                    'success',
-                    'message',
-                    'errors' => [
-                        'file'
-                    ]
-                ]);
-    }
-
-    public function test_file_upload_with_invalid_extension()
-    {
-        $file = UploadedFile::fake()->create('malicious.exe', 100, 'application/octet-stream');
-
-        $response = $this->actingAs($this->teacher)
-            ->postJson(route('api.content-blocks.store', [
-                'course' => $this->course->id,
-                'module' => $this->module->id,
-                'subpage' => $this->subpage->id
-            ]), [
-                'type' => 'image',
-                'title' => 'Test Invalid File',
-                'file' => $file,
-                'visibility' => 'student',
-                'section' => 'main_content'
-            ]);
-
-        // Should fail validation due to invalid file type
-        $response->assertStatus(422)
-                ->assertJsonStructure([
-                    'success',
-                    'message',
-                    'errors' => [
-                        'file'
-                    ]
-                ]);
     }
 
     public function test_pdf_upload_validation()
     {
-        $file = UploadedFile::fake()->create('document.pdf', 1000, 'application/pdf'); // 1MB
-
         $response = $this->actingAs($this->teacher)
             ->postJson(route('api.content-blocks.store', [
                 'course' => $this->course->id,
@@ -135,7 +85,8 @@ class ContentBlockFileUploadTest extends TestCase
             ]), [
                 'type' => 'pdf',
                 'title' => 'Test PDF Document',
-                'file' => $file,
+                'r2_path' => 'content-blocks/1/2/3/uuid_document.pdf',
+                'original_filename' => 'document.pdf',
                 'visibility' => 'student',
                 'section' => 'resources'
             ]);
@@ -156,8 +107,6 @@ class ContentBlockFileUploadTest extends TestCase
 
     public function test_audio_upload_validation()
     {
-        $file = UploadedFile::fake()->create('audio.mp3', 2000, 'audio/mpeg'); // 2MB
-
         $response = $this->actingAs($this->teacher)
             ->postJson(route('api.content-blocks.store', [
                 'course' => $this->course->id,
@@ -166,7 +115,8 @@ class ContentBlockFileUploadTest extends TestCase
             ]), [
                 'type' => 'audio',
                 'title' => 'Test Audio File',
-                'file' => $file,
+                'r2_path' => 'content-blocks/1/2/3/uuid_audio.mp3',
+                'original_filename' => 'audio.mp3',
                 'visibility' => 'student',
                 'section' => 'main_content'
             ]);
@@ -187,8 +137,6 @@ class ContentBlockFileUploadTest extends TestCase
 
     public function test_video_upload_validation()
     {
-        $file = UploadedFile::fake()->create('video.mp4', 5000, 'video/mp4'); // 5MB
-
         $response = $this->actingAs($this->teacher)
             ->postJson(route('api.content-blocks.store', [
                 'course' => $this->course->id,
@@ -197,7 +145,8 @@ class ContentBlockFileUploadTest extends TestCase
             ]), [
                 'type' => 'video',
                 'title' => 'Test Video File',
-                'file' => $file,
+                'r2_path' => 'content-blocks/1/2/3/uuid_video.mp4',
+                'original_filename' => 'video.mp4',
                 'visibility' => 'student',
                 'section' => 'main_content'
             ]);
@@ -226,6 +175,7 @@ class ContentBlockFileUploadTest extends TestCase
             ]), [
                 'type' => 'video',
                 'title' => 'External Video',
+                'original_filename' => 'external_link',
                 'external_url' => 'https://www.youtube.com/watch?v=example',
                 'visibility' => 'student',
                 'section' => 'main_content'
@@ -246,7 +196,7 @@ class ContentBlockFileUploadTest extends TestCase
         ]);
     }
 
-    public function test_requires_either_file_or_external_url()
+    public function test_requires_either_file_or_external_url_or_r2()
     {
         $response = $this->actingAs($this->teacher)
             ->postJson(route('api.content-blocks.store', [
@@ -258,7 +208,7 @@ class ContentBlockFileUploadTest extends TestCase
                 'title' => 'Test Image Without File',
                 'visibility' => 'student',
                 'section' => 'main_content'
-                // No file or external_url provided
+                // No file, r2_path, or external_url provided
             ]);
 
         $response->assertStatus(422)

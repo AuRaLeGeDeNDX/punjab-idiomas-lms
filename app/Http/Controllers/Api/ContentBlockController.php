@@ -1110,8 +1110,10 @@ class ContentBlockController extends Controller
                 
                 // Basic Laravel validation for file presence
                 // UPDATE: Allow empty creation (placeholder mode) for 2-step upload workflow
+                // ALSO: Support direct-to-R2 upload via `r2_path` parameter.
                 $rules['file'] = 'nullable'; 
                 $rules['external_url'] = 'nullable|string|max:2048';
+                $rules['r2_path'] = 'nullable|string'; // New rule for direct uploads
                 
                 if ($type === 'image') {
                     $rules['alt_text'] = 'nullable|string|max:255';
@@ -1126,6 +1128,7 @@ class ContentBlockController extends Controller
                 'correlation_id' => $correlationId,
                 'content_type' => $type,
                 'has_file' => $request->hasFile('file'),
+                'has_r2_path' => $request->filled('r2_path'),
             ]);
         } catch (ValidationException $e) {
             \Log::warning('ContentBlock validation: Rules validation failed', [
@@ -1140,6 +1143,15 @@ class ContentBlockController extends Controller
         // Add file to validated data if present
         if ($request->hasFile('file')) {
             $validated['file'] = $request->file('file');
+        }
+        
+        // Ensure either file, r2_path, or external_url is provided for media block types
+        if (in_array($type, ['image', 'pdf', 'audio', 'video'])) {
+            if (!$request->hasFile('file') && empty($validated['r2_path']) && empty($validated['external_url'])) {
+                 throw ValidationException::withMessages([
+                     'file' => ['A file, an external URL, or a valid pre-uploaded R2 path must be provided.']
+                 ]);
+            }
         }
         
         // Additional validation for text content: validate JSON structure if it's Editor.js format

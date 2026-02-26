@@ -74,9 +74,13 @@ class ContentBlockService
             $content = null;
 
             try {
-                // Handle file upload if present
+                // Handle file upload if present or direct R2 path
                 if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
                     $fileData = $this->handleFileUpload($data['file'], $data['type'], $subpage);
+                    $contentData = array_merge($contentData, $fileData);
+                } elseif (isset($data['r2_path']) && !empty($data['r2_path'])) {
+                    // Handle Direct-to-R2 upload
+                    $fileData = $this->handleDirectR2Upload($data['r2_path'], $data['type'], $subpage, $data);
                     $contentData = array_merge($contentData, $fileData);
                 }
 
@@ -152,7 +156,7 @@ class ContentBlockService
             $newFileData = null;
 
             try {
-                // Handle file upload if present
+                // Handle file upload if present or direct R2 path
                 if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
                     // Store old file data for potential rollback
                     if ($content->file_path) {
@@ -177,6 +181,27 @@ class ContentBlockService
                     // Only delete old file after successful verification of new file
                     if ($oldFileData) {
                         $this->deleteOldFileConsistently($content, $newFileData['correlation_id'] ?? Str::uuid()->toString());
+                    }
+                    
+                    return $content->fresh();
+                } elseif (isset($data['r2_path']) && !empty($data['r2_path'])) {
+                    // Handle Direct-to-R2 upload update
+                    if ($content->file_path) {
+                        $oldFileData = [
+                            'file_path' => $content->file_path,
+                            'storage_disk' => $content->storage_disk,
+                            'original_filename' => $content->original_filename,
+                            'file_size' => $content->file_size,
+                        ];
+                    }
+
+                    $newFileData = $this->handleDirectR2Upload($data['r2_path'], $content->type, $content->subpage, $data);
+                    $updateData = array_merge($updateData, $newFileData);
+                    
+                    $content->update($updateData);
+                    
+                    if ($oldFileData) {
+                        $this->deleteOldFileConsistently($content, Str::uuid()->toString());
                     }
                     
                     return $content->fresh();
@@ -767,6 +792,67 @@ class ContentBlockService
             
             throw new \InvalidArgumentException('Failed to store file securely: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Handle file processing for a file already uploaded directly to Cloudflare R2
+     * via a pre-signed URL. Bypasses the actual transfer but still ensures metadata consistency.
+     */
+    private function handleDirectR2Upload(string $r2Path, string $contentType, Subpage $subpage, array $requestData): array
+    {
+        $correlationId = Str::uuid()->toString();
+        \Log::info('ContentBlockService: Processing direct R2 upload', [
+            'correlation_id' => $correlationId,
+            'r2_path' => $r2Path,
+            'content_type' => $contentType,
+        ]);
+
+        // Default constraints
+        $config = Content::getContentTypeConfig($contentType);
+        $allowedExtensions = $config['allowed_extensions'] ?? [];
+        $maxFileSize = $config['max_file_size'] ?? (10 * 1024 * 1024);
+
+        $disk = Storage::disk('r2');
+
+        // 1. Verify existence
+        if (!$disk->exists($r2Path)) {
+            \Log::error('ContentBlockService: Direct R2 file not found', [
+                'correlation_id' => $correlationId,
+                'path' => $r2Path
+            ]);
+            throw new \InvalidArgumentException('The specified file does not exist in cloud storage.');
+        }
+
+        // 2. Extract Data
+        $fileSize = $disk->size($r2Path);
+        $originalFilename = $requestData['filename'] ?? basename($r2Path);
+        $fileExtension = strtolower(pathinfo($originalFilename, PATHINFO_EXTENSION));
+
+        // 3. Re-Validate
+        if (!empty($allowedExtensions) && !in_array($fileExtension, $allowedExtensions)) {
+            throw new \InvalidArgumentException("Security policy: Extension '$fileExtension' not allowed for this content type.");
+        }
+        if ($fileSize > $maxFileSize) {
+             throw new \InvalidArgumentException('Security policy: File size exceeds maximum allowed size.');
+        }
+
+        // 4. Mimic storage result array
+        $storageResult = [
+            'file_path' => $r2Path,
+            'storage_disk' => 'r2',
+            'original_filename' => $originalFilename,
+            'file_size' => $fileSize,
+            'file_hash' => null, // Hash is too expensive to compute remotely right now
+            'correlation_id' => $correlationId,
+        ];
+
+        \Log::info('ContentBlockService: Direct R2 upload processed successfully', [
+            'correlation_id' => $correlationId,
+            'path' => $r2Path,
+            'size' => $fileSize,
+        ]);
+
+        return $storageResult;
     }
 
     /**

@@ -203,6 +203,10 @@ Route::middleware(['auth', 'web'])->prefix('api/v1')->name('api.')->group(functi
                  ->name('content-blocks.index');
             Route::post('content-blocks', [\App\Http\Controllers\Api\ContentBlockController::class, 'store'])
                  ->name('content-blocks.store');
+                 
+            // Generate presigned URL for direct uploads
+            Route::post('content-blocks/presigned-url', [\App\Http\Controllers\Api\UploadController::class, 'getPresignedUrl'])
+                 ->name('content-blocks.presigned-url');
 
             // Static routes MUST come before parameterized {contentBlock} routes
             Route::post('content-blocks/reorder', [\App\Http\Controllers\Api\ContentBlockController::class, 'reorder'])

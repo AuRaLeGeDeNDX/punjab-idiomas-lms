@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use App\Http\Controllers\SecurePdfController;
 use App\Models\Content;
@@ -20,7 +20,7 @@ use Tests\TestCase;
  * 
  * Requirement 6.3: Provide error responses that PDF.js can interpret
  */
-class SecurePdfErrorResponseTest extends TestCase
+class SecurePdfErrorResponseFeatureTest extends TestCase
 {
     use RefreshDatabase;
 

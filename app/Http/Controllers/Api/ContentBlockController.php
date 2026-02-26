@@ -292,7 +292,7 @@ class ContentBlockController extends Controller
                 'user_id' => auth()->id(),
             ]);
             
-            $validated = $this->validateContentBlockRequest($request, $contentBlock->type, $correlationId);
+            $validated = $this->validateContentBlockRequest($request, $contentBlock->type, $correlationId, true);
             
             \Log::info('ContentBlock update: Validation passed', [
                 'correlation_id' => $correlationId,
@@ -951,7 +951,7 @@ class ContentBlockController extends Controller
     /**
      * Validate content block request data.
      */
-    private function validateContentBlockRequest(Request $request, ?string $type = null, ?string $correlationId = null): array
+    private function validateContentBlockRequest(Request $request, ?string $type = null, ?string $correlationId = null, bool $isUpdate = false): array
     {
         // Generate correlation ID if not provided (for backward compatibility)
         $correlationId = $correlationId ?? Str::uuid()->toString();
@@ -1145,8 +1145,9 @@ class ContentBlockController extends Controller
             $validated['file'] = $request->file('file');
         }
         
-        // Ensure either file, r2_path, or external_url is provided for media block types
-        if (in_array($type, ['image', 'pdf', 'audio', 'video'])) {
+        // Ensure either file, r2_path, or external_url is provided for NEW media block types
+        // For updates (metadata-only edits), the block already has a file, so skip this check
+        if (in_array($type, ['image', 'pdf', 'audio', 'video']) && !$isUpdate) {
             if (!$request->hasFile('file') && empty($validated['r2_path']) && empty($validated['external_url'])) {
                  throw ValidationException::withMessages([
                      'file' => ['A file, an external URL, or a valid pre-uploaded R2 path must be provided.']

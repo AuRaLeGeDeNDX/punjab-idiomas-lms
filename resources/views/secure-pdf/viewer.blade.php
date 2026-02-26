@@ -243,11 +243,11 @@
         }
 
         .watermark-logo {
-            width: 45%;
-            max-width: 400px;
-            min-width: 150px;
+            width: 70%;
+            max-width: 700px;
+            min-width: 300px;
             height: auto;
-            opacity: 0.15;
+            opacity: 0.18;
             pointer-events: none;
             filter: grayscale(20%);
             transform: rotate(-35deg);
@@ -304,7 +304,7 @@
             }
 
             .watermark-logo {
-                max-width: 500px;
+                max-width: 800px;
             }
         }
 
@@ -319,7 +319,7 @@
             }
 
             .watermark-logo {
-                max-width: 400px;
+                max-width: 700px;
             }
         }
 
@@ -343,7 +343,7 @@
             }
 
             .watermark-logo {
-                max-width: 350px;
+                max-width: 550px;
             }
 
             .document-title {
@@ -385,7 +385,7 @@
             }
 
             .watermark-logo {
-                max-width: 300px;
+                max-width: 450px;
             }
 
             .document-title {
@@ -428,7 +428,7 @@
             }
 
             .watermark-logo {
-                max-width: 220px;
+                max-width: 350px;
             }
 
             .document-title {
@@ -475,8 +475,8 @@
 
             /* Reduce watermark size in landscape to avoid obstruction */
             .watermark-logo {
-                max-width: 280px;
-                opacity: 0.12;
+                max-width: 400px;
+                opacity: 0.15;
             }
         }
 
@@ -637,7 +637,7 @@
             
             // Create logo watermark image
             const logo = document.createElement('img');
-            logo.src = '/images/logo.png';
+            logo.src = '/images/watermark-logo.png';
             logo.className = 'watermark-logo';
             logo.alt = '';
             logo.draggable = false;

@@ -40,14 +40,52 @@ class SecurePdfService
         // Enforce minimum expiration of 5 minutes (300 seconds) per Requirement 7.1
         $expirationMinutes = max($expirationMinutes, 5);
         
-        // Generate absolute signed URL with proper expiration
-        // URL::temporarySignedRoute automatically generates absolute URLs
-        // and includes signature and expires parameters for validation
+        // For R2-stored files, generate a direct pre-signed URL to avoid double-hop
+        // (VPS downloads from R2, then re-serves to browser = slow)
+        // Direct R2 pre-signed URL lets PDF.js load straight from Cloudflare's edge CDN
+        if ($content->storage_disk === 'r2' && $content->file_path) {
+            try {
+                $disk = Storage::disk('r2');
+                
+                // Verify file exists on R2
+                if ($disk->exists($content->file_path)) {
+                    /** @var \Aws\S3\S3Client $client */
+                    $client = $disk->getClient();
+                    
+                    $command = $client->getCommand('GetObject', [
+                        'Bucket' => config('filesystems.disks.r2.bucket'),
+                        'Key'    => $content->file_path,
+                    ]);
+                    
+                    $request = $client->createPresignedRequest(
+                        $command, 
+                        "+{$expirationMinutes} minutes"
+                    );
+                    
+                    $directUrl = (string) $request->getUri();
+                    
+                    Log::info('SecurePDF: Generated direct R2 pre-signed URL', [
+                        'content_id' => $content->id,
+                        'expires_in_minutes' => $expirationMinutes,
+                    ]);
+                    
+                    return $directUrl;
+                }
+            } catch (\Exception $e) {
+                Log::warning('SecurePDF: Failed to generate R2 pre-signed URL, falling back to VPS proxy', [
+                    'content_id' => $content->id,
+                    'error' => $e->getMessage(),
+                ]);
+                // Fall through to VPS-proxied URL below
+            }
+        }
+        
+        // Fallback: Generate VPS-proxied signed URL (for local/public/protected disks)
         return \URL::temporarySignedRoute(
-            'secure.pdf.stream',                    // Correct route name (Requirement 7.3)
-            now()->addMinutes($expirationMinutes),  // Minimum 5 minutes (Requirement 7.1)
-            ['content' => $content->id],            // All necessary parameters (Requirement 7.2)
-            true                                     // Force absolute URL generation
+            'secure.pdf.stream',
+            now()->addMinutes($expirationMinutes),
+            ['content' => $content->id],
+            true
         );
     }
 

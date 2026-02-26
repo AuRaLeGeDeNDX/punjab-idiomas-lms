@@ -2649,9 +2649,10 @@ window.saveContentBlock = async function() {
     console.log('[ContentBuilder] [AsyncUpload] File count:', files.length);
     const isMedia = ['image', 'pdf', 'audio', 'video'].includes(type);
 
-    // 4. Fallback for Empty Media (unless external URL is provided)
+    // 4. Fallback for Empty Media (unless external URL is provided or editing existing block)
     const externalUrl = document.querySelector('input[name="external_url"]')?.value;
-    if (isMedia && files.length === 0 && !externalUrl) {
+    const isEditingExisting = (form.dataset.isEdit === 'true' || form.dataset.editId);
+    if (isMedia && files.length === 0 && !externalUrl && !isEditingExisting) {
         alert('Please select a file or enter a URL.');
         saveButton.disabled = false;
         return;

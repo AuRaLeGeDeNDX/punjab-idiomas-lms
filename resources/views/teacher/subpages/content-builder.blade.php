@@ -1929,6 +1929,39 @@ function setupFileInputHandling() {
     });
 }
 
+// ── File Input Change Listener (delegated for dynamically created inputs) ──
+// This handles file selection via the click-to-browse file dialog.
+// Drag-and-drop is handled separately above.
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'block-file') {
+        console.log('[FileInput] Change event fired on #block-file');
+        handleFileSelection(e.target);
+        
+        // Also update the drop zone text to show the selected filename
+        const dropZone = e.target.closest('.file-drop-zone');
+        if (dropZone && e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            const textEl = dropZone.querySelector('.file-drop-zone-text');
+            const subtextEl = dropZone.querySelector('.file-drop-zone-subtext');
+            const iconEl = dropZone.querySelector('.file-drop-zone-icon');
+            
+            if (textEl) {
+                textEl.innerHTML = `<strong>${file.name}</strong>`;
+            }
+            if (subtextEl) {
+                subtextEl.textContent = `${formatFileSize(file.size)} — Click to change file`;
+            }
+            if (iconEl) {
+                iconEl.innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i>';
+            }
+            
+            // Add a subtle success border
+            dropZone.style.borderColor = '#28a745';
+            dropZone.style.backgroundColor = 'rgba(40, 167, 69, 0.05)';
+        }
+    }
+});
+
 // Show success feedback when file is dropped
 function showDropSuccessFeedback(dropZone, file) {
     const feedback = document.createElement('div');

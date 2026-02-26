@@ -3011,12 +3011,8 @@ function uploadFileInBackground(file, type, correlationId) {
                 console.log(`[ContentBuilder] [AsyncUpload] Success for: ${correlationId}`);
                 window.pageBuilderInstance.updatePendingBlock(correlationId, storeData.data);
                 
-                // Auto-open edit modal for the newly created block
-                if (storeData.data && storeData.data.id && window.editContentBlock) {
-                    setTimeout(() => {
-                        editContentBlock(storeData.data.id, storeData.data);
-                    }, 50);
-                }
+                // Block created successfully — no need to reopen the edit modal
+                // since the user already filled in all details before the upload
                 
                 resolve(storeData.data);
             } else {

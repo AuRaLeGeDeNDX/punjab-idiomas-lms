@@ -177,16 +177,22 @@ class SubpageController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Checkboxes don't send a value when unchecked, so we must explicitly set it
+        $validated['is_active'] = $request->has('is_active') ? true : false;
 
         $subpage->update($validated);
 
         // Clear module cache
         Cache::forget("module_subpages_{$module->id}");
 
+        // Redirect to the correct route based on role
+        $routePrefix = auth()->user()->hasRole('Admin') ? 'admin' : 'teacher';
+        
         return redirect()
-            ->route('teacher.courses.modules.subpages.show', [$course, $module, $subpage])
+            ->route("{$routePrefix}.courses.modules.subpages.show", [$course, $module, $subpage])
             ->with('success', 'Subpage updated successfully.');
     }
 

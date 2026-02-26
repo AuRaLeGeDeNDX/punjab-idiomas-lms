@@ -84,7 +84,7 @@
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center mb-2">
-                                        <span class="drag-handle me-2" style="cursor: move; display: none; color: #6c757d;">
+                                        <span class="subpage-drag-handle me-2" style="cursor: move; display: none; color: #6c757d;">
                                             <i class="fas fa-grip-vertical"></i>
                                         </span>
                                         <h6 class="mb-0 fw-bold" style="color: #1a1a2e;">
@@ -221,13 +221,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 reorderBtn.classList.add('btn-success');
                 
                 // Show drag handles
-                document.querySelectorAll('.drag-handle').forEach(handle => {
+                document.querySelectorAll('.subpage-drag-handle').forEach(handle => {
                     handle.style.display = 'inline-block';
                 });
                 
                 // Initialize sortable
                 sortable = Sortable.create(subpagesList, {
-                    handle: '.drag-handle',
+                    handle: '.subpage-drag-handle',
                     animation: 150,
                     ghostClass: 'sortable-ghost'
                 });

@@ -191,10 +191,11 @@
             </div>
             <div class="creative-card-body">
                 @forelse($recentGrades as $grade)
+                    @if($grade->submission && $grade->submission->assignment)
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div>
                             <h6 class="mb-1">{{ $grade->submission->assignment->title }}</h6>
-                            <small class="text-muted">{{ $grade->submission->assignment->course->title }}</small>
+                            <small class="text-muted">{{ $grade->submission->assignment->course?->title ?? 'Unknown Course' }}</small>
                         </div>
                         <div class="text-end">
                             <div class="h5 mb-0 text-{{ $grade->isPassing() ? 'success' : 'danger' }}">
@@ -203,6 +204,7 @@
                             <small class="text-muted">{{ $grade->getLetterGrade() }}</small>
                         </div>
                     </div>
+                    @endif
                 @empty
                     <p class="text-muted text-center">No grades yet</p>
                 @endforelse

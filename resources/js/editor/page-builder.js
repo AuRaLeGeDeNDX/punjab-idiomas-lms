@@ -1999,19 +1999,21 @@ export class PageBuilder {
 
             // Save Content Settings IMMEDIATELY to Backend
             try {
-                // Ensure we send the specific fields we want to persist
-                // ContentBlockController::update will handle 'settings' input
-                await this._saveBlockContent(block.id, {
-                    settings: block.settings,
-                    // If we updated 'data' for youtube, send it too
-                    data: block.data
-                });
+                // Only save to individual block endpoint if the block has a real (persisted) ID.
+                // Blocks with temp IDs (e.g. "temp-123456") haven't been created in the DB yet,
+                // so the server can't find them. Their settings will be persisted via layout save.
+                const isTempBlock = String(block.id).startsWith('temp-');
+                if (!isTempBlock) {
+                    await this._saveBlockContent(block.id, {
+                        settings: block.settings,
+                        data: block.data
+                    });
+                }
 
-                // Also save layout (for metadata sync)
+                // Save layout (persists metadata including settings for temp blocks)
                 await this._saveLayout();
             } catch (e) {
                 console.error('Failed to save settings:', e);
-                // TODO: Show toast error
             }
 
             // Close Modal
@@ -2492,7 +2494,9 @@ export class PageBuilder {
         hr.className = 'my-2';
         hr.style.width = width;
         hr.style.borderTopStyle = style;
-        hr.style.opacity = '0.15';
+        hr.style.borderTopWidth = '2px';
+        hr.style.borderTopColor = '#333';
+        hr.style.opacity = '0.6';
 
         el.appendChild(hr);
         return el;

@@ -37,8 +37,8 @@
                     </p>
                 </div>
                 <div>
-                    <a href="{{ route('student.courses.show', $courseWithModules) }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>Back to Course
+                    <a href="{{ route('student.courses.show', $courseWithModules) }}" class="btn btn-secondary back-btn">
+                        <i class="fas fa-arrow-left me-md-2"></i><span class="d-none d-md-inline">Back to Course</span>
                     </a>
                 </div>
             </div>
@@ -105,3 +105,68 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+/* =============================================
+   MOBILE REDESIGN (<768px)
+   - Hide breadcrumb
+   - Card styling (12px radius, shadow, 12px gap)
+   - Compact back button
+   ============================================= */
+@media screen and (max-width: 767px) {
+    /* Hide breadcrumb */
+    nav[aria-label="breadcrumb"] {
+        display: none !important;
+    }
+
+    /* Container padding */
+    .container-fluid {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    /* Compact header area */
+    .d-flex.justify-content-between.align-items-center.mb-4 {
+        margin-bottom: 16px !important;
+    }
+    
+    .h3 {
+        font-size: 20px !important;
+    }
+
+    /* Make back button icon-only and square */
+    .btn.back-btn {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px !important;
+    }
+    .btn.back-btn i {
+        margin: 0 !important;
+    }
+
+    /* Module Cards */
+    .card {
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+        border: 1px solid rgba(0,0,0,0.05) !important;
+    }
+    
+    /* 12px gap */
+    .col-md-6.col-lg-4.mb-4 {
+        margin-bottom: 12px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    
+    .row.mb-4 {
+        margin-left: -8px !important;
+        margin-right: -8px !important;
+    }
+}
+</style>
+@endpush

@@ -90,6 +90,69 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+/* =============================================
+   MOBILE REDESIGN (<768px)
+   - Hide sidebar
+   - Compact header
+   - Convert list items to cards
+   ============================================= */
+@media screen and (max-width: 767px) {
+    /* Hide sidebar */
+    .col-lg-4 {
+        display: none !important;
+    }
+
+    /* Full width main column */
+    .col-lg-8 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Remove container padding */
+    .container-fluid {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    /* Remove outer card wrapper styles */
+    .creative-card {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+    .creative-card-header {
+        display: none !important; /* hide "Subpages" title */
+    }
+    .creative-card-body {
+        padding: 0 !important;
+    }
+
+    /* Convert list items to cards */
+    .list-group-item {
+        border-radius: 12px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+        margin-bottom: 12px !important;
+        border: 1px solid rgba(0,0,0,0.05) !important;
+        padding: 16px !important;
+    }
+    
+    /* Ensure content is cleanly spaced inside the card */
+    .list-group-item .d-flex.align-items-center {
+        width: 100%;
+    }
+    
+    /* Make the chevron align right */
+    .list-group-item .fa-chevron-right {
+        margin-left: auto;
+    }
+}
+</style>
+@endpush

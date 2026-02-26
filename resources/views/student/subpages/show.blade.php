@@ -151,6 +151,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Mobile-only bottom navigation (hidden on desktop) -->
+    <div class="mobile-bottom-nav" style="display: none;">
+        @if($prevSubpage)
+            <a href="{{ route('student.courses.modules.subpages.show', [$course, $module, $prevSubpage]) }}" class="mobile-nav-prev">
+                <i class="fas fa-chevron-left"></i> Previous
+            </a>
+        @else
+            <span class="mobile-nav-disabled"><i class="fas fa-chevron-left"></i> Previous</span>
+        @endif
+        @if($nextSubpage)
+            <a href="{{ route('student.courses.modules.subpages.show', [$course, $module, $nextSubpage]) }}" class="mobile-nav-next">
+                Next <i class="fas fa-chevron-right"></i>
+            </a>
+        @else
+            <span class="mobile-nav-disabled">Next <i class="fas fa-chevron-right"></i></span>
+        @endif
+    </div>
 </div>
 @endsection
 
@@ -210,6 +228,122 @@
 
 .progress {
     height: 8px;
+}
+
+/* =============================================
+   MOBILE REDESIGN (<768px)
+   - Hide breadcrumb, sidebar, badges
+   - Compact header
+   - Full-width content
+   - Sticky bottom nav bar
+   ============================================= */
+@media screen and (max-width: 767px) {
+    /* Hide breadcrumb */
+    nav[aria-label="breadcrumb"] {
+        display: none !important;
+    }
+
+    /* Compact header */
+    .creative-page-header h1 {
+        font-size: 18px !important;
+        margin-bottom: 4px !important;
+    }
+    .creative-page-header p,
+    .creative-page-header .small,
+    .creative-page-header .creative-badge {
+        display: none !important;
+    }
+    .creative-page-header {
+        padding: 12px 16px !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* Hide desktop Previous/Next buttons in header */
+    .creative-page-header .col-md-4 {
+        display: none !important;
+    }
+
+    /* Full-width content */
+    .container-fluid {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .row.mb-4 {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Hide sidebar */
+    .col-lg-3 {
+        display: none !important;
+    }
+
+    /* Make content column full-width */
+    .col-lg-9 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Remove card shadow, make seamless */
+    .content-preview-card {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+    .content-preview-card .card-body {
+        padding: 16px !important;
+        padding-bottom: 72px !important; /* clearance for bottom nav */
+    }
+
+    /* Grid columns collapse to full-width on mobile */
+    .page-row {
+        grid-template-columns: 1fr !important;
+    }
+    .page-col {
+        grid-column: 1 / -1 !important;
+    }
+
+    /* Mobile bottom navigation bar */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 56px;
+        background: #1a1a2e;
+        padding: 8px;
+        gap: 8px;
+        z-index: 999;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    }
+    .mobile-bottom-nav a {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        gap: 6px;
+    }
+    .mobile-nav-prev {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ccc;
+    }
+    .mobile-nav-next {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+    }
+    .mobile-nav-disabled {
+        background: rgba(255, 255, 255, 0.05);
+        color: #555;
+        pointer-events: none;
+    }
 }
 </style>
 @endpush

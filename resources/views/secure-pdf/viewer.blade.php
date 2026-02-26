@@ -404,57 +404,99 @@
             }
         }
 
-        /* Small Tablet (600px - 767px) */
+        /* =============================================
+           MOBILE-FIRST REDESIGN (<768px)
+           - Hide top toolbar (title is on parent page)
+           - Hide security banner (blocks content)
+           - Full-width PDF canvas
+           - Sticky bottom toolbar with icon buttons
+           ============================================= */
         @media screen and (max-width: 767px) {
+            /* A) Hide top toolbar entirely */
             #toolbar {
-                padding: 8px 10px;
-                flex-direction: column;
-                gap: 8px;
+                display: none !important;
             }
 
-            #toolbar-left, #toolbar-center, #toolbar-right {
-                width: 100%;
-                justify-content: center;
-                gap: 8px;
+            /* B) Hide security banner */
+            .security-notice {
+                display: none !important;
             }
 
-            .toolbar-button {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
-
+            /* C) Full-width canvas, clear bottom toolbar */
             #pdf-canvas-container {
-                padding: 10px;
+                padding: 0;
+                padding-bottom: 64px; /* clearance for bottom toolbar */
+            }
+
+            #pdf-canvas {
+                max-width: 100%;
+                width: 100% !important;
+            }
+
+            /* Remove container shadows on mobile */
+            #viewer-container {
+                box-shadow: none;
             }
 
             .watermark-logo {
-                max-width: 350px;
+                max-width: 280px;
             }
 
-            .document-title {
-                font-size: 13px;
+            /* D) Mobile Bottom Toolbar */
+            #mobile-toolbar {
+                display: flex !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 56px;
+                background: #111;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 12px;
+                z-index: 1000;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+                gap: 4px;
+            }
+
+            .mobile-toolbar-group {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .mobile-toolbar-btn {
+                min-width: 44px;
+                min-height: 44px;
+                border: none;
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+                border-radius: 8px;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+                transition: background 0.15s ease;
+            }
+
+            .mobile-toolbar-btn:active {
+                background: rgba(255, 255, 255, 0.25);
+            }
+
+            .mobile-toolbar-btn:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+
+            .mobile-page-indicator {
+                color: #ccc;
+                font-size: 14px;
+                font-weight: 500;
+                white-space: nowrap;
+                min-width: 60px;
                 text-align: center;
-            }
-
-            .security-notice {
-                font-size: 11px;
-                padding: 6px 10px;
-            }
-
-            #page-input {
-                width: 50px;
-                padding: 5px 8px;
-                font-size: 12px;
-            }
-
-            #zoom-select {
-                padding: 6px 8px;
-                font-size: 11px;
-            }
-
-            /* Stack navigation buttons vertically on very small screens */
-            #toolbar-center {
-                flex-wrap: wrap;
             }
         }
 
@@ -550,6 +592,27 @@
                 </select>
                 <button class="toolbar-button" id="zoom-in">Zoom In</button>
                 <button class="toolbar-button" id="zoom-out">Zoom Out</button>
+            </div>
+        </div>
+
+        <!-- Mobile-Only Bottom Toolbar (hidden on desktop) -->
+        <div id="mobile-toolbar" style="display: none;">
+            <div class="mobile-toolbar-group">
+                <button class="mobile-toolbar-btn" id="mob-prev" disabled aria-label="Previous page">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <span class="mobile-page-indicator" id="mob-page-info">1 / —</span>
+                <button class="mobile-toolbar-btn" id="mob-next" disabled aria-label="Next page">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <div class="mobile-toolbar-group">
+                <button class="mobile-toolbar-btn" id="mob-zoom-out" aria-label="Zoom out">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10H15" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+                <button class="mobile-toolbar-btn" id="mob-zoom-in" aria-label="Zoom in">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 5V15M5 10H15" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
             </div>
         </div>
 
@@ -1406,8 +1469,41 @@
         // Track viewport width for resize detection
         let lastViewportWidth = window.innerWidth;
 
+        // ============================================
+        // MOBILE: Default to Fit Width + wire bottom toolbar
+        // ============================================
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+            zoomSelect.value = 'fit';
+        }
+
         // Load PDF on page load
         loadPDF();
+
+        // Mobile bottom toolbar wiring
+        (function initMobileToolbar() {
+            const mobPrev = document.getElementById('mob-prev');
+            const mobNext = document.getElementById('mob-next');
+            const mobPageInfo = document.getElementById('mob-page-info');
+            const mobZoomIn = document.getElementById('mob-zoom-in');
+            const mobZoomOut = document.getElementById('mob-zoom-out');
+            if (!mobPrev) return; // not rendered (shouldn't happen)
+
+            // Sync mobile page indicator whenever desktop updates
+            const origUpdateNav = updateNavigationButtons;
+            updateNavigationButtons = function() {
+                origUpdateNav();
+                // Sync mobile UI
+                mobPrev.disabled = prevButton.disabled;
+                mobNext.disabled = nextButton.disabled;
+                mobPageInfo.textContent = currentPage + ' / ' + (totalPages || '—');
+            };
+
+            mobPrev.addEventListener('click', () => { prevButton.click(); });
+            mobNext.addEventListener('click', () => { nextButton.click(); });
+            mobZoomIn.addEventListener('click', () => { zoomInButton.click(); });
+            mobZoomOut.addEventListener('click', () => { zoomOutButton.click(); });
+        })();
 
         // beforeunload removed — viewer is read-only, no changes to save
     </script>

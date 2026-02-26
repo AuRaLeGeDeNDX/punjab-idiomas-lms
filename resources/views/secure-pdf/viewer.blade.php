@@ -243,11 +243,11 @@
         }
 
         .watermark-logo {
-            width: 70%;
-            max-width: 700px;
-            min-width: 300px;
+            width: 45%;
+            max-width: 400px;
+            min-width: 150px;
             height: auto;
-            opacity: 0.22;
+            opacity: 0.15;
             pointer-events: none;
             filter: grayscale(20%);
             transform: rotate(-35deg);
@@ -304,7 +304,7 @@
             }
 
             .watermark-logo {
-                max-width: 800px;
+                max-width: 500px;
             }
         }
 
@@ -319,7 +319,7 @@
             }
 
             .watermark-logo {
-                max-width: 700px;
+                max-width: 400px;
             }
         }
 
@@ -343,7 +343,7 @@
             }
 
             .watermark-logo {
-                max-width: 550px;
+                max-width: 350px;
             }
 
             .document-title {
@@ -385,7 +385,7 @@
             }
 
             .watermark-logo {
-                max-width: 450px;
+                max-width: 300px;
             }
 
             .document-title {
@@ -428,7 +428,7 @@
             }
 
             .watermark-logo {
-                max-width: 350px;
+                max-width: 220px;
             }
 
             .document-title {
@@ -475,8 +475,8 @@
 
             /* Reduce watermark size in landscape to avoid obstruction */
             .watermark-logo {
-                max-width: 400px;
-                opacity: 0.18;
+                max-width: 280px;
+                opacity: 0.12;
             }
         }
 

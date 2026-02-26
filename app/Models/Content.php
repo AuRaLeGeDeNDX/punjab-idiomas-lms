@@ -363,7 +363,7 @@ class Content extends Model
                 'supports_files' => true,
                 'supports_external_url' => false,
                 'allowed_extensions' => ['pdf'],
-                'max_file_size' => 50 * 1024 * 1024, // 50MB
+                'max_file_size' => 200 * 1024 * 1024, // 200MB
             ],
             'audio' => [
                 'label' => 'Audio Block',

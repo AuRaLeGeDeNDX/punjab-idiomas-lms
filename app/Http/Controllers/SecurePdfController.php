@@ -331,18 +331,25 @@ class SecurePdfController extends Controller
         // Find file on storage
         $storageDisk = $content->storage_disk ?? 'protected';
         $disk = Storage::disk($storageDisk);
+        $isRemoteDisk = in_array($storageDisk, ['r2', 'r2-backup', 's3']);
         
         if (!$disk->exists($content->file_path)) {
-            // Try other disks as fallback
-            $disksToTry = ['protected', 'private', 'public'];
+            // Try other disks as fallback (include r2 in fallback search)
+            $disksToTry = ['r2', 'protected', 'private', 'public'];
             $fileFound = false;
             
             foreach ($disksToTry as $tryDisk) {
-                if (Storage::disk($tryDisk)->exists($content->file_path)) {
-                    $storageDisk = $tryDisk;
-                    $disk = Storage::disk($tryDisk);
-                    $fileFound = true;
-                    break;
+                try {
+                    if (Storage::disk($tryDisk)->exists($content->file_path)) {
+                        $storageDisk = $tryDisk;
+                        $disk = Storage::disk($tryDisk);
+                        $isRemoteDisk = in_array($tryDisk, ['r2', 'r2-backup', 's3']);
+                        $fileFound = true;
+                        break;
+                    }
+                } catch (\Exception $e) {
+                    // Skip disks that can't be resolved (e.g. missing credentials)
+                    continue;
                 }
             }
             
@@ -387,8 +394,13 @@ class SecurePdfController extends Controller
             }
         }
 
-        $path = $disk->path($content->file_path);
-        $fileSize = filesize($path);
+        // Get file size - handle remote (R2/S3) vs local disks differently
+        if ($isRemoteDisk) {
+            $fileSize = $disk->size($content->file_path);
+        } else {
+            $path = $disk->path($content->file_path);
+            $fileSize = filesize($path);
+        }
 
         // Log successful stream with PdfStreamLogger (Requirement 5.4)
         $correlationId = $this->logger->logSuccessfulStream($content, $request, [
@@ -427,45 +439,47 @@ class SecurePdfController extends Controller
             'correlation_id' => $correlationId,
         ]);
 
-        // Handle range requests for efficient streaming (Requirement 3.4)
+        // Standard security headers for all PDF responses
+        $securityHeaders = [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . basename($content->file_name ?? 'document.pdf') . '"',
+            'Accept-Ranges' => 'bytes',
+            'Access-Control-Allow-Origin' => $request->header('Origin') ?? config('app.url'),
+            'Access-Control-Allow-Methods' => 'GET, HEAD, OPTIONS',
+            'Access-Control-Allow-Headers' => 'Range, Content-Type',
+            'Access-Control-Expose-Headers' => 'Content-Length, Content-Range, Accept-Ranges',
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+            'X-Content-Type-Options' => 'nosniff',
+            'X-Frame-Options' => 'SAMEORIGIN',
+            'X-XSS-Protection' => '1; mode=block',
+            'Referrer-Policy' => 'strict-origin-when-cross-origin',
+            'Content-Security-Policy' => "default-src 'none'; object-src 'self'; plugin-types application/pdf; frame-ancestors 'self'; script-src 'none';",
+        ];
+
+        // ── Remote disk (R2/S3): proxy the file content through the VPS ──
+        if ($isRemoteDisk) {
+            // For remote disks, download the content and proxy it to the browser.
+            // Range requests are not supported for proxied R2 files (PDF.js will
+            // fall back to full-document mode, which is fine for most PDF sizes).
+            $fileContent = $disk->get($content->file_path);
+
+            return response($fileContent, 200, array_merge($securityHeaders, [
+                'Content-Length' => $fileSize,
+            ]));
+        }
+
+        // ── Local disk: use efficient file streaming with range request support ──
         $rangeHeader = $request->header('Range');
         
         if ($rangeHeader) {
             return $this->streamRangeResponse($path, $fileSize, $rangeHeader, $content, $request);
         }
 
-        // Return full PDF with strict security headers
-        $headers = [
-            // Content headers (Requirement 3.1)
-            'Content-Type' => 'application/pdf',
+        return response()->file($path, array_merge($securityHeaders, [
             'Content-Length' => $fileSize,
-            'Content-Disposition' => 'inline; filename="' . basename($content->file_name ?? 'document.pdf') . '"',
-            
-            // Range request support (Requirement 3.4)
-            'Accept-Ranges' => 'bytes',
-            
-            // CORS headers (Requirement 3.2) - Allow same-origin requests
-            'Access-Control-Allow-Origin' => $request->header('Origin') ?? config('app.url'),
-            'Access-Control-Allow-Methods' => 'GET, HEAD, OPTIONS',
-            'Access-Control-Allow-Headers' => 'Range, Content-Type',
-            'Access-Control-Expose-Headers' => 'Content-Length, Content-Range, Accept-Ranges',
-            
-            // Strict caching headers - no caching
-            'Cache-Control' => 'no-cache, no-store, must-revalidate',
-            'Pragma' => 'no-cache',
-            'Expires' => '0',
-            
-            // Security headers
-            'X-Content-Type-Options' => 'nosniff',
-            'X-Frame-Options' => 'SAMEORIGIN', // Allow iframe on same domain
-            'X-XSS-Protection' => '1; mode=block',
-            'Referrer-Policy' => 'strict-origin-when-cross-origin',
-            
-            // Content Security Policy - restrict what PDF can do
-            'Content-Security-Policy' => "default-src 'none'; object-src 'self'; plugin-types application/pdf; frame-ancestors 'self'; script-src 'none';",
-        ];
-
-        return response()->file($path, $headers);
+        ]));
     }
 
     /**

@@ -892,6 +892,10 @@ export class PageBuilder {
             video.setAttribute('controlsList', 'nodownload');
             video.oncontextmenu = (e) => e.preventDefault();
 
+            // Mobile specific: Prevent auto-fullscreen on play
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', '');
+
             video.preload = 'metadata';
             container.appendChild(video);
 

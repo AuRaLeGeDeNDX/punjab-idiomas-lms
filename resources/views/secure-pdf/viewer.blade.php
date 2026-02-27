@@ -1425,10 +1425,15 @@
             };
 
             // ============================================
-            // HYBRID PINCH TO ZOOM (GPU OPTIMIZED)
+            // HYBRID PINCH TO ZOOM (ANCHORED)
             // ============================================
             let touchStartDist = 0;
             let touchStartScale = 1.0;
+            let initialScrollLeft = 0;
+            let initialScrollTop = 0;
+            let midpointX = 0;
+            let midpointY = 0;
+            let containerRect = null;
             let liveScale = 1.0;
             let rafPending = false;
 
@@ -1437,11 +1442,19 @@
             container.addEventListener('touchstart', (e) => {
                 if (e.touches.length === 2 && window.innerWidth < 768) {
                     isPinching = true;
-                    touchStartDist = Math.hypot(
-                        e.touches[0].pageX - e.touches[1].pageX,
-                        e.touches[0].pageY - e.touches[1].pageY
-                    );
+                    const t1 = e.touches[0];
+                    const t2 = e.touches[1];
+                    
+                    touchStartDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
                     touchStartScale = currentScale;
+                    
+                    midpointX = (t1.clientX + t2.clientX) / 2;
+                    midpointY = (t1.clientY + t2.clientY) / 2;
+                    
+                    initialScrollLeft = container.scrollLeft;
+                    initialScrollTop = container.scrollTop;
+                    containerRect = container.getBoundingClientRect();
+                    
                     container.style.willChange = 'transform';
                 }
             }, { passive: true });
@@ -1450,21 +1463,28 @@
                 if (isPinching && e.touches.length === 2) {
                     if (e.cancelable) e.preventDefault();
 
-                    const currentDist = Math.hypot(
-                        e.touches[0].pageX - e.touches[1].pageX,
-                        e.touches[0].pageY - e.touches[1].pageY
-                    );
+                    const t1 = e.touches[0];
+                    const t2 = e.touches[1];
+                    const currentDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
                     
                     if (touchStartDist > 0) {
                         const factor = currentDist / touchStartDist;
                         liveScale = factor;
                         
-                        // Use rAF for silky smooth visual scaling
                         if (!rafPending) {
                             rafPending = true;
                             requestAnimationFrame(() => {
+                                // Scale purely visually during gesture
                                 canvas.style.transform = `scale(${liveScale})`;
-                                canvas.style.transformOrigin = 'center top';
+                                canvas.style.transformOrigin = '0 0';
+                                
+                                // Scroll compensation to keep pinch focal point stable
+                                const dx = midpointX - containerRect.left;
+                                const dy = midpointY - containerRect.top;
+                                
+                                container.scrollLeft = (initialScrollLeft + dx) * liveScale - dx;
+                                container.scrollTop = (initialScrollTop + dy) * liveScale - dy;
+                                
                                 rafPending = false;
                             });
                         }
@@ -1477,14 +1497,22 @@
                     isPinching = false;
                     container.style.willChange = 'auto';
 
-                    // Update currentScale based on final liveScale
-                    currentScale = Math.min(Math.max(touchStartScale * liveScale, 0.5), 5.0);
+                    const finalScale = Math.min(Math.max(touchStartScale * liveScale, 0.5), 5.0);
+                    const scaleRatio = finalScale / touchStartScale;
                     
-                    // Reset visual transform and re-render sharp version ONCE
+                    // Remove visual transform
                     canvas.style.transform = '';
-                    renderPage(currentPage, true); // immediate re-render sharp
+                    
+                    // Re-render sharp version
+                    currentScale = finalScale;
+                    renderPage(currentPage, true);
+                    
+                    // Adjust scroll position proportionally
+                    container.scrollLeft *= scaleRatio;
+                    container.scrollTop *= scaleRatio;
                     
                     touchStartDist = 0;
+                    liveScale = 1.0;
                 }
             }, { passive: true });
 

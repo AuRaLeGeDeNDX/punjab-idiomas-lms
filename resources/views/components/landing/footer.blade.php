@@ -3,7 +3,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-16 md:mb-20 text-center md:text-left">
             <div class="col-span-1 md:col-span-2 flex flex-col items-center md:items-start">
                 <div class="flex items-center gap-3 mb-6 md:mb-8">
-                    <img src="{{ asset('logo.jpeg') }}" class="h-10 w-10 md:h-12 md:w-12 rounded-xl" alt="Logo">
+                    <img src="{{ asset('images/logo.png') }}" class="h-10 w-10 md:h-12 md:w-12 rounded-xl" alt="Logo">
                     <span class="font-orbitron font-bold text-xl md:text-2xl tracking-wider text-orange-500">PUNJAB <span class="text-white">IDIOMAS</span></span>
                 </div>
                 <p class="text-base md:text-lg max-w-md leading-relaxed hidden md:block">

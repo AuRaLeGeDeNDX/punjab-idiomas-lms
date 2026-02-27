@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Punjab Idiomas | Escuela de Español en Barcelona')</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
     <!-- SEO & Meta Tags -->
     <meta name="description" content="@yield('description', 'Aprende español en Barcelona con Punjab Idiomas. Cursos A1-B2, preparación oficial DELE y plataforma LMS avanzada.')">
@@ -35,7 +36,7 @@
       "{{ '@' }}type": "EducationalOrganization",
       "name": "Punjab Idiomas",
       "url": "{{ url('/') }}",
-      "logo": "{{ asset('logo.jpeg') }}",
+      "logo": "{{ asset('images/logo.png') }}",
       "description": "Premium Spanish language school in Barcelona specialized in DELE preparation.",
       "address": {
         "{{ '@' }}type": "PostalAddress",

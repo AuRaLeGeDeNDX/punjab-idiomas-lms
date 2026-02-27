@@ -1,7 +1,7 @@
 <nav id="landing-navbar" class="fixed w-full z-50 transition-all duration-300 px-6 py-4 flex justify-between items-center bg-black/60 backdrop-blur-xl border-b border-white/10">
     <div class="flex items-center gap-3 cursor-pointer group" onclick="window.location.href='{{ url('/') }}'">
         <div class="relative overflow-hidden rounded-xl p-1 bg-gradient-to-br from-orange-400 to-orange-600 transition-transform group-hover:scale-110">
-            <img src="{{ asset('logo.jpeg') }}" class="h-10 w-10 object-cover rounded-lg" alt="Logo">
+            <img src="{{ asset('images/logo.png') }}" class="h-10 w-10 object-cover rounded-lg" alt="Logo">
         </div>
         <span class="font-orbitron font-bold text-xl tracking-wider text-orange-500 group-hover:text-orange-400 transition-colors">
             PUNJAB <span class="text-white group-hover:text-orange-500">IDIOMAS</span>

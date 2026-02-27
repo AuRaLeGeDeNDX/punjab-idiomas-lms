@@ -8,10 +8,7 @@
     <title>{{ config('app.name') }} - @yield('title', 'Learning Management System')</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('favicons/favicon-48x48.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="@yield('description', config('app.name') . ' - Modern Learning Management System')">

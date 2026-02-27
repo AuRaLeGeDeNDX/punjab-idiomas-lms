@@ -36,7 +36,13 @@
         #viewer-container {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
+        }
+
+        @media screen and (min-width: 768px) {
+            #viewer-container {
+                height: 100vh;
+            }
         }
 
         #toolbar {
@@ -395,17 +401,25 @@
             #pdf-canvas-container {
                 padding: 0;
                 padding-bottom: 70px; /* clear space for mobile toolbar */
-                min-height: auto !important; /* Allow it to shrink to content */
+                min-height: auto !important; 
+                flex: none !important; /* Don't stretch to fill viewer-container */
+                overflow: visible !important;
             }
 
             #pdf-canvas {
-                max-width: 100%;
+                max-width: 100% !important;
                 width: 100% !important;
+                height: auto !important;
+                display: block;
+                margin: 0 auto;
             }
 
             /* Remove container shadows on mobile */
             #viewer-container {
                 box-shadow: none;
+                height: auto !important;
+                min-height: auto !important;
+                background: #2c3e50; /* Ensure bg color is on container */
             }
 
 

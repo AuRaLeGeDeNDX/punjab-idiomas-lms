@@ -212,60 +212,8 @@
         </div>
     </section>
 
-    {{-- About --}}
-    <section id="nosotros" class="py-20 bg-white dark:bg-slate-900 transition-colors duration-300 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div data-aos="fade-right" data-aos-duration="800">
-                    <h2 class="text-base text-orange-600 dark:text-orange-500 font-bold tracking-wide uppercase">Sobre Nosotros</h2>
-                    <h3 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Punjab Idiomas</h3>
-                    <p class="mt-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Punjab Idiomas es un centro de enseñanza de español en Barcelona dedicado a ayudarte a aprender el idioma con confianza y a prepararte con éxito para los exámenes oficiales.
-                    </p>
-                    <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Ofrecemos una formación estructurada, clara y sólida, basada en fundamentos teóricos que garantizan un aprendizaje profundo y progresivo. Nuestro programa está diseñado para acompañarte paso a paso, desde el nivel A1 hasta el B2, proporcionando una guía completa y bien organizada para que avances con seguridad.
-                    </p>
-                   <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                   Además, somos una de las primeras plataformas informativas en Barcelona que, más allá de impartir clases, brinda un apoyo integral al estudiante: recursos didácticos, materiales de estudio actualizados y una preparación estratégica enfocada específicamente en los exámenes DELE.
-                    </p>
-
-                     <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                     En Punjab Idiomas, no solo aprendes español, construyes una base sólida para alcanzar tus metas académicas y profesionales.
-
-                    </p>
-                    <p class="mt-4 text-lg text-slate-800 dark:text-slate-200 font-semibold bg-orange-50 dark:bg-slate-800 p-4 border-l-4 border-orange-600 dark:border-orange-500 rounded-r-md transition-colors duration-300">
-                        Tanto si estás empezando desde cero como si deseas prepararte para los exámenes oficiales DELE, nuestro objetivo es que te sientas acompañado, bien preparado y con confianza en cada etapa de tu aprendizaje de idiomas.
-                    </p>
-                </div>
-                <div class="space-y-6" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
-                    <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all duration-300">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-orange-100 dark:bg-orange-900/50 p-3 rounded-lg text-orange-700 dark:text-orange-400 mr-4">
-                                <i data-lucide="target" class="w-7 h-7"></i>
-                            </div>
-                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Nuestra Misión</h4>
-                        </div>
-                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Formar estudiantes con bases sólidas, confianza y apoyo constante para que puedan aprobar con éxito los exámenes DELE A1 a B2, con material completo y enseñanza de alta calidad.
-                        </p>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all duration-300">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg text-yellow-600 dark:text-yellow-400 mr-4">
-                                <i data-lucide="eye" class="w-7 h-7"></i>
-                            </div>
-                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Nuestra Visión</h4>
-                        </div>
-                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Convertirnos en una de las escuelas más confiables de España en enseñanza teórica del español, reconocida por la calidad, el acompañamiento y un enfoque centrado en el estudiante.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="founder" class="py-20 bg-orange-50 dark:bg-slate-800/50 transition-colors duration-300 overflow-hidden">
+    {{-- Founder --}}
+<section id="founder" class="py-20 bg-orange-50 dark:bg-slate-800/50 transition-colors duration-300 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             
@@ -319,6 +267,61 @@
         </div>
     </div>
 </section>    
+
+    {{-- About --}}
+    <section id="nosotros" class="py-20 bg-white dark:bg-slate-900 transition-colors duration-300 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right" data-aos-duration="800">
+                    <h2 class="text-base text-orange-600 dark:text-orange-500 font-bold tracking-wide uppercase">Sobre Nosotros</h2>
+                    <h3 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Punjab Idiomas</h3>
+                    <p class="mt-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Punjab Idiomas es un centro de enseñanza de español en Barcelona dedicado a ayudarte a aprender el idioma con confianza y a prepararte con éxito para los exámenes oficiales.
+                    </p>
+                    <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Ofrecemos una formación estructurada, clara y sólida, basada en fundamentos teóricos que garantizan un aprendizaje profundo y progresivo. Nuestro programa está diseñado para acompañarte paso a paso, desde el nivel A1 hasta el B2, proporcionando una guía completa y bien organizada para que avances con seguridad.
+                    </p>
+                   <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                   Además, somos una de las primeras plataformas informativas en Barcelona que, más allá de impartir clases, brinda un apoyo integral al estudiante: recursos didácticos, materiales de estudio actualizados y una preparación estratégica enfocada específicamente en los exámenes DELE.
+                    </p>
+
+                     <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                     En Punjab Idiomas, no solo aprendes español, construyes una base sólida para alcanzar tus metas académicas y profesionales.
+
+                    </p>
+                    <p class="mt-4 text-lg text-slate-800 dark:text-slate-200 font-semibold bg-orange-50 dark:bg-slate-800 p-4 border-l-4 border-orange-600 dark:border-orange-500 rounded-r-md transition-colors duration-300">
+                        Tanto si estás empezando desde cero como si deseas prepararte para los exámenes oficiales DELE, nuestro objetivo es que te sientas acompañado, bien preparado y con confianza en cada etapa de tu aprendizaje de idiomas.
+                    </p>
+                </div>
+                <div class="space-y-6" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                    <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 dark:bg-orange-900/50 p-3 rounded-lg text-orange-700 dark:text-orange-400 mr-4">
+                                <i data-lucide="target" class="w-7 h-7"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Nuestra Misión</h4>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Formar estudiantes con bases sólidas, confianza y apoyo constante para que puedan aprobar con éxito los exámenes DELE A1 a B2, con material completo y enseñanza de alta calidad.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg text-yellow-600 dark:text-yellow-400 mr-4">
+                                <i data-lucide="eye" class="w-7 h-7"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-slate-900 dark:text-white">Nuestra Visión</h4>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Convertirnos en una de las escuelas más confiables de España en enseñanza teórica del español, reconocida por la calidad, el acompañamiento y un enfoque centrado en el estudiante.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
 
 
     {{-- Services --}}

@@ -324,9 +324,28 @@
     /* Grid columns collapse to full-width on mobile */
     .page-row {
         grid-template-columns: 1fr !important;
+        height: auto !important;
     }
     .page-col {
         grid-column: 1 / -1 !important;
+        align-self: flex-start !important; /* Prevent stretching to row height */
+        height: auto !important;
+        min-height: auto !important;
+    }
+    .page-block {
+        height: auto !important;
+        min-height: auto !important;
+        flex-grow: 0 !important; /* Prevent growth */
+    }
+    .page-block iframe {
+        height: auto !important;
+        min-height: 450px !important; /* Set a reasonable default height for mobile */
+        flex-grow: 0 !important;
+    }
+    .media-container {
+        height: auto !important;
+        min-height: auto !important;
+        flex-grow: 0 !important;
     }
 
     /* Mobile bottom navigation bar */

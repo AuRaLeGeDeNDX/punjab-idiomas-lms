@@ -399,11 +399,13 @@
 
             /* C) Full-width canvas, clear bottom toolbar */
             #pdf-canvas-container {
+                display: block !important; /* Wrapper: display block per requirement B */
+                height: auto !important;   /* height auto per requirement B */
+                min-height: auto !important;
                 padding: 0;
-                padding-bottom: 70px; /* clear space for mobile toolbar */
-                min-height: auto !important; 
-                flex: none !important; /* Don't stretch to fill viewer-container */
-                overflow: visible !important;
+                padding-bottom: 56px !important; /* Requirement C: exact toolbar height */
+                overflow: visible !important;   /* Requirement B: overflow visible */
+                flex: none !important;          /* Requirement D: prevent expansion */
             }
 
             #pdf-canvas {
@@ -414,12 +416,22 @@
                 margin: 0 auto;
             }
 
-            /* Remove container shadows on mobile */
+            /* Remove container shadows and forced heights on mobile */
             #viewer-container {
+                display: block !important; /* Requirement D: prevent flex expansion */
+                height: auto !important;   /* Requirement A: height auto */
+                min-height: auto !important; /* Requirement A: min-height auto */
+                flex: unset !important;      /* Requirement D: flex unset */
+                align-items: stretch;        /* Requirement D: align-items stretch */
                 box-shadow: none;
+                background: #2c3e50;
+            }
+
+            /* Requirement A: Ensure body/html don't force height */
+            body.mobile-viewer {
                 height: auto !important;
                 min-height: auto !important;
-                background: #2c3e50; /* Ensure bg color is on container */
+                overflow: visible !important;
             }
 
 

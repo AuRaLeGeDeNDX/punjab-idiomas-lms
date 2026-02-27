@@ -79,6 +79,16 @@
             min-height: calc(100vh - 56px);
             padding: 2rem;
         }
+
+        @media screen and (max-width: 767px) {
+            .main-content {
+                min-height: auto !important;
+                padding: 1rem !important;
+            }
+            .sidebar {
+                min-height: auto !important;
+            }
+        }
         
         .card {
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);

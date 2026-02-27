@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $content->title }} - Secure PDF Viewer</title>
     
@@ -399,21 +399,26 @@
 
             /* C) Full-width canvas, clear bottom toolbar */
             #pdf-canvas-container {
-                display: block !important; /* Wrapper: display block per requirement B */
-                height: auto !important;   /* height auto per requirement B */
+                display: block !important;
+                height: auto !important;
                 min-height: auto !important;
-                padding: 0;
-                padding-bottom: 56px !important; /* Requirement C: exact toolbar height */
-                overflow: visible !important;   /* Requirement B: overflow visible */
-                flex: none !important;          /* Requirement D: prevent expansion */
+                padding: 10px 10px 56px 10px !important; /* Requirement: 10px sides, 56px bottom */
+                padding-top: 8px !important; /* Requirement: 8px top */
+                background: #f1f3f4 !important; /* Requirement: light neutral background */
+                overflow: visible !important;
+                flex: none !important;
+                touch-action: pan-y pinch-zoom; /* Allow panning and pinching */
             }
 
             #pdf-canvas {
                 max-width: 100% !important;
-                width: 100% !important;
+                width: auto !important; /* Allow it to be centered and not forced full-width if zoomed out */
                 height: auto !important;
                 display: block;
-                margin: 0 auto;
+                margin: 0 auto 16px auto !important; /* Requirement: 16px bottom margin */
+                border-radius: 6px !important; /* Requirement: 6px radius */
+                box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important; /* Requirement: subtle shadow */
+                background: white !important;
             }
 
             /* Remove container shadows and forced heights on mobile */
@@ -1161,8 +1166,10 @@
 
             rendering = true;
 
-            // Add smooth transition effect
-            canvas.classList.add('rendering');
+            // Add smooth transition effect (skip if pinching for "no white flash" experience)
+            if (!isPinching) {
+                canvas.classList.add('rendering');
+            }
 
             try {
                 const page = await pdfDoc.getPage(pageNum);
@@ -1461,6 +1468,74 @@
                 mobNext.disabled = nextButton.disabled;
                 mobPageInfo.textContent = currentPage + ' / ' + (totalPages || '—');
             };
+
+            // ============================================
+            // PINCH TO ZOOM (MOBILE)
+            // ============================================
+            let touchStartDist = 0;
+            let touchStartScale = 1.0;
+            let isPinching = false;
+            let pinchTimeout;
+
+            const container = document.getElementById('pdf-canvas-container');
+
+            container.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2 && window.innerWidth < 768) {
+                    isPinching = true;
+                    touchStartDist = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    // Get current scale value (numeric)
+                    touchStartScale = (zoomSelect.value === 'fit') ? currentScale : parseFloat(zoomSelect.value || currentScale);
+                }
+            }, { passive: true });
+
+            container.addEventListener('touchmove', (e) => {
+                if (isPinching && e.touches.length === 2) {
+                    // Prevent browser default zoom
+                    if (e.cancelable) e.preventDefault();
+
+                    const currentDist = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    
+                    if (touchStartDist > 0) {
+                        const scaleFactor = currentDist / touchStartDist;
+                        let newScale = touchStartScale * scaleFactor;
+                        
+                        // Limit scale between 0.5 and 5.0
+                        newScale = Math.min(Math.max(newScale, 0.5), 5.0);
+
+                        // Re-render with PDF.js for high quality
+                        // We debounce slightly to avoid overwhelming the renderer
+                        clearTimeout(pinchTimeout);
+                        pinchTimeout = setTimeout(() => {
+                            if (Math.abs(newScale - currentScale) > 0.02) {
+                                currentScale = newScale;
+                                // Update zoom select if it matches an option, otherwise set to empty or custom
+                                zoomSelect.value = Array.from(zoomSelect.options).find(opt => parseFloat(opt.value) === parseFloat(newScale.toFixed(2))) ? newScale.toFixed(2) : zoomSelect.value;
+                                renderPage(currentPage);
+                            }
+                        }, 50);
+
+                        // During the pinch, we can apply a subtle CSS scale for immediate feedback
+                        // without causing blurriness since the re-render happens quickly
+                        canvas.style.transform = `scale(${scaleFactor})`;
+                        canvas.style.transformOrigin = 'center top';
+                    }
+                }
+            }, { passive: false });
+
+            container.addEventListener('touchend', (e) => {
+                if (isPinching) {
+                    isPinching = false;
+                    touchStartDist = 0;
+                    // Reset CSS transform as re-render will have happened or will happen
+                    canvas.style.transform = '';
+                }
+            }, { passive: true });
 
             mobPrev.addEventListener('click', () => { prevButton.click(); });
             mobNext.addEventListener('click', () => { nextButton.click(); });

@@ -402,38 +402,40 @@
                 display: block !important;
                 height: auto !important;
                 min-height: auto !important;
-                padding: 10px 10px 56px 10px !important; /* Requirement: 10px sides, 56px bottom */
-                padding-top: 8px !important; /* Requirement: 8px top */
-                background: #f1f3f4 !important; /* Requirement: light neutral background */
+                padding: 10px 10px 56px 10px !important;
+                padding-top: 8px !important;
+                background: #f1f3f4 !important;
                 overflow: visible !important;
                 flex: none !important;
-                touch-action: pan-y pinch-zoom; /* Allow panning and pinching */
+                touch-action: pan-y pinch-zoom;
+                will-change: transform; /* Hint GPU optimization */
             }
 
             #pdf-canvas {
                 max-width: 100% !important;
-                width: auto !important; /* Allow it to be centered and not forced full-width if zoomed out */
+                width: auto !important;
                 height: auto !important;
                 display: block;
-                margin: 0 auto 16px auto !important; /* Requirement: 16px bottom margin */
-                border-radius: 6px !important; /* Requirement: 6px radius */
-                box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important; /* Requirement: subtle shadow */
+                margin: 0 auto 16px auto !important;
+                border-radius: 6px !important;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
                 background: white !important;
+                /* Remove transitions for smooth hybrid zoom */
+                transition: none !important;
             }
 
             /* Remove container shadows and forced heights on mobile */
             #viewer-container {
-                display: block !important; /* Requirement D: prevent flex expansion */
-                height: auto !important;   /* Requirement A: height auto */
-                min-height: auto !important; /* Requirement A: min-height auto */
-                flex: unset !important;      /* Requirement D: flex unset */
-                align-items: stretch;        /* Requirement D: align-items stretch */
+                display: block !important;
+                height: auto !important;
+                min-height: auto !important;
+                flex: none !important;
                 box-shadow: none;
-                background: #2c3e50;
+                background: #f1f3f4; /* Match container background */
             }
 
-            /* Requirement A: Ensure body/html don't force height */
-            body.mobile-viewer {
+            /* Ensure body/html don't force height/stretching */
+            body, html {
                 height: auto !important;
                 min-height: auto !important;
                 overflow: visible !important;
@@ -1151,19 +1153,19 @@
         }
 
         // Render specific page with enhanced error handling
-        async function renderPage(pageNum) {
+        let renderTimeout;
+        async function renderPage(pageNum, immediate = false) {
             if (rendering) return;
 
-            // NULL SAFETY: Check if pdfDoc is loaded before attempting to render
-            if (!pdfDoc) {
-                console.error('Cannot render page: PDF document not loaded');
-                displayError(
-                    'PDF Not Loaded',
-                    'The PDF document failed to load. Please refresh the page to try again.',
-                    true
-                );
+            // Debounce rendering unless immediate=true
+            if (!immediate && !isPinching) {
+                clearTimeout(renderTimeout);
+                renderTimeout = setTimeout(() => renderPage(pageNum, true), 150);
                 return;
             }
+
+            // NULL SAFETY: Check if pdfDoc is loaded before attempting to render
+            if (!pdfDoc) return;
 
             rendering = true;
 
@@ -1174,43 +1176,14 @@
 
             try {
                 const page = await pdfDoc.getPage(pageNum);
-                
-                // Calculate scale with responsive adjustments
-                let viewport;
-                if (zoomSelect.value === 'fit') {
-                    // Responsive container width calculation
-                    const container = document.getElementById('pdf-canvas-container');
-                    const containerWidth = container.clientWidth - 40;
-                    
-                    // Adjust padding based on viewport size
-                    let paddingAdjustment = 40;
-                    if (window.innerWidth < 768) {
-                        paddingAdjustment = 20;
-                    } else if (window.innerWidth < 992) {
-                        paddingAdjustment = 30;
-                    }
-                    
-                    const effectiveWidth = container.clientWidth - paddingAdjustment;
-                    const pageViewport = page.getViewport({ scale: 1.0 });
-                    currentScale = effectiveWidth / pageViewport.width;
-                    viewport = page.getViewport({ scale: currentScale });
-                } else {
-                    // Apply responsive scale adjustments for fixed zoom levels
-                    let responsiveScale = currentScale;
-                    
-                    // On smaller screens, slightly reduce the scale to ensure fit
-                    if (window.innerWidth < 768 && currentScale > 1.0) {
-                        responsiveScale = currentScale * 0.9;
-                    } else if (window.innerWidth < 992 && currentScale > 1.5) {
-                        responsiveScale = currentScale * 0.95;
-                    }
-                    
-                    viewport = page.getViewport({ scale: responsiveScale });
-                }
+                const viewport = page.getViewport({ scale: currentScale });
 
                 // Set canvas dimensions
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
+
+                // Clear previous context to save memory/prevent heavy feel
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 // Render page
                 const renderContext = {
@@ -1242,23 +1215,8 @@
                 logError('rendering_error', 'Failed to render page', {
                     page_number: pageNum,
                     error_message: error.toString(),
-                    current_scale: currentScale,
-                    viewport_size: {
-                        width: window.innerWidth,
-                        height: window.innerHeight
-                    }
+                    current_scale: currentScale
                 });
-                
-                // Show error message on canvas
-                ctx.fillStyle = '#2c3e50';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#ff6b6b';
-                ctx.font = '16px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('Failed to render page ' + pageNum, canvas.width / 2, canvas.height / 2);
-                ctx.fillStyle = '#ccc';
-                ctx.font = '14px Arial';
-                ctx.fillText('Please try navigating to another page', canvas.width / 2, canvas.height / 2 + 30);
             }
         }
 
@@ -1357,41 +1315,37 @@
         });
 
         zoomInButton.addEventListener('click', () => {
-            // Add visual feedback
-            zoomInButton.style.transform = 'scale(0.95)';
+            const oldValue = currentScale;
+            currentScale = Math.min(currentScale + 0.25, 5.0);
+            
+            // Hybrid Button Zoom: Scale visually first
+            const factor = currentScale / oldValue;
+            canvas.style.transition = 'transform 0.2s ease-out';
+            canvas.style.transform = `scale(${factor})`;
+            canvas.style.transformOrigin = 'center top';
+
             setTimeout(() => {
-                zoomInButton.style.transform = 'scale(1)';
-            }, 100);
-            
-            // Find current zoom level in select options
-            const currentValue = parseFloat(zoomSelect.value);
-            const options = Array.from(zoomSelect.options).map(opt => parseFloat(opt.value)).filter(v => !isNaN(v));
-            
-            // Find next higher zoom level
-            const nextZoom = options.find(v => v > currentValue) || Math.min(currentScale + 0.25, 3.0);
-            
-            currentScale = nextZoom;
-            zoomSelect.value = currentScale;
-            renderPage(currentPage);
+                canvas.style.transition = 'none';
+                canvas.style.transform = '';
+                renderPage(currentPage, true);
+            }, 200);
         });
 
         zoomOutButton.addEventListener('click', () => {
-            // Add visual feedback
-            zoomOutButton.style.transform = 'scale(0.95)';
+            const oldValue = currentScale;
+            currentScale = Math.max(currentScale - 0.25, 0.5);
+            
+            // Hybrid Button Zoom: Scale visually first
+            const factor = currentScale / oldValue;
+            canvas.style.transition = 'transform 0.2s ease-out';
+            canvas.style.transform = `scale(${factor})`;
+            canvas.style.transformOrigin = 'center top';
+
             setTimeout(() => {
-                zoomOutButton.style.transform = 'scale(1)';
-            }, 100);
-            
-            // Find current zoom level in select options
-            const currentValue = parseFloat(zoomSelect.value);
-            const options = Array.from(zoomSelect.options).map(opt => parseFloat(opt.value)).filter(v => !isNaN(v)).reverse();
-            
-            // Find next lower zoom level
-            const nextZoom = options.find(v => v < currentValue) || Math.max(currentScale - 0.25, 0.5);
-            
-            currentScale = nextZoom;
-            zoomSelect.value = currentScale;
-            renderPage(currentPage);
+                canvas.style.transition = 'none';
+                canvas.style.transform = '';
+                renderPage(currentPage, true);
+            }, 200);
         });
 
         // ============================================
@@ -1471,11 +1425,12 @@
             };
 
             // ============================================
-            // PINCH TO ZOOM (MOBILE)
+            // HYBRID PINCH TO ZOOM (GPU OPTIMIZED)
             // ============================================
             let touchStartDist = 0;
             let touchStartScale = 1.0;
-            let pinchTimeout;
+            let liveScale = 1.0;
+            let rafPending = false;
 
             const container = document.getElementById('pdf-canvas-container');
 
@@ -1486,14 +1441,13 @@
                         e.touches[0].pageX - e.touches[1].pageX,
                         e.touches[0].pageY - e.touches[1].pageY
                     );
-                    // Get current scale value (numeric)
-                    touchStartScale = (zoomSelect.value === 'fit') ? currentScale : parseFloat(zoomSelect.value || currentScale);
+                    touchStartScale = currentScale;
+                    container.style.willChange = 'transform';
                 }
             }, { passive: true });
 
             container.addEventListener('touchmove', (e) => {
                 if (isPinching && e.touches.length === 2) {
-                    // Prevent browser default zoom
                     if (e.cancelable) e.preventDefault();
 
                     const currentDist = Math.hypot(
@@ -1502,28 +1456,18 @@
                     );
                     
                     if (touchStartDist > 0) {
-                        const scaleFactor = currentDist / touchStartDist;
-                        let newScale = touchStartScale * scaleFactor;
+                        const factor = currentDist / touchStartDist;
+                        liveScale = factor;
                         
-                        // Limit scale between 0.5 and 5.0
-                        newScale = Math.min(Math.max(newScale, 0.5), 5.0);
-
-                        // Re-render with PDF.js for high quality
-                        // We debounce slightly to avoid overwhelming the renderer
-                        clearTimeout(pinchTimeout);
-                        pinchTimeout = setTimeout(() => {
-                            if (Math.abs(newScale - currentScale) > 0.02) {
-                                currentScale = newScale;
-                                // Update zoom select if it matches an option, otherwise set to empty or custom
-                                zoomSelect.value = Array.from(zoomSelect.options).find(opt => parseFloat(opt.value) === parseFloat(newScale.toFixed(2))) ? newScale.toFixed(2) : zoomSelect.value;
-                                renderPage(currentPage);
-                            }
-                        }, 50);
-
-                        // During the pinch, we can apply a subtle CSS scale for immediate feedback
-                        // without causing blurriness since the re-render happens quickly
-                        canvas.style.transform = `scale(${scaleFactor})`;
-                        canvas.style.transformOrigin = 'center top';
+                        // Use rAF for silky smooth visual scaling
+                        if (!rafPending) {
+                            rafPending = true;
+                            requestAnimationFrame(() => {
+                                canvas.style.transform = `scale(${liveScale})`;
+                                canvas.style.transformOrigin = 'center top';
+                                rafPending = false;
+                            });
+                        }
                     }
                 }
             }, { passive: false });
@@ -1531,9 +1475,16 @@
             container.addEventListener('touchend', (e) => {
                 if (isPinching) {
                     isPinching = false;
-                    touchStartDist = 0;
-                    // Reset CSS transform as re-render will have happened or will happen
+                    container.style.willChange = 'auto';
+
+                    // Update currentScale based on final liveScale
+                    currentScale = Math.min(Math.max(touchStartScale * liveScale, 0.5), 5.0);
+                    
+                    // Reset visual transform and re-render sharp version ONCE
                     canvas.style.transform = '';
+                    renderPage(currentPage, true); // immediate re-render sharp
+                    
+                    touchStartDist = 0;
                 }
             }, { passive: true });
 

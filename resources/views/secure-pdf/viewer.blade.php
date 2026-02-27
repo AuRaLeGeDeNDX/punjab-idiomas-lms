@@ -228,30 +228,7 @@
             letter-spacing: 0.5px;
         }
 
-        #watermark-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
-        .watermark-logo {
-            width: 70%;
-            max-width: 700px;
-            min-width: 300px;
-            height: auto;
-            opacity: 0.18;
-            pointer-events: none;
-            filter: grayscale(20%);
-            transform: rotate(-35deg);
-        }
 
         .security-notice {
             background: #ff6b6b;
@@ -303,9 +280,7 @@
                 padding: 40px;
             }
 
-            .watermark-logo {
-                max-width: 800px;
-            }
+
         }
 
         /* Standard Desktop (1200px - 1919px) */
@@ -318,9 +293,7 @@
                 padding: 30px;
             }
 
-            .watermark-logo {
-                max-width: 700px;
-            }
+
         }
 
         /* Small Desktop / Large Tablet Landscape (992px - 1199px) */
@@ -342,9 +315,7 @@
                 padding: 20px;
             }
 
-            .watermark-logo {
-                max-width: 550px;
-            }
+
 
             .document-title {
                 font-size: 15px;
@@ -384,9 +355,7 @@
                 padding: 15px;
             }
 
-            .watermark-logo {
-                max-width: 450px;
-            }
+
 
             .document-title {
                 font-size: 14px;
@@ -438,9 +407,7 @@
                 box-shadow: none;
             }
 
-            .watermark-logo {
-                max-width: 280px;
-            }
+
 
             /* D) Mobile Bottom Toolbar */
             #mobile-toolbar {
@@ -515,11 +482,7 @@
                 font-size: 11px;
             }
 
-            /* Reduce watermark size in landscape to avoid obstruction */
-            .watermark-logo {
-                max-width: 400px;
-                opacity: 0.15;
-            }
+
         }
 
         /* High DPI / Retina Display adjustments */
@@ -619,8 +582,7 @@
         <!-- PDF Canvas Container -->
         <div id="pdf-canvas-container">
             <canvas id="pdf-canvas"></canvas>
-            <!-- Watermark Overlay (inside canvas container to clip to PDF area) -->
-            <div id="watermark-overlay"></div>
+
         </div>
 
         <!-- Loading Indicator -->
@@ -685,30 +647,7 @@
         const zoomInButton = document.getElementById('zoom-in');
         const zoomOutButton = document.getElementById('zoom-out');
 
-        // ============================================
-        // WATERMARK RENDERING (Logo Watermark)
-        // ============================================
 
-        /**
-         * Render a centered logo watermark over the PDF viewer
-         */
-        function renderWatermark() {
-            const overlay = document.getElementById('watermark-overlay');
-            
-            // Clear existing watermarks
-            overlay.innerHTML = '';
-            
-            // Create logo watermark image
-            const logo = document.createElement('img');
-            logo.src = '/images/watermark-logo.png';
-            logo.className = 'watermark-logo';
-            logo.alt = '';
-            logo.draggable = false;
-            
-            overlay.appendChild(logo);
-            
-            console.log('Logo watermark rendered');
-        }
 
         // ============================================
         // ANTI-DOWNLOAD PROTECTIONS
@@ -1446,14 +1385,11 @@
         // INITIALIZATION
         // ============================================
 
-        // Render watermark on page load
-        renderWatermark();
+
 
         // Re-render watermark on window resize
         let resizeTimeout;
         window.addEventListener('resize', () => {
-            // Re-render watermark immediately
-            renderWatermark();
             
             // Debounce PDF re-rendering to avoid excessive renders
             clearTimeout(resizeTimeout);

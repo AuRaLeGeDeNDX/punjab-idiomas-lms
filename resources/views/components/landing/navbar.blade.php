@@ -30,11 +30,12 @@
                 <button class="flex items-center gap-2 text-sm font-bold uppercase hover:text-orange-500 transition-colors py-2 px-3 bg-white/5 rounded-lg border border-white/10">
                     <i class="fas fa-globe text-orange-500"></i> {{ strtoupper(app()->getLocale()) }}
                 </button>
-                <div class="absolute top-full right-0 mt-2 w-32 bg-gray-900 border border-white/10 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl z-50">
+                <div class="absolute top-full right-0 mt-2 w-32 bg-gray-900 border border-white/10 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl z-50 text-center">
                     <a href="?lang=es" class="block px-4 py-2 hover:bg-orange-600 hover:text-white transition-colors text-xs font-bold @if(app()->getLocale() == 'es') text-orange-500 @endif">ESPAÑOL</a>
                     <a href="?lang=en" class="block px-4 py-2 hover:bg-orange-600 hover:text-white transition-colors text-xs font-bold @if(app()->getLocale() == 'en') text-orange-500 @endif">ENGLISH</a>
                     <a href="?lang=pa" class="block px-4 py-2 hover:bg-orange-600 hover:text-white transition-colors text-xs font-bold @if(app()->getLocale() == 'pa') text-orange-500 @endif">ਪੰਜਾਬੀ</a>
                     <a href="?lang=hi" class="block px-4 py-2 hover:bg-orange-600 hover:text-white transition-colors text-xs font-bold @if(app()->getLocale() == 'hi') text-orange-500 @endif">हिन्दी</a>
+                    <a href="?lang=ur" class="block px-4 py-2 hover:bg-orange-600 hover:text-white transition-colors text-xs font-bold @if(app()->getLocale() == 'ur') text-orange-500 @endif">اردو</a>
                 </div>
             </div>
 
@@ -74,6 +75,7 @@
             <a href="?lang=en" class="px-4 py-2 rounded-lg border border-white/10 text-xs font-bold @if(app()->getLocale() == 'en') bg-orange-500 text-white @else text-gray-400 @endif">EN</a>
             <a href="?lang=pa" class="px-4 py-2 rounded-lg border border-white/10 text-xs font-bold @if(app()->getLocale() == 'pa') bg-orange-500 text-white @else text-gray-400 @endif">PA</a>
             <a href="?lang=hi" class="px-4 py-2 rounded-lg border border-white/10 text-xs font-bold @if(app()->getLocale() == 'hi') bg-orange-500 text-white @else text-gray-400 @endif">HI</a>
+            <a href="?lang=ur" class="px-4 py-2 rounded-lg border border-white/10 text-xs font-bold @if(app()->getLocale() == 'ur') bg-orange-500 text-white @else text-gray-400 @endif">UR</a>
         </div>
 
         @auth

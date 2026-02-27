@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,12 +104,13 @@
                             <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
                         </button>
                         <div class="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-slate-100 dark:border-slate-700">
-                            <ul class="py-1 text-sm text-slate-700 dark:text-slate-200">
+                            <ul class="py-1 text-sm text-slate-700 dark:text-slate-200 text-center">
                                 <li><a href="#" onclick="setLanguage('es', event)" class="block px-4 py-2 hover:bg-orange-50 dark:hover:bg-slate-700 hover:text-orange-700 dark:hover:text-yellow-400">Español</a></li>
                                 <li><a href="#" onclick="setLanguage('ca', event)" class="block px-4 py-2 hover:bg-orange-50 dark:hover:bg-slate-700 hover:text-orange-700 dark:hover:text-yellow-400">Català</a></li>
                                 <li><a href="#" onclick="setLanguage('en', event)" class="block px-4 py-2 hover:bg-orange-50 dark:hover:bg-slate-700 hover:text-orange-700 dark:hover:text-yellow-400">English</a></li>
                                 <li><a href="#" onclick="setLanguage('hi', event)" class="block px-4 py-2 hover:bg-orange-50 dark:hover:bg-slate-700 hover:text-orange-700 dark:hover:text-yellow-400">हिन्दी</a></li>
                                 <li><a href="#" onclick="setLanguage('pa', event)" class="block px-4 py-2 hover:bg-orange-50 dark:hover:bg-slate-700 hover:text-orange-700 dark:hover:text-yellow-400">ਪੰਜਾਬੀ</a></li>
+                                <li><a href="#" onclick="setLanguage('ur', event)" class="block px-4 py-2 hover:bg-orange-50 dark:hover:bg-slate-700 hover:text-orange-700 dark:hover:text-yellow-400">اردو</a></li>
                             </ul>
                         </div>
                     </div>

@@ -99,7 +99,7 @@ class AppServiceProvider extends ServiceProvider
         // Simple language switcher via query param
         if (request()->has('lang')) {
             $lang = request()->get('lang');
-            if (in_array($lang, ['es', 'en', 'pa', 'hi', 'ca'])) {
+            if (in_array($lang, ['es', 'en', 'pa', 'hi', 'ca', 'ur'])) {
                 app()->setLocale($lang);
                 session()->put('locale', $lang);
             }

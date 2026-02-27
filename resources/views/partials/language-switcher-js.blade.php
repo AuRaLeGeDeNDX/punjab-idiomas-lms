@@ -5,7 +5,7 @@
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'es',
-            includedLanguages: 'en,es,ca,hi,pa',
+            includedLanguages: 'en,es,ca,hi,pa,ur',
             autoDisplay: false
         }, 'google_translate_element');
     }
@@ -13,16 +13,26 @@
     function setLanguage(lang, event) {
         if(event) event.preventDefault();
         
-        let domain = window.location.hostname;
-        if (lang === 'es') {
-            document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=' + domain + '; path=/;';
-            document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.' + domain + '; path=/;';
-        } else {
-            document.cookie = 'googtrans=/es/' + lang + '; path=/;';
-            document.cookie = 'googtrans=/es/' + lang + '; domain=' + domain + '; path=/;';
-            document.cookie = 'googtrans=/es/' + lang + '; domain=.' + domain + '; path=/;';
-        }
+        const domain = window.location.hostname;
+        const cookieName = 'googtrans';
+        const cookieValue = lang === 'es' ? '' : '/es/' + lang;
+        const expires = lang === 'es' ? 'Expires=Thu, 01 Jan 1970 00:00:01 GMT' : '';
+        
+        // Comprehensive cookie clearing/setting
+        const paths = ['/', '/index.php'];
+        const domains = [domain, '.' + domain, ''];
+        
+        domains.forEach(d => {
+            paths.forEach(p => {
+                let cookieStr = `${cookieName}=${cookieValue}; path=${p};`;
+                if (d) cookieStr += ` domain=${d};`;
+                if (expires) cookieStr += ` ${expires};`;
+                document.cookie = cookieStr;
+            });
+        });
+
+        // Set local cookie as fallback
+        document.cookie = `${cookieName}=${cookieValue}; path=/;`;
         
         // Preserve current path, update query param
         let url = new URL(window.location.href);

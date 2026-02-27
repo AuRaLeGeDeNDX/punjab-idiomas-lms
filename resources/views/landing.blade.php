@@ -32,6 +32,30 @@
         .dark .cursor-active { background: rgba(250, 204, 21, 0.1) !important; border-color: #c2410c !important; }
         .perspective-1000 { perspective: 1000px; }
         .card-3d { transition: transform 0.1s ease-out, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; transform-style: preserve-3d; will-change: transform; }
+
+        /* Refined Contact Map */
+        .contact-map-wrapper {
+            width: auto;
+            height: 320px;
+            overflow: hidden;
+            margin: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .dark .contact-map-wrapper {
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        @media (max-width: 767px) {
+            .contact-map-wrapper {
+                height: 250px;
+                margin: 16px;
+                border-radius: 12px;
+            }
+        }
     </style>
 </head>
 <body class="font-sans text-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-slate-200 min-h-screen transition-colors duration-300 overflow-x-hidden">
@@ -373,9 +397,10 @@
     <section id="contacto" class="py-20 bg-orange-900 dark:bg-slate-950 relative transition-colors duration-300">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="fade-up">
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden transition-colors duration-300">
+                <div class="flex flex-col lg:flex-row">
 
-                <div class="bg-orange-800 dark:bg-orange-900 text-white p-6 md:p-10 lg:w-2/5 flex flex-col justify-between relative overflow-hidden transition-colors duration-300">
+                <div class="bg-orange-800 dark:bg-orange-900 text-white p-6 md:p-10 lg:w-2/5 flex flex-col justify-between relative overflow-hidden transition-colors duration-300 rounded-2xl">
                     <div class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-orange-700 dark:bg-orange-800 rounded-full opacity-50 blur-3xl transition-colors duration-300"></div>
                     <div class="relative z-10">
                         <h3 class="text-3xl font-bold mb-2 text-yellow-400">Contáctanos</h3>
@@ -446,7 +471,20 @@
                     </form>
                 </div>
             </div>
+
+            {{-- Full Width Map --}}
+            <div class="contact-map-wrapper">
+                <iframe
+                    src="https://www.google.com/maps?q=Calle+Padilla+391,+08025+Barcelona&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0; filter: grayscale(0.2) contrast(1.1);"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
+            </div>
         </div>
+    </div>
     </section>
 
     {{-- Footer --}}

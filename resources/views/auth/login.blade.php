@@ -106,7 +106,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <a href="{{ url('/') }}" class="flex items-center no-underline">
-                    <img src="{{ asset('images/logo.png') }}" alt="Punjab Idiomas Logo" class="h-10 w-auto mr-3 rounded-sm">
+                    <img src="{{ asset('images/logo.png') }}" alt="Punjab Idiomas Logo" class="h-16 w-auto mr-3 rounded-sm">
                     <div>
                         <span class="font-extrabold text-xl text-orange-900 dark:text-orange-500 leading-none block">PUNJAB</span>
                         <span class="font-semibold text-xs text-yellow-500 uppercase tracking-wider block">Idiomas</span>

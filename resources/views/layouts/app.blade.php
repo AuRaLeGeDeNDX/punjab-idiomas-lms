@@ -52,9 +52,9 @@
         }
         
         .navbar-logo {
-            height: 40px;
+            height: 60px;
             width: auto;
-            margin-right: 10px;
+            margin-right: 12px;
         }
         
         .sidebar {

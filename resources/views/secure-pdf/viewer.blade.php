@@ -394,7 +394,8 @@
             /* C) Full-width canvas, clear bottom toolbar */
             #pdf-canvas-container {
                 padding: 0;
-                padding-bottom: 64px; /* clearance for bottom toolbar */
+                padding-bottom: 70px; /* clear space for mobile toolbar */
+                min-height: auto !important; /* Allow it to shrink to content */
             }
 
             #pdf-canvas {

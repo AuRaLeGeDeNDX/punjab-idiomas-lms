@@ -14,26 +14,35 @@
     <div class="content-builder-sticky-header">
         <div class="container-fluid px-4 pt-2">
             <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb" class="mb-1">
+            <nav aria-label="breadcrumb" class="mb-2">
                 <ol class="breadcrumb bg-transparent p-0 mb-0" style="font-size: 0.85rem;">
                     <li class="breadcrumb-item">
-                        <a href="{{ route($routePrefix . '.courses.index') }}" class="text-decoration-none">
+                        <a href="{{ route($routePrefix . '.courses.index') }}" style="text-decoration: none; color: #667eea; transition: all 0.2s;">
                             <i class="fas fa-book me-1"></i>Courses
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route($routePrefix . '.courses.show', $course) }}" class="text-decoration-none">
+                        <a href="{{ route($routePrefix . '.courses.show', $course) }}" style="text-decoration: none; color: #667eea; transition: all 0.2s;">
                             {{ $course->title }}
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route($routePrefix . '.courses.modules.subpages.index', [$course, $module]) }}" class="text-decoration-none">
+                        <a href="{{ route($routePrefix . '.courses.modules.subpages.index', [$course, $module]) }}" style="text-decoration: none; color: #667eea; transition: all 0.2s;">
                             {{ $module->title }} - Subpages
                         </a>
                     </li>
-                    <li class="breadcrumb-item active">{{ $subpage->title }} - Content Builder</li>
+                    <li class="breadcrumb-item active" style="color: #764ba2; font-weight: 600;">
+                        {{ $subpage->title }} - Content Builder
+                    </li>
                 </ol>
             </nav>
+            <style>
+                .breadcrumb-item + .breadcrumb-item::before {
+                    content: "›" !important;
+                    color: #667eea !important;
+                    font-weight: bold;
+                }
+            </style>
 
             <!-- Header -->
             <div class="d-flex justify-content-between align-items-center mb-2">

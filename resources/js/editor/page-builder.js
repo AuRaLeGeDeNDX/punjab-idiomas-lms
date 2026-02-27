@@ -917,11 +917,20 @@ export class PageBuilder {
     _renderPdfBlock(block) {
         const container = document.createElement('div');
         container.className = 'w-100';
-        // Use explicit min-height since CSS height:100% doesn't resolve against parent min-height
-        const pdfHeight = (block.metadata && block.metadata.minHeight) || 600;
+
+        // Responsive Height Logic:
+        // In editor/preview mode, we need a visible minimum height.
+        // On mobile, 600px is often too tall for a single viewport.
+        const isMobile = window.innerWidth < 768;
+        const defaultMinHeight = isMobile ? 400 : 600;
+
+        const pdfHeight = (block.metadata && block.metadata.minHeight) || defaultMinHeight;
         container.style.minHeight = `${pdfHeight}px`;
         container.style.height = '100%';
         container.style.position = 'relative';
+
+        // Add overflow:hidden to prevent any internal scrolling from leaking out
+        container.style.overflow = 'hidden';
 
         const viewerUrl = block.secure_viewer_url;
         const directUrl = block.secure_url || block.signed_url || block.file_path;

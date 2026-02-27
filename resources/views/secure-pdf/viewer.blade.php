@@ -666,6 +666,7 @@
         let totalPages = 0;
         let currentScale = 1.0;
         let rendering = false;
+        let isPinching = false;
 
         // DOM Elements
         const canvas = document.getElementById('pdf-canvas');
@@ -1474,7 +1475,6 @@
             // ============================================
             let touchStartDist = 0;
             let touchStartScale = 1.0;
-            let isPinching = false;
             let pinchTimeout;
 
             const container = document.getElementById('pdf-canvas-container');

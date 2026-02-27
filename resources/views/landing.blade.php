@@ -265,6 +265,62 @@
         </div>
     </section>
 
+    <section id="founder" class="py-20 bg-orange-50 dark:bg-slate-800/50 transition-colors duration-300 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            
+            <div class="w-full lg:w-1/2 relative" data-aos="fade-right">
+                <div class="absolute -top-10 -left-10 w-64 h-64 bg-yellow-400/20 rounded-full blur-3xl"></div>
+                
+                <div class="relative flex items-center justify-center">
+                    <div class="relative z-10 w-2/3 shadow-2xl rounded-2xl overflow-hidden border-8 border-white dark:border-slate-900 transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+                        <img src="{{ asset('founder_pic/priya1.jpeg') }}" alt="Priyal Kalra Main" class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="absolute -bottom-10 -right-4 z-20 w-1/2 shadow-2xl rounded-2xl overflow-hidden border-8 border-white dark:border-slate-900 transform rotate-6 hover:rotate-0 transition-transform duration-500">
+                        <img src="{{ asset('founder_pic/priya2.jpeg') }}" alt="Priyal Kalra Profile" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <div class="absolute top-0 right-0 bg-orange-700 text-white p-4 rounded-xl z-30 shadow-lg hidden md:block">
+                    <p class="text-sm font-bold uppercase">Enfoque</p>
+                    <p class="text-xs opacity-80 italic">Cultural y Práctico</p>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-1/2" data-aos="fade-left">
+                <span class="text-orange-600 dark:text-orange-500 font-bold tracking-widest uppercase text-sm block mb-2">Fundadora</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">Priyal Kalra</h2>
+                
+                <h3 class="text-xl font-semibold text-orange-800 dark:text-yellow-400 mb-6">
+                    Cofundadora de Punjab Idiomas
+                </h3>
+                
+                <div class="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p class="border-l-4 border-orange-500 pl-4 bg-orange-100/30 dark:bg-orange-900/10 py-2">
+                        Un centro especializado en la enseñanza de español para la comunidad punjabi y estudiantes internacionales.
+                    </p>
+                    <p>
+                        Con una visión enfocada en la **integración y el empoderamiento**, impulsa un aprendizaje práctico y cercano, creando un entorno culturalmente familiar que ayuda a sus alumnos a ganar confianza y desenvolverse con seguridad en España.
+                    </p>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700 flex flex-wrap gap-8">
+                    <div>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-white">Confianza</p>
+                        <p class="text-sm text-slate-500">Garantizada en clase</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-white">Empoderamiento</p>
+                        <p class="text-sm text-slate-500">Para vivir en España</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>    
+
+
     {{-- Services --}}
     <section id="servicios" class="py-20 bg-slate-50 dark:bg-slate-900/50 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -406,7 +406,7 @@
                 background: #f1f3f4 !important;
                 overflow: auto !important;
                 flex: none !important;
-                touch-action: none;
+                touch-action: pan-x pan-y; /* Requirement: Allow native finger panning/scrolling */
             }
 
             #pdf-scale-wrapper {
@@ -1471,6 +1471,7 @@
 
             container.addEventListener('touchmove', (e) => {
                 if (isPinching && e.touches.length === 2) {
+                    // Only block default zoom when we are actively pinching
                     if (e.cancelable) e.preventDefault();
 
                     const t1 = e.touches[0];

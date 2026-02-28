@@ -405,10 +405,18 @@
                 padding: 10px 10px 56px 10px !important;
                 padding-top: 8px !important;
                 background: #f1f3f4 !important;
-                overflow: visible !important;
+                overflow: auto !important; /* Requirement: container handles scroll */
                 flex: none !important;
-                touch-action: pan-y pinch-zoom;
-                will-change: transform; /* Hint GPU optimization */
+                touch-action: none; /* Requirement: touch-action none for custom pinch */
+            }
+
+            #pdf-scale-wrapper {
+                display: block;
+                width: fit-content;
+                height: fit-content;
+                margin: 0 auto;
+                transform-origin: 0 0; /* Requirement: transform-origin 0 0 */
+                will-change: transform;
             }
 
             #pdf-canvas {
@@ -420,7 +428,6 @@
                 border-radius: 6px !important;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
                 background: white !important;
-                /* Remove transitions for smooth hybrid zoom */
                 transition: none !important;
             }
 
@@ -431,7 +438,7 @@
                 min-height: auto !important;
                 flex: none !important;
                 box-shadow: none;
-                background: #f1f3f4; /* Match container background */
+                background: #f1f3f4;
             }
 
             /* Ensure body/html don't force height/stretching */
@@ -614,9 +621,10 @@
         </div>
 
         <!-- PDF Canvas Container -->
-        <div id="pdf-canvas-container">
-            <canvas id="pdf-canvas"></canvas>
-
+        <div id="pdf-canvas-container" class="pdf-scroll-container">
+            <div id="pdf-scale-wrapper" class="pdf-scale-wrapper">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
         </div>
 
         <!-- Loading Indicator -->
@@ -1314,19 +1322,21 @@
             }
         });
 
+        const scaleWrapper = document.getElementById('pdf-scale-wrapper');
+
         zoomInButton.addEventListener('click', () => {
             const oldValue = currentScale;
             currentScale = Math.min(currentScale + 0.25, 5.0);
             
             // Hybrid Button Zoom: Scale visually first
             const factor = currentScale / oldValue;
-            canvas.style.transition = 'transform 0.2s ease-out';
-            canvas.style.transform = `scale(${factor})`;
-            canvas.style.transformOrigin = 'center top';
+            scaleWrapper.style.transition = 'transform 0.2s ease-out';
+            scaleWrapper.style.transform = `scale(${factor})`;
+            scaleWrapper.style.transformOrigin = 'center top';
 
             setTimeout(() => {
-                canvas.style.transition = 'none';
-                canvas.style.transform = '';
+                scaleWrapper.style.transition = 'none';
+                scaleWrapper.style.transform = '';
                 renderPage(currentPage, true);
             }, 200);
         });
@@ -1337,13 +1347,13 @@
             
             // Hybrid Button Zoom: Scale visually first
             const factor = currentScale / oldValue;
-            canvas.style.transition = 'transform 0.2s ease-out';
-            canvas.style.transform = `scale(${factor})`;
-            canvas.style.transformOrigin = 'center top';
+            scaleWrapper.style.transition = 'transform 0.2s ease-out';
+            scaleWrapper.style.transform = `scale(${factor})`;
+            scaleWrapper.style.transformOrigin = 'center top';
 
             setTimeout(() => {
-                canvas.style.transition = 'none';
-                canvas.style.transform = '';
+                scaleWrapper.style.transition = 'none';
+                scaleWrapper.style.transform = '';
                 renderPage(currentPage, true);
             }, 200);
         });
@@ -1425,12 +1435,13 @@
             };
 
             // ============================================
-            // HYBRID PINCH TO ZOOM (ANCHORED)
+            // TRUE CONTENT-ANCHOR PINCH ZOOM
             // ============================================
             let touchStartDist = 0;
             let touchStartScale = 1.0;
-            let initialScrollLeft = 0;
-            let initialScrollTop = 0;
+            let initialScale = 1.0;
+            let contentX = 0;
+            let contentY = 0;
             let midpointX = 0;
             let midpointY = 0;
             let containerRect = null;
@@ -1438,6 +1449,7 @@
             let rafPending = false;
 
             const container = document.getElementById('pdf-canvas-container');
+            const scaleWrapper = document.getElementById('pdf-scale-wrapper');
 
             container.addEventListener('touchstart', (e) => {
                 if (e.touches.length === 2 && window.innerWidth < 768) {
@@ -1446,16 +1458,15 @@
                     const t2 = e.touches[1];
                     
                     touchStartDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
-                    touchStartScale = currentScale;
+                    initialScale = currentScale;
                     
+                    containerRect = container.getBoundingClientRect();
                     midpointX = (t1.clientX + t2.clientX) / 2;
                     midpointY = (t1.clientY + t2.clientY) / 2;
                     
-                    initialScrollLeft = container.scrollLeft;
-                    initialScrollTop = container.scrollTop;
-                    containerRect = container.getBoundingClientRect();
-                    
-                    container.style.willChange = 'transform';
+                    // Requirement: Convert to content coordinates
+                    contentX = (midpointX - containerRect.left + container.scrollLeft) / initialScale;
+                    contentY = (midpointY - containerRect.top + container.scrollTop) / initialScale;
                 }
             }, { passive: true });
 
@@ -1468,22 +1479,20 @@
                     const currentDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
                     
                     if (touchStartDist > 0) {
-                        const factor = currentDist / touchStartDist;
-                        liveScale = factor;
+                        const scaleFactor = currentDist / touchStartDist;
+                        liveScale = scaleFactor;
+                        const absoluteLiveScale = initialScale * liveScale;
                         
                         if (!rafPending) {
                             rafPending = true;
                             requestAnimationFrame(() => {
-                                // Scale purely visually during gesture
-                                canvas.style.transform = `scale(${liveScale})`;
-                                canvas.style.transformOrigin = '0 0';
+                                // Requirement: Apply scale ONLY to wrapper
+                                scaleWrapper.style.transform = `scale(${liveScale})`;
+                                scaleWrapper.style.transformOrigin = '0 0';
                                 
-                                // Scroll compensation to keep pinch focal point stable
-                                const dx = midpointX - containerRect.left;
-                                const dy = midpointY - containerRect.top;
-                                
-                                container.scrollLeft = (initialScrollLeft + dx) * liveScale - dx;
-                                container.scrollTop = (initialScrollTop + dy) * liveScale - dy;
+                                // Requirement: Precise scroll compensation
+                                container.scrollLeft = contentX * absoluteLiveScale - (midpointX - containerRect.left);
+                                container.scrollTop = contentY * absoluteLiveScale - (midpointY - containerRect.top);
                                 
                                 rafPending = false;
                             });
@@ -1495,21 +1504,24 @@
             container.addEventListener('touchend', (e) => {
                 if (isPinching) {
                     isPinching = false;
-                    container.style.willChange = 'auto';
-
-                    const finalScale = Math.min(Math.max(touchStartScale * liveScale, 0.5), 5.0);
-                    const scaleRatio = finalScale / touchStartScale;
                     
+                    // Final physical scale
+                    const finalScale = Math.min(Math.max(initialScale * liveScale, 0.5), 5.0);
+                    
+                    // Important: Store current scroll before removing transform
+                    const finalScrollLeft = container.scrollLeft;
+                    const finalScrollTop = container.scrollTop;
+
                     // Remove visual transform
-                    canvas.style.transform = '';
+                    scaleWrapper.style.transform = '';
                     
                     // Re-render sharp version
                     currentScale = finalScale;
                     renderPage(currentPage, true);
                     
-                    // Adjust scroll position proportionally
-                    container.scrollLeft *= scaleRatio;
-                    container.scrollTop *= scaleRatio;
+                    // Restore scroll position (PDF.js will re-size canvas, we must keep view)
+                    container.scrollLeft = finalScrollLeft;
+                    container.scrollTop = finalScrollTop;
                     
                     touchStartDist = 0;
                     liveScale = 1.0;

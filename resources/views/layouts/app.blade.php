@@ -55,6 +55,7 @@
             height: 60px;
             width: auto;
             margin-right: 12px;
+            flex-shrink: 0;
         }
         
         .sidebar {
@@ -119,7 +120,11 @@
         
         @media (max-width: 768px) {
             .navbar-logo {
-                height: 32px;
+                height: 64px;
+            }
+            .navbar-brand {
+                padding-top: 0;
+                padding-bottom: 0;
             }
             
             .sidebar {

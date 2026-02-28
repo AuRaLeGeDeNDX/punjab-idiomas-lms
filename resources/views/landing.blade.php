@@ -250,7 +250,7 @@
                         Un centro especializado en la enseñanza de español para la comunidad punjabi y estudiantes internacionales.
                     </p>
                     <p>
-                        Con una visión enfocada en la **integración y el empoderamiento**, impulsa un aprendizaje práctico y cercano, creando un entorno culturalmente familiar que ayuda a sus alumnos a ganar confianza y desenvolverse con seguridad en España.
+                        Con una visión enfocada en la integración y el empoderamiento, impulsa un aprendizaje práctico y cercano, creando un entorno culturalmente familiar que ayuda a sus alumnos a ganar confianza y desenvolverse con seguridad en España.
                     </p>
                 </div>
 

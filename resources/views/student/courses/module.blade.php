@@ -148,3 +148,96 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+/* =============================================
+   MOBILE REDESIGN (<768px)
+   - Hide breadcrumb
+   - Compact header card
+   - Align chevron horizontally
+   - Balanced spacing
+   ============================================= */
+@media screen and (max-width: 767px) {
+    /* Hide breadcrumb for more space */
+    nav[aria-label="breadcrumb"] {
+        display: none !important;
+    }
+
+    .container-fluid {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    /* Compact Header Card */
+    .creative-page-header {
+        padding: 1.25rem !important;
+        margin-bottom: 1rem !important;
+        border-radius: 16px !important;
+    }
+
+    .creative-page-header h1 {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .creative-page-header p {
+        font-size: 0.85rem !important;
+    }
+
+    .creative-btn-outline {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.75rem !important;
+        border-radius: 8px !important;
+    }
+
+    /* Module Description Card */
+    .creative-card.mb-4 {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .creative-card-body {
+        padding: 1rem !important;
+    }
+
+    /* Subpage List Items */
+    .creative-card-header {
+        padding: 1rem 1.25rem !important;
+    }
+
+    .creative-card-header h3 {
+        font-size: 1rem !important;
+    }
+
+    .list-group-item {
+        padding: 0.85rem 1.25rem !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+
+    /* FORCE HORIZONTAL ALIGNMENT */
+    .list-group-item .d-flex {
+        flex-direction: row !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    .list-group-item h6 {
+        font-size: 0.95rem !important;
+        margin-bottom: 0 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 70vw;
+    }
+
+    .list-group-item .text-muted.small {
+        display: none !important; /* Hide description in list to save space */
+    }
+
+    .fa-chevron-right {
+        font-size: 0.8rem !important;
+    }
+}
+</style>
+@endpush

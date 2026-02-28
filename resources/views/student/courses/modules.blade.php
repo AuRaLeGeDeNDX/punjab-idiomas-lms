@@ -151,21 +151,52 @@
 
     /* Module Cards */
     .card {
-        border-radius: 12px !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
-        border: 1px solid rgba(0,0,0,0.05) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        margin-bottom: 16px !important;
     }
     
-    /* 12px gap */
+    .card-body {
+        padding: 1.25rem !important;
+    }
+
+    .card-title {
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 0.75rem !important;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .card-title i {
+        font-size: 1.25rem;
+        margin-top: 2px;
+    }
+
+    .card-text {
+        font-size: 0.85rem !important;
+        margin-bottom: 1rem !important;
+        line-height: 1.5;
+    }
+    
+    /* Metadata and Button alignment */
+    .d-flex.justify-content-between.align-items-center.mt-3 {
+        margin-top: 1rem !important;
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    .btn-sm.btn-primary {
+        padding: 0.5rem 1rem !important;
+        font-weight: 600 !important;
+        border-radius: 10px !important;
+        font-size: 0.8rem !important;
+    }
+
     .col-md-6.col-lg-4.mb-4 {
-        margin-bottom: 12px !important;
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-    }
-    
-    .row.mb-4 {
-        margin-left: -8px !important;
-        margin-right: -8px !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 16px !important;
     }
 }
 </style>

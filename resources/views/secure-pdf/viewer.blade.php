@@ -402,20 +402,19 @@
                 display: block !important;
                 height: auto !important;
                 min-height: auto !important;
-                padding: 10px 10px 56px 10px !important;
-                padding-top: 8px !important;
+                padding: 5px 0 56px 0 !important; /* Spacing for top/bottom, NO horizontal padding on container */
                 background: #f1f3f4 !important;
-                overflow: auto !important; /* Requirement: container handles scroll */
+                overflow: auto !important;
                 flex: none !important;
-                touch-action: none; /* Requirement: touch-action none for custom pinch */
+                touch-action: none;
             }
 
             #pdf-scale-wrapper {
                 display: block;
                 width: fit-content;
                 height: fit-content;
-                margin: 0 auto;
-                transform-origin: 0 0; /* Requirement: transform-origin 0 0 */
+                margin: 0; /* REQUIREMENT: No horizontal centering logic */
+                transform-origin: 0 0;
                 will-change: transform;
             }
 
@@ -424,7 +423,7 @@
                 width: auto !important;
                 height: auto !important;
                 display: block;
-                margin: 0 auto 16px auto !important;
+                margin: 0 10px 16px 10px !important; /* Apply breathing space via margin on canvas instead */
                 border-radius: 6px !important;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
                 background: white !important;
@@ -1501,25 +1500,31 @@
                 }
             }, { passive: false });
 
-            container.addEventListener('touchend', (e) => {
+            container.addEventListener('touchend', async (e) => {
                 if (isPinching) {
                     isPinching = false;
                     
+                    // Requirement: Sync zoom selector to show "Custom" or empty
+                    if (zoomSelect) zoomSelect.value = '';
+
                     // Final physical scale
                     const finalScale = Math.min(Math.max(initialScale * liveScale, 0.5), 5.0);
                     
-                    // Important: Store current scroll before removing transform
+                    // Requirement: Store current scroll position before removing transform
                     const finalScrollLeft = container.scrollLeft;
                     const finalScrollTop = container.scrollTop;
 
                     // Remove visual transform
                     scaleWrapper.style.transform = '';
                     
-                    // Re-render sharp version
+                    // Requirement: Update currentScale and RE-RENDER sharp version
                     currentScale = finalScale;
-                    renderPage(currentPage, true);
                     
-                    // Restore scroll position (PDF.js will re-size canvas, we must keep view)
+                    // IMPORTANT: We must await the render so the container handles the new canvas size 
+                    // before we restore the scroll position, preventing clamping/scrolling to top.
+                    await renderPage(currentPage, true);
+                    
+                    // Requirement: Restore scroll position precisely
                     container.scrollLeft = finalScrollLeft;
                     container.scrollTop = finalScrollTop;
                     

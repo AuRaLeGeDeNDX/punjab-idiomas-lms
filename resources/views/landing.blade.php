@@ -71,9 +71,10 @@
                 <span class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-2 text-yellow-400"></i> Calle Padilla 391, Barcelona</span>
             </div>
             <div class="flex space-x-4">
-                <a href="#" class="hover:text-yellow-400 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-                <a href="#" class="hover:text-yellow-400 transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
-                <a href="#" class="hover:text-yellow-400 transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+                <a href="https://www.instagram.com/punjabdrivingschoolbcn?igsh=MWR3dTlsdzNydXBocw==" target="_blank" class="hover:text-yellow-400 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                <a href="https://www.tiktok.com/@punjabdrivingschoolbcn?_r=1&_t=ZN-94Wiw6bKeOt" target="_blank" class="hover:text-yellow-400 transition-colors flex items-center"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v4.6c-.2 5.06-4.99 8.87-9.98 7.37-3.23-1.02-5.5-3.8-5.9-7.14-.38-3.08 1.1-6.23 3.8-7.79 2.04-1.18 4.62-1.28 6.75-.24v4.32c-1.89-1.01-4.22-.05-4.99 1.96-.69 1.76.12 3.86 1.8 4.64 1.63.74 3.65.17 4.54-1.35.47-.84.67-1.8.62-2.77V.02z"/></svg></a>
+                <a href="https://www.facebook.com/p/Punjab-driving-school-Bcn-100085488819759/" target="_blank" class="hover:text-yellow-400 transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                <a href="https://www.youtube.com/@PunjabDriving-vx7uz/shorts" target="_blank" class="hover:text-yellow-400 transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
             </div>
         </div>
     </div>
@@ -491,9 +492,10 @@
                     <div class="mt-12 relative z-10">
                         <p class="font-semibold mb-4 text-sm uppercase tracking-wider text-orange-200">Síguenos en</p>
                         <div class="flex space-x-4">
-                            <a href="#" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                            <a href="#" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                            <a href="#" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                            <a href="https://www.instagram.com/punjabdrivingschoolbcn?igsh=MWR3dTlsdzNydXBocw==" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                            <a href="https://www.tiktok.com/@punjabdrivingschoolbcn?_r=1&_t=ZN-94Wiw6bKeOt" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v4.6c-.2 5.06-4.99 8.87-9.98 7.37-3.23-1.02-5.5-3.8-5.9-7.14-.38-3.08 1.1-6.23 3.8-7.79 2.04-1.18 4.62-1.28 6.75-.24v4.32c-1.89-1.01-4.22-.05-4.99 1.96-.69 1.76.12 3.86 1.8 4.64 1.63.74 3.65.17 4.54-1.35.47-.84.67-1.8.62-2.77V.02z"/></svg></a>
+                            <a href="https://www.facebook.com/p/Punjab-driving-school-Bcn-100085488819759/" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                            <a href="https://www.youtube.com/@PunjabDriving-vx7uz/shorts" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white"><i data-lucide="youtube" class="w-5 h-5"></i></a>
                         </div>
                     </div>
                 </div>

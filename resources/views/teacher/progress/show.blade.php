@@ -340,13 +340,16 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 // Grade Trend Chart
-const gradeData = @json($gradeHistory->map(function($grade) {
-    return [
-        'date' => $grade->created_at->format('M j'),
-        'score' => round(($grade->score / $grade->submission->assignment->max_points) * 100, 1),
-        'assignment' => $grade->submission->assignment->title
-    ];
-}));
+@php
+    $chartData = $gradeHistory->map(function($grade) {
+        return [
+            'date' => $grade->created_at->format('M j'),
+            'score' => round(($grade->score / $grade->submission->assignment->max_points) * 100, 1),
+            'assignment' => $grade->submission->assignment->title
+        ];
+    });
+@endphp
+const gradeData = @json($chartData);
 
 const ctx = document.getElementById('gradeChart').getContext('2d');
 new Chart(ctx, {

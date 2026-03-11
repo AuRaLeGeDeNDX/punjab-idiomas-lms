@@ -246,11 +246,14 @@
                 </h3>
                 
                 <div class="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                    <p class="border-l-4 border-orange-500 pl-4 bg-orange-100/30 dark:bg-orange-900/10 py-2">
-                        Un centro especializado en la enseñanza de español para la comunidad punjabi y estudiantes internacionales.
-                    </p>
+                    
                     <p>
-                        Con una visión enfocada en la integración y el empoderamiento, impulsa un aprendizaje práctico y cercano, creando un entorno culturalmente familiar que ayuda a sus alumnos a ganar confianza y desenvolverse con seguridad en España.
+                       Soy Priya Kalra, apasionada por la educación y los idiomas. Me encanta ayudar a las personas a aprender de forma práctica, motivadora y dinámica, para que ganen confianza y desarrollen sus habilidades.
+                     <p>
+                       Creo que la curiosidad y la constancia son claves para crecer y alcanzar nuestras metas. 🌍📚✨ 
+                    </p>
+                    <p class="border-l-4 border-orange-500 pl-4 bg-orange-100/30 dark:bg-orange-900/10 py-2">
+                       ✨ Aprender idiomas abre puertas al mundo, y me encanta ser parte de ese camino.
                     </p>
                 </div>
 

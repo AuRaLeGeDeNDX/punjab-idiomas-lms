@@ -38,6 +38,7 @@
     @if($messages->count() > 0)
         <div class="bg-white rounded-lg shadow-md border border-gray-200">
             @foreach($messages as $message)
+                @php /** @var \App\Models\Message $message */ @endphp
                 <div class="border-b border-gray-200 last:border-b-0">
                     <a href="{{ route('messages.show', $message) }}" 
                        class="block p-4 hover:bg-gray-50 transition-colors duration-150">
@@ -67,7 +68,7 @@
                                 </div>
                                 
                                 <p class="mt-1 text-sm text-gray-600 truncate">
-                                    {{ Str::limit($message->message, 100) }}
+                                    {{ \Illuminate\Support\Str::limit($message->message, 100) }}
                                 </p>
                             </div>
                             

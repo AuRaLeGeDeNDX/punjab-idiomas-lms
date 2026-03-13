@@ -224,11 +224,11 @@
                 
                 <div class="relative flex items-center justify-center">
                     <div class="relative z-10 w-2/3 shadow-2xl rounded-2xl overflow-hidden border-8 border-white dark:border-slate-900 transform -rotate-3 hover:rotate-0 transition-transform duration-500">
-                        <img src="{{ asset('founder_pic/priya1.jpeg') }}" alt="Priyal Kalra Main" class="w-full h-full object-cover">
+                        <img src="{{ asset('founder_pic/priya1.jpeg') }}" alt="Priya Kalra Main" class="w-full h-full object-cover">
                     </div>
 
                     <div class="absolute -bottom-10 -right-4 z-20 w-1/2 shadow-2xl rounded-2xl overflow-hidden border-8 border-white dark:border-slate-900 transform rotate-6 hover:rotate-0 transition-transform duration-500">
-                        <img src="{{ asset('founder_pic/priya2.jpeg') }}" alt="Priyal Kalra Profile" class="w-full h-full object-cover">
+                        <img src="{{ asset('founder_pic/priya2.jpeg') }}" alt="Priya Kalra Profile" class="w-full h-full object-cover">
                     </div>
                 </div>
 
@@ -240,7 +240,7 @@
 
             <div class="w-full lg:w-1/2" data-aos="fade-left">
                 <span class="text-orange-600 dark:text-orange-500 font-bold tracking-widest uppercase text-sm block mb-2">Fundadora</span>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">Priyal Kalra</h2>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">Priya Kalra</h2>
                 
                 <h3 class="text-xl font-semibold text-orange-800 dark:text-yellow-400 mb-6">
                     Cofundadora de Punjab Idiomas

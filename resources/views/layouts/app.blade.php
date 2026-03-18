@@ -529,9 +529,13 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out, width 0.3s, height 0.3s, background 0.3s;
+            z-index: 1000000;
+            transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s, opacity 0.3s;
             display: none;
+            opacity: 0;
+            left: 0;
+            top: 0;
+            will-change: transform;
         }
 
         .dark #custom-cursor {
@@ -539,10 +543,20 @@
             border-color: #facc15;
         }
 
+        /* Only apply cursor:none when custom cursor is active and moving */
+        .custom-cursor-enabled, 
+        .custom-cursor-enabled a, 
+        .custom-cursor-enabled button, 
+        .custom-cursor-enabled select, 
+        .custom-cursor-enabled input, 
+        .custom-cursor-enabled textarea, 
+        .custom-cursor-enabled .glass-panel, 
+        .custom-cursor-enabled .btn { 
+            cursor: none !important; 
+        }
+
         @media (min-width: 768px) {
             #custom-cursor { display: block; }
-            body { cursor: none; }
-            a, button, select, input, textarea, .glass-panel, .btn { cursor: none; }
         }
 
         .cursor-active {
@@ -912,13 +926,56 @@
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('custom-cursor');
             if (cursor) {
+                let mouseX = 0;
+                let mouseY = 0;
+                let cursorX = 0;
+                let cursorY = 0;
+                let isMoving = false;
+
+                // Smooth movement using requestAnimationFrame
+                function animate() {
+                    const lerp = 0.2; // Smoothing factor
+                    cursorX += (mouseX - cursorX) * lerp;
+                    cursorY += (mouseY - cursorY) * lerp;
+                    
+                    cursor.style.transform = `translate3d(${cursorX - (cursor.offsetWidth/2)}px, ${cursorY - (cursor.offsetHeight/2)}px, 0)`;
+                    requestAnimationFrame(animate);
+                }
+                animate();
+
                 document.addEventListener('mousemove', (e) => {
-                    cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    
+                    if (!isMoving) {
+                        isMoving = true;
+                        cursor.style.opacity = '1';
+                        document.body.classList.add('custom-cursor-enabled');
+                    }
                 });
 
-                document.querySelectorAll('a, button, .btn, .creative-card, input, select, textarea').forEach(el => {
-                    el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-                    el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+                // Hide when leaving window
+                document.addEventListener('mouseleave', () => {
+                    cursor.style.opacity = '0';
+                });
+
+                document.addEventListener('mouseenter', () => {
+                    if (isMoving) cursor.style.opacity = '1';
+                });
+
+                // Event delegation for hover states (works with dynamic content)
+                document.addEventListener('mouseover', (e) => {
+                    const target = e.target.closest('a, button, .btn, .creative-card, input, select, textarea, [role="button"]');
+                    if (target) {
+                        cursor.classList.add('cursor-active');
+                    }
+                });
+
+                document.addEventListener('mouseout', (e) => {
+                    const target = e.target.closest('a, button, .btn, .creative-card, input, select, textarea, [role="button"]');
+                    if (target) {
+                        cursor.classList.remove('cursor-active');
+                    }
                 });
             }
         }

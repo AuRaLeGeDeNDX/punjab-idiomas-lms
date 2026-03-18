@@ -54,37 +54,37 @@
     <div class="col-lg-8">
         <div class="creative-card mb-4">
             <div class="creative-card-header">
-                <h3><i class="fas fa-book"></i> My Courses</h3>
-                <a href="{{ route('teacher.courses.create') }}" class="creative-btn creative-btn-success" style="padding: 0.5rem 1rem;">
-                    <i class="fas fa-plus"></i> Create New
+                <h3 class="mb-0"><i class="fas fa-book me-2"></i>My Courses</h3>
+                <a href="{{ route('teacher.courses.create') }}" class="creative-btn creative-btn-success">
+                    <i class="fas fa-plus me-1"></i> Create New
                 </a>
             </div>
             <div class="creative-card-body">
                 @forelse($courses as $course)
-                    <div class="d-flex align-items-center mb-3 p-3 border rounded">
+                    <div class="d-flex align-items-center mb-3 p-3 border rounded responsive-card-list-item">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">
                                 <a href="{{ route('teacher.courses.show', $course) }}" class="text-decoration-none">
                                     {{ $course->title }}
                                 </a>
                                 @if($course->is_published)
-                                    <span class="creative-badge creative-badge-success ms-2">Published</span>
+                                    <span class="creative-badge creative-badge-success creative-badge-sm ms-2">Published</span>
                                 @else
-                                    <span class="creative-badge creative-badge-warning ms-2">Draft</span>
+                                    <span class="creative-badge creative-badge-secondary creative-badge-sm ms-2">Draft</span>
                                 @endif
                             </h6>
                             <p class="text-muted mb-1">{{ Str::limit($course->description, 100) }}</p>
-                            <small class="text-muted">
-                                {{ $course->enrollments_count }} students enrolled
-                                • {{ $course->modules_count }} modules
+                            <small class="text-muted d-block">
+                                <i class="fas fa-users me-1"></i>{{ $course->enrollments_count }} students enrolled
+                                <i class="fas fa-book-open ms-2 me-1"></i>{{ $course->modules_count }} modules
                             </small>
                         </div>
                         <div class="text-end">
                             <div class="btn-group" role="group">
                                 <a href="{{ route('teacher.courses.show', $course) }}" 
-                                   class="btn btn-sm btn-outline-primary">Manage</a>
+                                   class="creative-btn creative-btn-outline-primary creative-btn-sm">Manage</a>
                                 <a href="{{ route('teacher.courses.edit', $course) }}" 
-                                   class="btn btn-sm btn-outline-secondary">Edit</a>
+                                   class="creative-btn creative-btn-outline-secondary creative-btn-sm">Edit</a>
                             </div>
                         </div>
                     </div>
@@ -170,19 +170,24 @@
             </div>
             <div class="creative-card-body">
                 @forelse($pendingSubmissions as $submission)
-                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-start border-3 border-warning">
-                        <div>
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 border-start border-3 border-warning rounded responsive-card-list-item" style="background: rgba(245, 158, 11, 0.03);">
+                        <div class="flex-grow-1">
                             <h6 class="mb-1">{{ $submission->assignment->title }}</h6>
-                            <small class="text-muted">{{ $submission->user->name }}</small>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <i class="fas fa-user-circle text-muted"></i>
+                                <span class="small fw-medium">{{ $submission->user->name }}</span>
+                            </div>
                             <div class="small text-muted">
-                                Submitted: {{ $submission->submitted_at->format('M j, g:i A') }}
+                                <i class="fas fa-clock me-1"></i>Submitted: {{ $submission->submitted_at->format('M j, g:i A') }}
                                 @if($submission->is_late)
-                                    <span class="text-danger">(Late)</span>
+                                    <span class="text-danger fw-bold ms-1">(Late)</span>
                                 @endif
                             </div>
                         </div>
-                        <a href="{{ route('teacher.grading.show', $submission) }}" 
-                           class="creative-btn creative-btn-outline" style="padding: 0.5rem 1rem; border-color: var(--color-warning); color: var(--color-warning);">Grade</a>
+                        <div class="text-end ms-3">
+                            <a href="{{ route('teacher.grading.show', $submission) }}" 
+                               class="creative-btn creative-btn-outline-warning creative-btn-sm w-100">Grade</a>
+                        </div>
                     </div>
                 @empty
                     <p class="text-muted text-center">No submissions to grade</p>

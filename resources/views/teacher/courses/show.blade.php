@@ -8,55 +8,40 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="creative-page-header fade-in-up">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center responsive-card-list-item">
                     <div>
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
+                            <ol class="breadcrumb mb-2">
                                 <li class="breadcrumb-item">
                                     <a href="{{ route('teacher.courses.index') }}">Courses</a>
                                 </li>
-                                <li class="breadcrumb-item active">{{ $courseWithModules->title }}</li>
+                                <li class="breadcrumb-item active text-truncate" style="max-width: 200px;">{{ $courseWithModules->title }}</li>
                             </ol>
                         </nav>
-                        <h1><i class="fas fa-book me-2"></i>{{ $courseWithModules->title }}</h1>
-                        <div class="d-flex align-items-center gap-2 mt-2">
+                        <h1 class="mb-0"><i class="fas fa-book me-2"></i>{{ $courseWithModules->title }}</h1>
+                        <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
                             @if($courseWithModules->is_published)
-                                <span class="creative-badge creative-badge-success">Published</span>
+                                <span class="creative-badge creative-badge-success creative-badge-sm">Published</span>
                             @else
-                                <span class="creative-badge creative-badge-secondary">Draft</span>
+                                <span class="creative-badge creative-badge-secondary creative-badge-sm">Draft</span>
                             @endif
                             @if($courseWithModules->is_featured)
-                                <span class="creative-badge creative-badge-warning">Featured</span>
+                                <span class="creative-badge creative-badge-warning creative-badge-sm">Featured</span>
                             @endif
                             @if($courseWithModules->category)
-                                <span class="creative-badge creative-badge-info">{{ $courseWithModules->category }}</span>
+                                <span class="creative-badge creative-badge-info creative-badge-sm">{{ $courseWithModules->category }}</span>
                             @endif
                         </div>
                     </div>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex flex-wrap gap-2 mt-3 mt-md-0">
                         <button type="button" class="creative-btn creative-btn-primary" id="assign-students-btn">
-                            <i class="fas fa-user-plus me-2"></i>Assign Students
+                            <i class="fas fa-user-plus me-1"></i>Assign
                         </button>
-                        @if($courseWithModules->is_published)
-                            <form method="POST" action="{{ route('teacher.courses.unpublish', $courseWithModules) }}" class="d-inline">
-                                @csrf
-                                <button type="submit" class="creative-btn creative-btn-outline">
-                                    <i class="fas fa-eye-slash me-2"></i>Unpublish
-                                </button>
-                            </form>
-                        @else
-                            <form method="POST" action="{{ route('teacher.courses.publish', $courseWithModules) }}" class="d-inline">
-                                @csrf
-                                <button type="submit" class="creative-btn creative-btn-primary">
-                                    <i class="fas fa-eye me-2"></i>Publish
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ route('teacher.courses.edit', $courseWithModules) }}" class="creative-btn creative-btn-outline">
-                            <i class="fas fa-edit me-2"></i>Edit Course
+                        <a href="{{ route('teacher.courses.edit', $courseWithModules) }}" class="creative-btn creative-btn-outline-secondary">
+                            <i class="fas fa-edit me-1"></i>Edit
                         </a>
-                        <a href="{{ route('teacher.courses.index') }}" class="creative-btn creative-btn-outline">
-                            <i class="fas fa-arrow-left me-2"></i>Back
+                        <a href="{{ route('teacher.courses.index') }}" class="creative-btn creative-btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>Back
                         </a>
                     </div>
                 </div>
@@ -159,16 +144,16 @@
                     @if($courseWithModules->modules && $courseWithModules->modules->count() > 0)
                         <div class="list-group list-group-flush">
                             @foreach($courseWithModules->modules->sortBy('order') as $module)
-                            <div class="list-group-item">
+                            <div class="list-group-item responsive-card-list-item">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div class="flex-grow-1">
-                                        <div class="d-flex align-items-center mb-2">
+                                        <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                                             <h5 class="mb-0">
                                                 <a href="{{ route('teacher.modules.show', [$courseWithModules, $module]) }}" class="text-decoration-none">
                                                     {{ $module->title }}
                                                 </a>
                                             </h5>
-                                            <div class="ms-3">
+                                            <div class="d-flex gap-1">
                                                 @if($module->is_published)
                                                     <span class="creative-badge creative-badge-success creative-badge-sm">Published</span>
                                                 @else
@@ -180,37 +165,37 @@
                                             </div>
                                         </div>
                                         @if($module->description)
-                                            <p class="mb-2 text-muted">{{ Str::limit($module->description, 150) }}</p>
+                                            <p class="mb-2 text-muted small">{{ Str::limit($module->description, 120) }}</p>
                                         @endif
-                                        <div class="d-flex align-items-center gap-3 text-muted small">
-                                            <span><i class="fas fa-sort-numeric-up me-1"></i>Order: {{ $module->order }}</span>
+                                        <div class="d-flex flex-wrap align-items-center gap-3 text-muted small">
+                                            <span><i class="fas fa-sort-numeric-up me-1"></i>{{ $module->order }}</span>
                                             @if($module->duration_minutes)
-                                                <span><i class="fas fa-clock me-1"></i>{{ $module->duration_minutes }} minutes</span>
+                                                <span><i class="fas fa-clock me-1"></i>{{ $module->duration_minutes }}m</span>
                                             @endif
                                             @if($module->subpages)
-                                                <span><i class="fas fa-file-alt me-1"></i>{{ $module->subpages->count() }} subpages</span>
+                                                <span><i class="fas fa-file-alt me-1"></i>{{ $module->subpages->count() }} pages</span>
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-column align-items-end gap-2">
+                                    <div class="text-end ms-md-3">
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('teacher.modules.show', [$courseWithModules, $module]) }}" 
-                                               class="creative-btn creative-btn-outline creative-btn-sm" title="View Module">
+                                               class="creative-btn creative-btn-outline-primary creative-btn-sm" title="View">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             <a href="{{ route('teacher.modules.edit', [$courseWithModules, $module]) }}" 
-                                               class="creative-btn creative-btn-outline creative-btn-sm" title="Edit Module">
+                                               class="creative-btn creative-btn-outline-secondary creative-btn-sm" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a href="{{ route('teacher.courses.modules.subpages.index', [$courseWithModules, $module]) }}" 
-                                               class="creative-btn creative-btn-outline creative-btn-sm" title="Manage Subpages">
+                                               class="creative-btn creative-btn-outline-info creative-btn-sm" title="Pages">
                                                 <i class="fas fa-file-alt"></i>
                                             </a>
                                             <form method="POST" action="{{ route('teacher.modules.destroy', [$courseWithModules, $module]) }}" 
-                                                  class="d-inline" onsubmit="return confirm('Are you sure you want to delete this module? This will also delete all subpages and content within it.')">
+                                                  class="d-inline" onsubmit="return confirm('Delete this module?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="creative-btn creative-btn-outline creative-btn-sm" title="Delete Module">
+                                                <button type="submit" class="creative-btn creative-btn-outline-danger creative-btn-sm" title="Delete">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>

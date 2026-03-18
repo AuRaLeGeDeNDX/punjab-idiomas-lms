@@ -6,14 +6,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="h3 mb-0">My Courses</h1>
-                <div class="d-flex gap-2">
-                    <a href="{{ route('teacher.dashboard') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            <div class="creative-page-header fade-in-up responsive-card-list-item">
+                <h1 class="mb-0"><i class="fas fa-book me-2"></i>My Courses</h1>
+                <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
+                    <a href="{{ route('teacher.dashboard') }}" class="creative-btn creative-btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>Back
                     </a>
-                    <a href="{{ route('teacher.courses.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Create New Course
+                    <a href="{{ route('teacher.courses.create') }}" class="creative-btn creative-btn-primary">
+                        <i class="fas fa-plus me-1"></i>New Course
                     </a>
                 </div>
             </div>
@@ -78,29 +78,39 @@
                                     </small>
                                 </div>
                             </div>
-                            <div class="card-footer bg-transparent">
-                                <div class="d-flex justify-content-between">
-                                    <a href="{{ route('teacher.courses.show', $course) }}" class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-eye me-1"></i>View
+                            <div class="creative-card-footer">
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="{{ route('teacher.courses.show', $course) }}"
+                                       class="creative-btn creative-btn-outline-primary creative-btn-sm flex-fill">
+                                        <i class="fas fa-cog me-1"></i>Manage
                                     </a>
-                                    <a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-sm btn-outline-secondary">
-                                        <i class="fas fa-edit me-1"></i>Edit
+                                    <a href="{{ route('teacher.courses.edit', $course) }}"
+                                       class="creative-btn creative-btn-outline-secondary creative-btn-sm flex-fill">
+                                        <i class="fas fa-edit"></i>
                                     </a>
                                     @if($course->is_published)
-                                        <form method="POST" action="{{ route('teacher.courses.unpublish', $course) }}" class="d-inline">
+                                        <form method="POST" action="{{ route('teacher.courses.unpublish', $course) }}" class="d-inline flex-fill">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-outline-warning" title="Unpublish">
+                                            <button type="submit" class="creative-btn creative-btn-outline-warning creative-btn-sm w-100" title="Unpublish">
                                                 <i class="fas fa-eye-slash"></i>
                                             </button>
                                         </form>
                                     @else
-                                        <form method="POST" action="{{ route('teacher.courses.publish', $course) }}" class="d-inline">
+                                        <form method="POST" action="{{ route('teacher.courses.publish', $course) }}" class="d-inline flex-fill">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-outline-success" title="Publish">
+                                            <button type="submit" class="creative-btn creative-btn-outline-success creative-btn-sm w-100" title="Publish">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                         </form>
                                     @endif
+                                    <form action="{{ route('teacher.courses.destroy', $course) }}" method="POST"
+                                          class="d-inline flex-fill" onsubmit="return confirm('Delete this course?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="creative-btn creative-btn-outline-danger creative-btn-sm w-100">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

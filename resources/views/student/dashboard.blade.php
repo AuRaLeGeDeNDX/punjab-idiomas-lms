@@ -57,12 +57,12 @@
     <div class="col-lg-8">
         <div class="creative-card mb-4">
             <div class="creative-card-header">
-                <h3><i class="fas fa-book"></i> My Courses</h3>
-                <a href="{{ route('student.courses.enrolled') }}" class="creative-btn creative-btn-outline" style="padding: 0.5rem 1rem;">View All</a>
+                <h3 class="mb-0"><i class="fas fa-book me-2"></i>My Courses</h3>
+                <a href="{{ route('student.courses.enrolled') }}" class="creative-btn creative-btn-outline-primary creative-btn-sm">View All</a>
             </div>
             <div class="creative-card-body">
                 @forelse($enrolledCourses as $enrollment)
-                    <div class="d-flex align-items-center mb-3 p-3 border rounded">
+                    <div class="d-flex align-items-center mb-3 p-3 border rounded responsive-card-list-item">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">
                                 <a href="{{ route('student.courses.show', $enrollment->course) }}" class="text-decoration-none">
@@ -70,19 +70,19 @@
                                 </a>
                             </h6>
                             <p class="text-muted mb-1">{{ Str::limit($enrollment->course->description, 80) }}</p>
-                            <small class="text-muted">
-                                Enrolled: {{ $enrollment->enrolled_at->format('M j, Y') }}
+                            <small class="text-muted d-block mb-2">
+                                <i class="fas fa-calendar-alt me-1"></i>Enrolled: {{ $enrollment->enrolled_at->format('M j, Y') }}
                             </small>
-                        </div>
-                        <div class="text-end">
-                            <div class="progress mb-2" style="width: 120px; height: 8px; border-radius: 4px;">
+                            <div class="progress" style="height: 8px; border-radius: 4px;">
                                 <div class="progress-bar" role="progressbar" 
                                      style="width: {{ $enrollment->progress_data['overall_progress'] ?? 0 }}%; background: var(--gradient-primary);">
                                 </div>
                             </div>
-                            <small class="text-muted mb-2 d-block">{{ round($enrollment->progress_data['overall_progress'] ?? 0) }}% complete</small>
+                            <small class="text-muted mt-1 d-block">{{ round($enrollment->progress_data['overall_progress'] ?? 0) }}% complete</small>
+                        </div>
+                        <div class="text-end">
                             <a href="{{ route('student.courses.show', $enrollment->course) }}" 
-                               class="creative-btn creative-btn-primary" style="padding: 0.5rem 1rem;">Continue</a>
+                               class="creative-btn creative-btn-primary w-100">Continue</a>
                         </div>
                     </div>
                 @empty
@@ -167,16 +167,21 @@
             </div>
             <div class="creative-card-body">
                 @forelse($upcomingAssignments as $assignment)
-                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-start border-3 {{ $assignment->isOverdue() ? 'border-danger' : 'border-warning' }}">
-                        <div>
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 border-start border-3 {{ $assignment->isOverdue() ? 'border-danger' : 'border-warning' }} rounded responsive-card-list-item" style="background: {{ $assignment->isOverdue() ? 'rgba(239, 68, 68, 0.03)' : 'rgba(245, 158, 11, 0.03)' }};">
+                        <div class="flex-grow-1">
                             <h6 class="mb-1">{{ $assignment->title }}</h6>
-                            <small class="text-muted">{{ $assignment->course->title }}</small>
-                            <div class="small {{ $assignment->isOverdue() ? 'text-danger' : 'text-warning' }}">
-                                Due: {{ $assignment->due_date ? $assignment->due_date->format('M j, g:i A') : 'No due date' }}
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <i class="fas fa-book text-muted small"></i>
+                                <span class="small fw-medium">{{ $assignment->course->title }}</span>
+                            </div>
+                            <div class="small {{ $assignment->isOverdue() ? 'text-danger fw-bold' : 'text-warning' }}">
+                                <i class="fas fa-calendar-alt me-1"></i>Due: {{ $assignment->due_date ? $assignment->due_date->format('M j, g:i A') : 'No due date' }}
                             </div>
                         </div>
-                        <a href="{{ route('student.courses.modules.subpages.assignments.show', [$assignment->course, $assignment->module, $assignment->subpage, $assignment]) }}" 
-                           class="creative-btn creative-btn-outline" style="padding: 0.5rem 1rem;">View</a>
+                        <div class="text-end">
+                            <a href="{{ route('student.courses.modules.subpages.assignments.show', [$assignment->course, $assignment->module, $assignment->subpage, $assignment]) }}" 
+                               class="creative-btn {{ $assignment->isOverdue() ? 'creative-btn-outline-danger' : 'creative-btn-outline-warning' }} creative-btn-sm w-100">View</a>
+                        </div>
                     </div>
                 @empty
                     <p class="text-muted text-center">No upcoming assignments</p>

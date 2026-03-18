@@ -15,14 +15,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2><i class="fas fa-book-open me-2"></i>My Courses</h2>
-                <div class="d-flex gap-2">
-                    <a href="{{ route('student.dashboard') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            <div class="d-flex justify-content-between align-items-center mb-4 responsive-card-list-item">
+                <h2 class="mb-0"><i class="fas fa-book-open me-2"></i>My Courses</h2>
+                <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
+                    <a href="{{ route('student.dashboard') }}" class="creative-btn creative-btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>Back
                     </a>
-                    <a href="{{ route('student.courses.index') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Browse More Courses
+                    <a href="{{ route('student.courses.index') }}" class="creative-btn creative-btn-primary">
+                        <i class="fas fa-plus me-1"></i>Browse
                     </a>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                                                 {{ $enrollment->course->title }}
                                             </a>
                                         </h5>
-                                        <span class="badge bg-{{ $enrollment->status === 'completed' ? 'success' : 'primary' }}">
+                                        <span class="creative-badge creative-badge-{{ $enrollment->status === 'completed' ? 'success' : 'primary' }} creative-badge-sm">
                                             {{ ucfirst($enrollment->status) }}
                                         </span>
                                     </div>
@@ -80,19 +80,19 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="d-flex gap-2">
+                                    <div class="d-flex flex-wrap gap-2 mt-3">
                                         @if($enrollment->status === 'active')
                                             <a href="{{ route('student.courses.modules', $enrollment->course) }}" 
-                                               class="btn btn-primary btn-sm flex-fill">
+                                               class="creative-btn creative-btn-primary btn-sm flex-fill">
                                                 <i class="fas fa-play me-1"></i>Continue
                                             </a>
                                         @endif
                                         <a href="{{ route('student.courses.progress', $enrollment->course) }}" 
-                                           class="btn btn-outline-info btn-sm">
+                                           class="creative-btn creative-btn-outline-info btn-sm flex-fill">
                                             <i class="fas fa-chart-line me-1"></i>Progress
                                         </a>
                                         <a href="{{ route('student.courses.show', $enrollment->course) }}" 
-                                           class="btn btn-outline-secondary btn-sm">
+                                           class="creative-btn creative-btn-outline-secondary btn-sm flex-fill">
                                             <i class="fas fa-info-circle me-1"></i>Details
                                         </a>
                                     </div>

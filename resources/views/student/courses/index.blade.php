@@ -15,18 +15,15 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="d-flex align-items-center gap-3">
-                    <h2><i class="fas fa-book me-2"></i>Browse Courses</h2>
-                    <a href="{{ route('student.dashboard') }}" class="btn btn-outline-secondary btn-sm">
-                        <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+            <div class="creative-page-header fade-in-up responsive-card-list-item">
+                <h1 class="mb-0"><i class="fas fa-search me-2"></i>Browse Courses</h1>
+                <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
+                    <a href="{{ route('student.dashboard') }}" class="creative-btn creative-btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>Back
                     </a>
-                </div>
-                <div class="alert alert-info mb-0 py-2 px-3">
-                    <small>
-                        <i class="fas fa-info-circle me-1"></i>
-                        Course assignment is managed by teachers and administrators
-                    </small>
+                    <a href="{{ route('student.courses.enrolled') }}" class="creative-btn creative-btn-primary">
+                        <i class="fas fa-book me-1"></i>My Courses
+                    </a>
                 </div>
             </div>
 
@@ -108,7 +105,7 @@
                                         {{ Str::limit($course->description, 120) }}
                                     </p>
                                     
-                                    <div class="mt-auto">
+                                    <div class="creative-card-footer">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             <small class="text-muted">
                                                 <i class="fas fa-user me-1"></i>{{ $course->teacher->name }}
@@ -119,19 +116,20 @@
                                                 </small>
                                             @endif
                                         </div>
-                                        
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <small class="text-muted">
-                                                {{ $course->enrollments()->where('status', 'active')->count() }} students
-                                                @if($course->max_students)
-                                                    / {{ $course->max_students }}
-                                                @endif
-                                            </small>
-                                            
-                                            <a href="{{ route('student.courses.show', $course) }}" 
-                                               class="btn btn-sm btn-outline-primary">
-                                                View Details
-                                            </a>
+                                            @if($course->isEnrolledBy(auth()->user()))
+                                                <span class="creative-badge creative-badge-success creative-badge-sm">
+                                                    <i class="fas fa-check me-1"></i>Enrolled
+                                                </span>
+                                                <a href="{{ route('student.courses.show', $course) }}" 
+                                                   class="creative-btn creative-btn-primary creative-btn-sm">Continue</a>
+                                            @else
+                                                <small class="text-muted">
+                                                    <i class="fas fa-users me-1"></i>{{ $course->enrollments_count }}
+                                                </small>
+                                                <a href="{{ route('student.courses.show', $course) }}" 
+                                                   class="creative-btn creative-btn-outline-primary creative-btn-sm">Details</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

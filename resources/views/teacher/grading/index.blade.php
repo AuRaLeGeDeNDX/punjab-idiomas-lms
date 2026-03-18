@@ -22,11 +22,11 @@
             <h1 class="h3 mb-0">
                 <i class="fas fa-clipboard-check me-2"></i>Grading Queue
             </h1>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-outline-primary" onclick="refreshQueue()">
+            <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
+                <button type="button" class="creative-btn creative-btn-outline-primary creative-btn-sm" onclick="refreshQueue()">
                     <i class="fas fa-sync-alt me-1"></i>Refresh
                 </button>
-                <button type="button" class="btn btn-outline-secondary" onclick="showBulkActions()">
+                <button type="button" class="creative-btn creative-btn-outline-secondary creative-btn-sm" onclick="showBulkActions()">
                     <i class="fas fa-tasks me-1"></i>Bulk Actions
                 </button>
             </div>
@@ -35,40 +35,40 @@
 </div>
 
 <!-- Statistics Cards -->
-<div class="row mb-4">
+<div class="row mb-4 stats-grid-2">
     <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
+        <div class="creative-card text-center h-100">
+            <div class="creative-card-body p-3">
                 <i class="fas fa-clock fa-2x text-warning mb-2"></i>
-                <h4 class="text-warning">{{ $stats['total_pending'] }}</h4>
-                <p class="card-text">Pending Grading</p>
+                <h4 class="text-warning mb-0">{{ $stats['total_pending'] }}</h4>
+                <p class="small text-muted mb-0">Pending</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
+        <div class="creative-card text-center h-100">
+            <div class="creative-card-body p-3">
                 <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
-                <h4 class="text-danger">{{ $stats['overdue_submissions'] }}</h4>
-                <p class="card-text">Overdue</p>
+                <h4 class="text-danger mb-0">{{ $stats['overdue_submissions'] }}</h4>
+                <p class="small text-muted mb-0">Overdue</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
+        <div class="creative-card text-center h-100">
+            <div class="creative-card-body p-3">
                 <i class="fas fa-calendar-week fa-2x text-info mb-2"></i>
-                <h4 class="text-info">{{ $stats['due_this_week'] }}</h4>
-                <p class="card-text">Due This Week</p>
+                <h4 class="text-info mb-0">{{ $stats['due_this_week'] }}</h4>
+                <p class="small text-muted mb-0">This Week</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
+        <div class="creative-card text-center h-100">
+            <div class="creative-card-body p-3">
                 <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
-                <h4 class="text-success">{{ $stats['graded_today'] }}</h4>
-                <p class="card-text">Graded Today</p>
+                <h4 class="text-success mb-0">{{ $stats['graded_today'] }}</h4>
+                <p class="small text-muted mb-0">Graded Today</p>
             </div>
         </div>
     </div>
@@ -124,7 +124,7 @@
             <div class="col-md-2">
                 <label class="form-label">&nbsp;</label>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="creative-btn creative-btn-primary">
                         <i class="fas fa-filter me-1"></i>Filter
                     </button>
                 </div>
@@ -146,9 +146,9 @@
     </div>
     <div class="card-body p-0">
         @forelse($submissions as $submission)
-            <div class="submission-item border-bottom p-3 {{ $submission->is_late ? 'border-start border-danger border-3' : '' }}">
+            <div class="submission-item border-bottom p-3 {{ $submission->is_late ? 'border-start border-danger border-3' : '' }} responsive-card-list-item">
                 <div class="row align-items-center">
-                    <div class="col-md-1">
+                    <div class="col-md-1 d-none d-md-block">
                         <div class="form-check">
                             <input class="form-check-input submission-checkbox" type="checkbox" 
                                    value="{{ $submission->id }}" id="submission_{{ $submission->id }}">
@@ -156,44 +156,43 @@
                     </div>
                     <div class="col-md-3">
                         <h6 class="mb-1">{{ $submission->assignment->title }}</h6>
-                        <small class="text-muted">{{ $submission->assignment->course->title }}</small>
+                        <small class="text-muted d-block">{{ $submission->assignment->course->title }}</small>
                         @if($submission->is_late)
-                            <span class="badge bg-danger ms-2">Late</span>
+                            <span class="creative-badge creative-badge-danger creative-badge-sm mt-1">Late</span>
                         @endif
                     </div>
                     <div class="col-md-2">
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center mt-2 mt-md-0">
                             <img src="{{ $submission->user->avatar ?? '/images/default-avatar.png' }}" 
-                                 alt="{{ $submission->user->name }}" class="rounded-circle me-2" width="32" height="32">
+                                 alt="{{ $submission->user->name }}" class="rounded-circle me-2" width="28" height="28">
                             <div>
-                                <div class="fw-medium">{{ $submission->user->name }}</div>
-                                <small class="text-muted">{{ $submission->user->email }}</small>
+                                <div class="fw-medium small">{{ $submission->user->name }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="text-muted">
-                            <small>Submitted:</small><br>
-                            <span class="fw-medium">{{ $submission->submitted_at->format('M j, g:i A') }}</span>
+                        <div class="text-muted small mt-2 mt-md-0">
+                            <span class="d-md-none">Submitted: </span>
+                            <span class="fw-medium text-dark">{{ $submission->submitted_at->format('M j, g:i A') }}</span>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="text-muted">
-                            <small>Due:</small><br>
-                            <span class="fw-medium {{ $submission->assignment->due_date->isPast() ? 'text-danger' : '' }}">
+                        <div class="text-muted small mt-1 mt-md-0">
+                            <span class="d-md-none">Due: </span>
+                            <span class="fw-medium {{ $submission->assignment->due_date->isPast() ? 'text-danger' : 'text-dark' }}">
                                 {{ $submission->assignment->due_date->format('M j, g:i A') }}
                             </span>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="d-grid gap-1">
+                        <div class="d-flex gap-2 mt-3 mt-md-0">
                             <a href="{{ route('teacher.grading.show', $submission) }}" 
-                               class="btn btn-primary btn-sm">
+                               class="creative-btn creative-btn-primary creative-btn-sm flex-fill">
                                 <i class="fas fa-edit me-1"></i>Grade
                             </a>
                             @if($submission->files->count() > 0)
-                                <button class="btn btn-outline-secondary btn-sm" onclick="viewFiles({{ $submission->id }})">
-                                    <i class="fas fa-paperclip me-1"></i>Files ({{ $submission->files->count() }})
+                                <button class="creative-btn creative-btn-outline-secondary creative-btn-sm" onclick="viewFiles({{ $submission->id }})">
+                                    <i class="fas fa-paperclip"></i>
                                 </button>
                             @endif
                         </div>

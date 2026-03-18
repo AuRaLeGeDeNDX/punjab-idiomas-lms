@@ -14,6 +14,7 @@
     'resources/css/components/navigation.css'
 ])
 <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v={{ filemtime(public_path('css/admin-dashboard.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/admin-mobile.css') }}?v={{ filemtime(public_path('css/admin-mobile.css')) }}">
 <style>
 /* Inline dark mode fallback for dashboard cards */
 .dark .admin-dashboard,
@@ -159,37 +160,63 @@
                     <h3><i class="fas fa-history"></i> Recent System Activity</h3>
                 </div>
                 <div class="creative-card-body">
-                    <div class="table-responsive">
-                        <table class="creative-table">
-                            <thead>
-                                <tr>
-                                    <th>Time</th>
-                                    <th>User</th>
-                                    <th>Action</th>
-                                    <th>Resource</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($recentActivities as $activity)
+                    {{-- Desktop: Table view --}}
+                    <div class="admin-mobile-table-desktop">
+                        <div class="table-responsive">
+                            <table class="creative-table">
+                                <thead>
                                     <tr>
-                                        <td>{{ $activity['time'] }}</td>
-                                        <td>{{ $activity['user'] }}</td>
-                                        <td>{{ $activity['action'] }}</td>
-                                        <td>{{ $activity['resource'] }}</td>
-                                        <td>
-                                            <span class="creative-badge creative-badge-{{ $activity['status_color'] }}">
-                                                {{ $activity['status'] }}
-                                            </span>
-                                        </td>
+                                        <th>Time</th>
+                                        <th>User</th>
+                                        <th>Action</th>
+                                        <th>Resource</th>
+                                        <th>Status</th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center text-muted">No recent activity</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @forelse($recentActivities as $activity)
+                                        <tr>
+                                            <td>{{ $activity['time'] }}</td>
+                                            <td>{{ $activity['user'] }}</td>
+                                            <td>{{ $activity['action'] }}</td>
+                                            <td>{{ $activity['resource'] }}</td>
+                                            <td>
+                                                <span class="creative-badge creative-badge-{{ $activity['status_color'] }}">
+                                                    {{ $activity['status'] }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">No recent activity</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {{-- Mobile: Card view --}}
+                    <div class="admin-mobile-cards">
+                        @forelse($recentActivities as $activity)
+                            <div class="admin-activity-mobile-item">
+                                <div class="admin-activity-icon {{ $activity['status_color'] }}">
+                                    <i class="fas fa-{{ $activity['action'] === 'Course Created' ? 'book' : ($activity['action'] === 'User Registration' ? 'user-plus' : 'circle-dot') }}"></i>
+                                </div>
+                                <div class="admin-activity-content">
+                                    <div class="admin-activity-action">{{ $activity['action'] }}</div>
+                                    <div class="admin-activity-user">
+                                        {{ $activity['user'] }}
+                                        @if($activity['resource'])
+                                            &middot; {{ $activity['resource'] }}
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="admin-activity-time">{{ $activity['time'] }}</div>
+                            </div>
+                        @empty
+                            <p class="text-muted text-center">No recent activity</p>
+                        @endforelse
                     </div>
                 </div>
             </div>

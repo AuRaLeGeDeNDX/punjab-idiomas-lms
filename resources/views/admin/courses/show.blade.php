@@ -6,6 +6,10 @@
     @include('admin.sidebar')
 @endsection
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin-mobile.css') }}?v={{ filemtime(public_path('css/admin-mobile.css')) }}">
+@endpush
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -29,10 +33,10 @@
                         </div>
                     </div>
                     <div class="d-flex gap-2">
-                        <button type="button" class="creative-btn creative-btn-success assign-students-btn">
+                        <button type="button" class="creative-btn creative-btn-outline-success assign-students-btn">
                             <i class="fas fa-user-plus"></i>Assign Students
                         </button>
-                        <a href="{{ route('admin.courses.edit', $courseWithModules) }}" class="creative-btn creative-btn-primary">
+                        <a href="{{ route('admin.courses.edit', $courseWithModules) }}" class="creative-btn creative-btn-outline-primary">
                             <i class="fas fa-edit"></i>Edit Course
                         </a>
                         <a href="{{ route('admin.courses.index') }}" class="creative-btn creative-btn-outline">
@@ -134,10 +138,10 @@
                         <div class="creative-card-header d-flex justify-content-between align-items-center">
                             <h3 class="mb-0"><i class="fas fa-book-open me-2"></i>Course Modules</h3>
                             <div class="d-flex gap-2">
-                                <button type="button" class="creative-btn creative-btn-warning creative-btn-sm" id="view-module-trash">
+                                <button type="button" class="creative-btn creative-btn-outline-warning creative-btn-sm" id="view-module-trash">
                                     <i class="fas fa-trash-restore me-1"></i>Trash ({{ $trashedModules->count() }})
                                 </button>
-                                <a href="{{ route('teacher.modules.create', $courseWithModules) }}" class="creative-btn creative-btn-primary creative-btn-sm">
+                                <a href="{{ route('teacher.modules.create', $courseWithModules) }}" class="creative-btn creative-btn-outline-primary creative-btn-sm">
                                     <i class="fas fa-plus me-1"></i>Add Module
                                 </a>
                             </div>

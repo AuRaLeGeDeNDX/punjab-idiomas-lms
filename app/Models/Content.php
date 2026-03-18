@@ -1283,8 +1283,13 @@ class Content extends Model
             return null;
         }
 
+        $user = auth()->user();
+        if (!$user) {
+            return $this->getSecurePdfUrl(); // Fallback to signed stream URL if no user session
+        }
+
         $pdfService = app(\App\Services\SecurePdfService::class);
-        return $pdfService->generateViewerUrl($this, auth()->user());
+        return $pdfService->generateViewerUrl($this, $user);
     }
 
     /**

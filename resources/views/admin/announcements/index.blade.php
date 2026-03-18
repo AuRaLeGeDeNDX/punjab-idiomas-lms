@@ -21,10 +21,10 @@
             <p>Manage system-wide announcements and communications</p>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('admin.announcements.trashed') }}" class="creative-btn creative-btn-outline" style="border-color: var(--color-warning); color: var(--color-warning);">
+            <a href="{{ route('admin.announcements.trashed') }}" class="creative-btn creative-btn-outline-warning">
                 <i class="fas fa-trash"></i> View Trash
             </a>
-            <a href="{{ route('admin.announcements.create') }}" class="creative-btn creative-btn-primary">
+            <a href="{{ route('admin.announcements.create') }}" class="creative-btn creative-btn-outline-primary">
                 <i class="fas fa-plus"></i> Create Announcement
             </a>
         </div>
@@ -37,7 +37,7 @@
             <i class="fas fa-bullhorn fa-3x mb-3" style="color: var(--color-gray-400);"></i>
             <h5 style="color: var(--color-gray-600);">No System Announcements</h5>
             <p style="color: var(--color-gray-500);">No system-wide announcements have been created yet.</p>
-            <a href="{{ route('admin.announcements.create') }}" class="creative-btn creative-btn-primary">
+            <a href="{{ route('admin.announcements.create') }}" class="creative-btn creative-btn-outline-primary">
                 Create First Announcement
             </a>
         </div>

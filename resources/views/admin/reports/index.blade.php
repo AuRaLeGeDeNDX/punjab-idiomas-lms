@@ -22,14 +22,14 @@
             <h1 class="h3 mb-0">
                 <i class="fas fa-chart-bar me-2"></i>System Reports
             </h1>
-            <div class="btn-group">
-                <button class="btn btn-outline-primary" onclick="refreshReports()">
+            <div class="d-flex gap-2">
+                <button class="creative-btn creative-btn-outline-primary" onclick="refreshReports()">
                     <i class="fas fa-sync-alt me-1"></i>Refresh
                 </button>
-                <button class="btn btn-outline-success" onclick="exportReport()">
+                <button class="creative-btn creative-btn-outline-success" onclick="exportReport()">
                     <i class="fas fa-download me-1"></i>Export
                 </button>
-                <button class="btn btn-outline-info" onclick="scheduleReport()">
+                <button class="creative-btn creative-btn-outline-info" onclick="scheduleReport()">
                     <i class="fas fa-clock me-1"></i>Schedule
                 </button>
             </div>
@@ -157,8 +157,8 @@ function exportReport() {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="downloadReport()">Download</button>
+                        <button type="button" class="creative-btn creative-btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="creative-btn creative-btn-outline-primary" onclick="downloadReport()">Download</button>
                     </div>
                 </div>
             </div>

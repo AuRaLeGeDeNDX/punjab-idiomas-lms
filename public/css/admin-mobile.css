@@ -1,0 +1,489 @@
+/* ============================================
+   Admin Mobile UI Overhaul
+   Responsive fixes for all admin pages
+   ============================================ */
+
+/* ============================================
+   PAGE HEADER: Stack vertically on mobile
+   ============================================ */
+@media (max-width: 767px) {
+    .creative-page-header .d-flex.justify-content-between {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem;
+    }
+
+    .creative-page-header .d-flex.justify-content-between > div:last-child {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .creative-page-header .d-flex.justify-content-between > div:last-child .creative-btn,
+    .creative-page-header .d-flex.justify-content-between > div:last-child > a,
+    .creative-page-header .d-flex.justify-content-between > div:last-child > button {
+        flex: 1 1 auto;
+        min-width: 0;
+        text-align: center;
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem;
+        white-space: nowrap;
+    }
+
+    .creative-page-header h1 {
+        font-size: 1.35rem !important;
+    }
+
+    .creative-page-header p {
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================
+   STATS GRID: 2 columns on mobile
+   ============================================ */
+@media (max-width: 767px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+
+    .creative-stat-card {
+        padding: 1rem !important;
+    }
+
+    .creative-stat-card .number {
+        font-size: 1.5rem !important;
+    }
+
+    .creative-stat-card .label {
+        font-size: 0.75rem !important;
+    }
+
+    .creative-stat-card .subtitle {
+        font-size: 0.7rem !important;
+    }
+
+    .creative-stat-card .icon {
+        font-size: 1.25rem !important;
+    }
+
+    .creative-stat-card .icon i {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* ============================================
+   USER STATISTICS CARD: Stack on mobile
+   ============================================ */
+@media (max-width: 767px) {
+    .admin-dashboard .creative-card-body [style*="grid-template-columns: repeat(3"] {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+
+    .admin-dashboard .creative-card-body [style*="grid-template-columns: repeat(3"] > div {
+        padding: 0.5rem !important;
+    }
+
+    .admin-dashboard .creative-card-body [style*="grid-template-columns: repeat(3"] > div [style*="font-size: 2rem"] {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* ============================================
+   CREATIVE TABLE: Mobile card layout
+   ============================================ */
+@media (max-width: 767px) {
+    /* Hide the table, show the mobile cards */
+    .admin-mobile-table-desktop {
+        display: none !important;
+    }
+
+    .admin-mobile-cards {
+        display: block !important;
+    }
+
+    /* Filter forms: stack vertically */
+    .creative-card-body form.row {
+        gap: 0.75rem !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .creative-card-body form.row > [class*="col-md"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .creative-card-body form.row .d-flex.align-items-end {
+        flex-direction: row !important;
+        gap: 0.5rem;
+    }
+
+    .creative-card-body form.row .d-flex.align-items-end .creative-btn {
+        flex: 1;
+    }
+
+    /* Bulk actions: stack */
+    .creative-card-body .row.align-items-center > [class*="col-md"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 0.5rem;
+    }
+
+    .creative-card-body .row.align-items-center > .text-end {
+        text-align: left !important;
+    }
+
+    /* Pagination: stack */
+    .d-flex.justify-content-between.align-items-center[style*="padding: 1.5rem"] {
+        flex-direction: column !important;
+        gap: 0.75rem;
+        align-items: center !important;
+    }
+}
+
+/* Hide mobile cards on desktop */
+.admin-mobile-cards {
+    display: none;
+}
+
+/* ============================================
+   MOBILE CARD STYLES (for tables converted to cards)
+   ============================================ */
+.admin-mobile-card {
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.dark .admin-mobile-card {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.admin-mobile-card:last-child {
+    margin-bottom: 0;
+}
+
+.admin-mobile-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.admin-mobile-card-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-mobile-card-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    color: #fff;
+    background: var(--admin-primary, #4f46e5);
+    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.admin-mobile-card-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.admin-mobile-card-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-primary, #111827);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.15rem;
+}
+
+.dark .admin-mobile-card-name {
+    color: #f8fafc;
+}
+
+.admin-mobile-card-email {
+    font-size: 0.85rem;
+    color: var(--text-muted, #6b7280);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-mobile-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--border-color, #f3f4f6);
+    border-bottom: 1px solid var(--border-color, #f3f4f6);
+}
+
+.dark .admin-mobile-card-meta {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.admin-mobile-card-meta-item {
+    font-size: 0.8rem;
+    color: var(--text-secondary, #4b5563);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+}
+
+.dark .admin-mobile-card-meta-item {
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-mobile-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.admin-mobile-card-actions > form {
+    grid-column: span 2;
+}
+
+.admin-mobile-card-actions .creative-btn {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    padding: 0.6rem 0.75rem !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+/* ============================================
+   ACTIVITY MOBILE CARDS
+   ============================================ */
+.admin-activity-mobile-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.dark .admin-activity-mobile-item {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.admin-activity-mobile-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.admin-activity-mobile-item:first-child {
+    padding-top: 0;
+}
+
+.admin-activity-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+}
+
+.admin-activity-icon.success {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+.admin-activity-icon.warning {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}
+
+.admin-activity-icon.info {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+}
+
+.admin-activity-icon.danger {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+.admin-activity-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-activity-action {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-primary, #111827);
+    margin-bottom: 2px;
+}
+
+.dark .admin-activity-action {
+    color: #f8fafc;
+}
+
+.admin-activity-user {
+    font-size: 0.8rem;
+    color: var(--text-secondary, #6b7280);
+}
+
+.dark .admin-activity-user {
+    color: #94a3b8;
+}
+
+.admin-activity-time {
+    font-size: 0.75rem;
+    color: var(--text-muted, #9ca3af);
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 2px;
+}
+
+/* ============================================
+   COURSE MODULE LIST: Mobile improvements  
+   ============================================ */
+@media (max-width: 767px) {
+    /* Module list items: stack vertically */
+    .list-group-item .d-flex.justify-content-between.align-items-start {
+        flex-direction: column !important;
+        gap: 0.75rem;
+    }
+
+    /* Module title + badges: wrap properly */
+    .list-group-item .d-flex.align-items-center.mb-2 {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .list-group-item .d-flex.align-items-center.mb-2 .ms-3 {
+        margin-left: 0 !important;
+    }
+
+    /* Module title */
+    .list-group-item h5 {
+        font-size: 1rem;
+    }
+
+    /* Module meta info: wrap */
+    .list-group-item .d-flex.align-items-center.gap-3.text-muted.small {
+        flex-wrap: wrap;
+        gap: 0.375rem 0.75rem;
+    }
+
+    /* Action buttons: full width row */
+    .list-group-item .d-flex.flex-column.align-items-end {
+        align-items: stretch !important;
+        width: 100%;
+    }
+
+    .list-group-item .btn-group {
+        display: flex !important;
+        width: 100%;
+    }
+
+    .list-group-item .btn-group .creative-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    /* Creative card header with buttons */
+    .creative-card-header.d-flex {
+        flex-direction: column !important;
+        gap: 0.75rem;
+        align-items: flex-start !important;
+    }
+
+    .creative-card-header .d-flex.gap-2 {
+        width: 100%;
+    }
+
+    .creative-card-header .d-flex.gap-2 .creative-btn {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* ============================================
+   COURSE SHOW PAGE: Responsive sidebar
+   ============================================ */
+@media (max-width: 767px) {
+    /* Enrollment stats: ensure proper centering */
+    .creative-card .row.text-center .col-6 {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .creative-card .row.text-center h4 {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* ============================================
+   CREATIVE TABLE FALLBACK: Force responsive 
+   for tables inside .table-responsive
+   ============================================ */
+@media (max-width: 767px) {
+    .creative-table {
+        min-width: 600px;
+    }
+
+    .table-responsive {
+        border-radius: 0;
+        margin: 0 -1px;
+    }
+}
+
+/* ============================================
+   QUICK ACTIONS SECTION: Mobile tweaks
+   ============================================ */
+@media (max-width: 767px) {
+    .creative-card-body [style*="flex-direction: column"] .creative-btn {
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   COL-LG SIDEBAR: Stack on mobile
+   ============================================ */
+@media (max-width: 991px) {
+    .admin-dashboard .row > .col-lg-8,
+    .admin-dashboard .row > .col-lg-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

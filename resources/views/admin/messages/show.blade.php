@@ -96,7 +96,7 @@
                                             <i class="fas fa-envelope me-1"></i> Se enviará un correo a <strong>{{ $message->email }}</strong>
                                         </div>
                                     </div>
-                                    <button type="submit" class="creative-btn creative-btn-primary w-100 justify-content-center mt-3" onclick="return confirm('¿Estás seguro de enviar este correo electrónico?')">
+                                    <button type="submit" class="creative-btn creative-btn-outline-primary w-100 justify-content-center mt-3" onclick="return confirm('¿Estás seguro de enviar este correo electrónico?')">
                                         <i class="fas fa-paper-plane me-2"></i> Enviar Respuesta
                                     </button>
                                 </form>

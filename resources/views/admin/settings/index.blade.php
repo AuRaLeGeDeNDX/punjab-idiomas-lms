@@ -22,14 +22,14 @@
             <h1 class="h3 mb-0">
                 <i class="fas fa-cog me-2"></i>System Settings
             </h1>
-            <div class="btn-group">
-                <button class="btn btn-outline-primary" onclick="backupSettings()">
+            <div class="d-flex gap-2">
+                <button class="creative-btn creative-btn-outline-primary" onclick="backupSettings()">
                     <i class="fas fa-save me-1"></i>Backup
                 </button>
-                <button class="btn btn-outline-warning" onclick="optimizeSystem()">
+                <button class="creative-btn creative-btn-outline-warning" onclick="optimizeSystem()">
                     <i class="fas fa-rocket me-1"></i>Optimize
                 </button>
-                <button class="btn btn-outline-info" onclick="showSystemInfo()">
+                <button class="creative-btn creative-btn-outline-info" onclick="showSystemInfo()">
                     <i class="fas fa-info-circle me-1"></i>System Info
                 </button>
             </div>
@@ -291,8 +291,8 @@
             </div>
 
             <div class="d-flex justify-content-end gap-2">
-                <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
-                <button type="submit" class="btn btn-primary">
+                <button type="button" class="creative-btn creative-btn-outline-secondary" onclick="resetForm()">Reset</button>
+                <button type="submit" class="creative-btn creative-btn-outline-primary">
                     <i class="fas fa-save me-1"></i>Save Settings
                 </button>
             </div>
@@ -307,19 +307,19 @@
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-outline-primary" onclick="clearCache('all')">
+                    <button class="creative-btn creative-btn-outline-primary" onclick="clearCache('all')">
                         <i class="fas fa-broom me-2"></i>Clear All Cache
                     </button>
-                    <button class="btn btn-outline-info" onclick="clearCache('config')">
+                    <button class="creative-btn creative-btn-outline-info" onclick="clearCache('config')">
                         <i class="fas fa-cog me-2"></i>Clear Config Cache
                     </button>
-                    <button class="btn btn-outline-success" onclick="clearCache('view')">
+                    <button class="creative-btn creative-btn-outline-success" onclick="clearCache('view')">
                         <i class="fas fa-eye me-2"></i>Clear View Cache
                     </button>
-                    <button class="btn btn-outline-warning" onclick="optimizeSystem()">
+                    <button class="creative-btn creative-btn-outline-warning" onclick="optimizeSystem()">
                         <i class="fas fa-rocket me-2"></i>Optimize System
                     </button>
-                    <button class="btn btn-outline-danger" onclick="toggleMaintenance()">
+                    <button class="creative-btn creative-btn-outline-danger" onclick="toggleMaintenance()">
                         <i class="fas fa-tools me-2"></i>Toggle Maintenance
                     </button>
                 </div>
@@ -345,10 +345,10 @@
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-outline-primary" onclick="backupSettings()">
+                    <button class="creative-btn creative-btn-outline-primary" onclick="backupSettings()">
                         <i class="fas fa-save me-2"></i>Create Backup
                     </button>
-                    <button class="btn btn-outline-secondary" onclick="showBackups()">
+                    <button class="creative-btn creative-btn-outline-secondary" onclick="showBackups()">
                         <i class="fas fa-history me-2"></i>View Backups
                     </button>
                 </div>

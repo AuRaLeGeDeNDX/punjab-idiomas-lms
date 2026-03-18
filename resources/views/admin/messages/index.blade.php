@@ -38,7 +38,7 @@
                             </select>
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
-                            <button type="submit" class="creative-btn creative-btn-primary me-2">
+                            <button type="submit" class="creative-btn creative-btn-outline-primary me-2">
                                 <i class="fas fa-filter"></i> Filtrar
                             </button>
                             <a href="{{ route('admin.contact-messages.index') }}" class="creative-btn creative-btn-outline">
@@ -89,7 +89,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.contact-messages.show', $msg) }}" class="btn btn-sm btn-action btn-outline-primary" title="Ver / Responder">
+                                    <a href="{{ route('admin.contact-messages.show', $msg) }}" class="creative-btn creative-btn-outline-primary creative-btn-sm" style="padding: 0.5rem;" title="Ver / Responder">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </td>

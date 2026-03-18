@@ -691,7 +691,8 @@
                     <li class="nav-item dropdown d-flex align-items-center me-2">
                         <a class="nav-link text-uppercase fw-semibold d-flex align-items-center" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i data-lucide="globe" class="me-1" style="width: 20px; height: 20px;"></i>
-                            {{ app()->getLocale() }}
+                            <span class="d-none d-lg-inline">{{ app()->getLocale() }}</span>
+                            <span class="d-lg-none ms-1">Language: {{ strtoupper(app()->getLocale()) }}</span>
                             <i data-lucide="chevron-down" class="ms-1" style="width: 16px; height: 16px;"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="languageDropdown">
@@ -704,17 +705,20 @@
                     </li>
                     <!-- Theme Toggle -->
                     <li class="nav-item d-flex align-items-center me-2">
-                        <button id="theme-toggle" type="button" class="btn btn-link nav-link px-2 d-flex align-items-center" aria-label="Toggle Dark Mode">
+                        <button id="theme-toggle" type="button" class="btn btn-link nav-link px-2 d-flex align-items-center w-100" aria-label="Toggle Dark Mode">
                             <i id="theme-toggle-dark-icon" data-lucide="moon" class="d-none" style="width: 20px; height: 20px;"></i>
                             <i id="theme-toggle-light-icon" data-lucide="sun" class="d-none text-warning" style="width: 20px; height: 20px;"></i>
+                            <span class="d-lg-none ms-2">Switch Appearance</span>
                         </button>
                     </li>
                     <!-- Notifications -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link notification-badge" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link notification-badge d-flex align-items-center" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-bell"></i>
+                            <span class="d-lg-none ms-2">Notifications</span>
                             @if(auth()->user()->unreadNotifications->count() > 0)
-                                <span class="badge bg-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                <span class="badge bg-danger ms-auto d-lg-none">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                <span class="badge bg-danger d-none d-lg-block">{{ auth()->user()->unreadNotifications->count() }}</span>
                             @endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" style="width: 300px;">

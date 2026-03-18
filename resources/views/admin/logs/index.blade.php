@@ -22,14 +22,14 @@
             <h1 class="h3 mb-0">
                 <i class="fas fa-list-alt me-2"></i>System Logs
             </h1>
-            <div class="btn-group">
-                <button class="btn btn-outline-primary" onclick="refreshLogs()">
+            <div class="d-flex gap-2">
+                <button class="creative-btn creative-btn-outline-primary" onclick="refreshLogs()">
                     <i class="fas fa-sync-alt me-1"></i>Refresh
                 </button>
-                <button class="btn btn-outline-success" onclick="downloadLogs()">
+                <button class="creative-btn creative-btn-outline-success" onclick="downloadLogs()">
                     <i class="fas fa-download me-1"></i>Download
                 </button>
-                <button class="btn btn-outline-info" onclick="checkSystemHealth()">
+                <button class="creative-btn creative-btn-outline-info" onclick="checkSystemHealth()">
                     <i class="fas fa-heartbeat me-1"></i>Health Check
                 </button>
             </div>
@@ -101,7 +101,7 @@
                             </select>
                             <input type="date" name="date" value="{{ $logDate }}" class="form-control form-control-sm" onchange="this.form.submit()">
                             <input type="text" name="search" value="{{ $search }}" placeholder="Search logs..." class="form-control form-control-sm">
-                            <button type="submit" class="btn btn-sm btn-primary">
+                            <button type="submit" class="creative-btn creative-btn-outline-primary creative-btn-sm" style="padding: 0.25rem 0.5rem;">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
@@ -185,11 +185,11 @@
                                     {{ $file['modified_human'] }}
                                 </small>
                             </div>
-                            <div class="btn-group-vertical btn-group-sm">
-                                <a href="{{ route('admin.logs.download', $file['name']) }}" class="btn btn-outline-primary btn-sm">
+                            <div class="btn-group-vertical">
+                                <a href="{{ route('admin.logs.download', $file['name']) }}" class="creative-btn creative-btn-outline-primary creative-btn-sm mb-1">
                                     <i class="fas fa-download"></i>
                                 </a>
-                                <button class="btn btn-outline-danger btn-sm" onclick="clearLogFile('{{ $file['name'] }}')">
+                                <button class="creative-btn creative-btn-outline-danger creative-btn-sm" onclick="clearLogFile('{{ $file['name'] }}')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>

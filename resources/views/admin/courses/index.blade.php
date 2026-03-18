@@ -5,6 +5,9 @@
 @section('sidebar')
     @include('admin.sidebar')
 @endsection
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin-mobile.css') }}?v={{ filemtime(public_path('css/admin-mobile.css')) }}">
+@endpush
 
 @section('content')
 <div class="container-fluid">
@@ -21,10 +24,10 @@
                         <a href="{{ route('admin.dashboard') }}" class="creative-btn creative-btn-outline">
                             <i class="fas fa-arrow-left"></i>Back to Dashboard
                         </a>
-                        <a href="{{ route('admin.courses.trashed') }}" class="creative-btn creative-btn-outline" style="border-color: var(--color-warning); color: var(--color-warning);">
+                        <a href="{{ route('admin.courses.trashed') }}" class="creative-btn creative-btn-outline-warning">
                             <i class="fas fa-trash"></i>View Trash
                         </a>
-                        <a href="{{ route('admin.courses.create') }}" class="creative-btn creative-btn-primary">
+                        <a href="{{ route('admin.courses.create') }}" class="creative-btn creative-btn-outline-primary">
                             <i class="fas fa-plus"></i>Create New Course
                         </a>
                     </div>
@@ -117,96 +120,156 @@
             <div class="creative-card">
                 <div class="creative-card-body" style="padding: 0;">
                     @if($courses->count() > 0)
-                        <div class="table-responsive">
-                            <table class="creative-table">
-                                <thead>
-                                    <tr>
-                                        <th width="50">
-                                            <input type="checkbox" id="select-all" class="form-check-input">
-                                        </th>
-                                        <th>Course</th>
-                                        <th>Teacher</th>
-                                        <th>Category</th>
-                                        <th>Status</th>
-                                        <th>Enrollments</th>
-                                        <th>Created</th>
-                                        <th width="150">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($courses as $course)
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" name="course_ids[]" value="{{ $course->id }}" 
-                                                   class="form-check-input course-checkbox">
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <h6 class="mb-1">{{ $course->title }}</h6>
-                                                @if($course->description)
-                                                    <small class="text-muted">{{ Str::limit($course->description, 80) }}</small>
-                                                @endif
-                                                @if($course->is_featured)
-                                                    <span class="creative-badge creative-badge-warning ms-2">Featured</span>
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @if($course->teacher)
-                                                <div class="d-flex align-items-center">
-                                                    <div>
-                                                        <div class="fw-medium">{{ $course->teacher->name }}</div>
-                                                        <small class="text-muted">{{ $course->teacher->email }}</small>
-                                                    </div>
+                        {{-- Desktop: Table view --}}
+                        <div class="admin-mobile-table-desktop">
+                            <div class="table-responsive">
+                                <table class="creative-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="50">
+                                                <input type="checkbox" id="select-all" class="form-check-input">
+                                            </th>
+                                            <th>Course</th>
+                                            <th>Teacher</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Enrollments</th>
+                                            <th>Created</th>
+                                            <th width="150">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($courses as $course)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="course_ids[]" value="{{ $course->id }}" 
+                                                       class="form-check-input course-checkbox">
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <h6 class="mb-1">{{ $course->title }}</h6>
+                                                    @if($course->description)
+                                                        <small class="text-muted">{{ Str::limit($course->description, 80) }}</small>
+                                                    @endif
+                                                    @if($course->is_featured)
+                                                        <span class="creative-badge creative-badge-warning ms-2">Featured</span>
+                                                    @endif
                                                 </div>
-                                            @else
-                                                <span class="text-muted">No teacher assigned</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($course->category)
-                                                <span class="creative-badge creative-badge-primary">{{ $course->category }}</span>
-                                            @else
-                                                <span style="color: var(--color-gray-500);">Uncategorized</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($course->is_published)
-                                                <span class="creative-badge creative-badge-success">Published</span>
-                                            @else
-                                                <span class="creative-badge creative-badge-primary">Draft</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <span class="creative-badge creative-badge-info">{{ $course->enrollments_count ?? 0 }}</span>
-                                        </td>
-                                        <td>
-                                            <small class="text-muted">{{ $course->created_at->format('M j, Y') }}</small>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <a href="{{ route('admin.courses.show', $course) }}" 
-                                                   class="creative-btn creative-btn-outline" style="padding: 0.5rem 0.75rem;" title="View">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('admin.courses.edit', $course) }}" 
-                                                   class="creative-btn creative-btn-outline" style="padding: 0.5rem 0.75rem;" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form method="POST" action="{{ route('admin.courses.destroy', $course) }}" 
-                                                      class="d-inline" onsubmit="return confirm('Are you sure you want to delete this course?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="creative-btn creative-btn-outline" style="padding: 0.5rem 0.75rem; border-color: var(--color-danger); color: var(--color-danger);" title="Delete">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
+                                            </td>
+                                            <td>
+                                                @if($course->teacher)
+                                                    <div class="d-flex align-items-center">
+                                                        <div>
+                                                            <div class="fw-medium">{{ $course->teacher->name }}</div>
+                                                            <small class="text-muted">{{ $course->teacher->email }}</small>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <span class="text-muted">No teacher assigned</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($course->category)
+                                                    <span class="creative-badge creative-badge-primary">{{ $course->category }}</span>
+                                                @else
+                                                    <span style="color: var(--color-gray-500);">Uncategorized</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($course->is_published)
+                                                    <span class="creative-badge creative-badge-success">Published</span>
+                                                @else
+                                                    <span class="creative-badge creative-badge-primary">Draft</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <span class="creative-badge creative-badge-info">{{ $course->enrollments_count ?? 0 }}</span>
+                                            </td>
+                                            <td>
+                                                <small class="text-muted">{{ $course->created_at->format('M j, Y') }}</small>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ route('admin.courses.show', $course) }}" 
+                                                       class="creative-btn creative-btn-outline" style="padding: 0.5rem 0.75rem;" title="View">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('admin.courses.edit', $course) }}" 
+                                                       class="creative-btn creative-btn-outline" style="padding: 0.5rem 0.75rem;" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <form method="POST" action="{{ route('admin.courses.destroy', $course) }}" 
+                                                          class="d-inline" onsubmit="return confirm('Are you sure you want to delete this course?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="creative-btn creative-btn-outline" style="padding: 0.5rem 0.75rem; border-color: var(--color-danger); color: var(--color-danger);" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {{-- Mobile: Card view --}}
+                        <div class="admin-mobile-cards" style="padding: 1rem;">
+                            @foreach($courses as $course)
+                                <div class="admin-mobile-card">
+                                    <div class="admin-mobile-card-header">
+                                        <div class="admin-mobile-card-user">
+                                            <div class="admin-mobile-card-info" style="width: 100%;">
+                                                <div class="admin-mobile-card-name" style="white-space: normal;">{{ $course->title }}</div>
+                                                @if($course->description)
+                                                    <div class="admin-mobile-card-email" style="white-space: normal;">{{ Str::limit($course->description, 60) }}</div>
+                                                @endif
                                             </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="admin-mobile-card-meta">
+                                        @if($course->is_published)
+                                            <span class="creative-badge creative-badge-success">Published</span>
+                                        @else
+                                            <span class="creative-badge creative-badge-primary">Draft</span>
+                                        @endif
+                                        @if($course->is_featured)
+                                            <span class="creative-badge creative-badge-warning">Featured</span>
+                                        @endif
+                                        @if($course->category)
+                                            <span class="creative-badge creative-badge-primary">{{ $course->category }}</span>
+                                        @endif
+                                        <span class="admin-mobile-card-meta-item">
+                                            <i class="fas fa-users"></i>
+                                            {{ $course->enrollments_count ?? 0 }} enrolled
+                                        </span>
+                                        @if($course->teacher)
+                                            <span class="admin-mobile-card-meta-item">
+                                                <i class="fas fa-chalkboard-teacher"></i>
+                                                {{ $course->teacher->name }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="admin-mobile-card-actions">
+                                        <a href="{{ route('admin.courses.show', $course) }}" class="creative-btn creative-btn-outline" title="View">
+                                            <i class="fas fa-eye"></i> View
+                                        </a>
+                                        <a href="{{ route('admin.courses.edit', $course) }}" class="creative-btn creative-btn-outline" title="Edit">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <form method="POST" action="{{ route('admin.courses.destroy', $course) }}" class="d-inline" style="flex: 1;"
+                                              onsubmit="return confirm('Are you sure?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="creative-btn creative-btn-outline w-100" style="border-color: var(--color-danger); color: var(--color-danger);" title="Delete">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
 
                         <!-- Pagination -->

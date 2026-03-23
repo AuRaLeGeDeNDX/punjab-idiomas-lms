@@ -40,6 +40,11 @@ class SystemSettingsController extends Controller
     public function update(Request $request): JsonResponse
     {
         $this->authorize('viewAny', \App\Models\User::class);
+
+        // Capture admin info BEFORE config:clear/config:cache commands (they reset auth state)
+        $adminId   = auth()->id();
+        $adminName = auth()->user()?->name ?? 'Unknown';
+        $adminUser = auth()->user();
         
         $validated = $request->validate([
             'app_name' => 'required|string|max:255',
@@ -68,19 +73,25 @@ class SystemSettingsController extends Controller
         
         try {
             $this->updateEnvironmentFile($validated);
-            $this->updateConfigCache();
+            // Only clear config cache — do NOT run config:cache here.
+            // config:cache makes env() return null in application code, which would
+            // break getSystemSettings() and the settings page on the next load.
+            // The Optimize button is the correct place to run config:cache.
+            Artisan::call('config:clear');
             
-            // Log the settings update
+            // Log the settings update (use pre-captured values, auth state may be reset now)
             Log::info('System settings updated by admin', [
-                'admin_id' => auth()->id(),
-                'admin_name' => auth()->user()->name,
+                'admin_id' => $adminId,
+                'admin_name' => $adminName,
                 'updated_settings' => array_keys($validated)
             ]);
 
-            activity('admin')
-                ->causedBy(auth()->user())
-                ->withProperties(['updated_settings' => array_keys($validated)])
-                ->log('System settings updated');
+            if ($adminUser) {
+                activity('admin')
+                    ->causedBy($adminUser)
+                    ->withProperties(['updated_settings' => array_keys($validated)])
+                    ->log('System settings updated');
+            }
             
             return response()->json([
                 'message' => 'System settings updated successfully',
@@ -89,7 +100,7 @@ class SystemSettingsController extends Controller
         } catch (\Exception $e) {
             Log::error('Failed to update system settings', [
                 'error' => $e->getMessage(),
-                'admin_id' => auth()->id()
+                'admin_id' => $adminId
             ]);
             
             return response()->json([
@@ -398,29 +409,30 @@ class SystemSettingsController extends Controller
     private function getSystemSettings(): array
     {
         return [
-            'app_name' => config('app.name'),
-            'app_url' => config('app.url'),
-            'app_timezone' => config('app.timezone'),
-            'app_debug' => config('app.debug'),
-            'app_env' => config('app.env'),
-            'mail_driver' => config('mail.default'),
-            'mail_host' => config('mail.mailers.smtp.host'),
-            'mail_port' => config('mail.mailers.smtp.port'),
-            'mail_username' => config('mail.mailers.smtp.username'),
-            'mail_encryption' => config('mail.mailers.smtp.encryption'),
-            'mail_from_address' => config('mail.from.address'),
-            'mail_from_name' => config('mail.from.name'),
-            'cache_driver' => config('cache.default'),
-            'session_driver' => config('session.driver'),
-            'queue_driver' => config('queue.default'),
-            'file_max_size' => config('filesystems.max_file_size', 10),
-            'allowed_file_types' => config('filesystems.allowed_types', 'jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip'),
-            'maintenance_mode' => app()->isDownForMaintenance(),
-            'registration_enabled' => config('auth.registration_enabled', true),
-            'email_verification' => config('auth.email_verification', false),
-            'password_reset_enabled' => config('auth.password_reset_enabled', true),
-            'max_login_attempts' => config('auth.throttle.max_attempts', 5),
-            'lockout_duration' => config('auth.throttle.decay_minutes', 15),
+            'app_name'               => config('app.name'),
+            'app_url'                => config('app.url'),
+            'app_timezone'           => config('app.timezone'),
+            'app_debug'              => config('app.debug'),
+            'app_env'                => config('app.env'),
+            'mail_driver'            => config('mail.default'),
+            'mail_host'              => config('mail.mailers.smtp.host'),
+            'mail_port'              => config('mail.mailers.smtp.port'),
+            'mail_username'          => config('mail.mailers.smtp.username'),
+            'mail_encryption'        => config('mail.mailers.smtp.encryption'),
+            'mail_from_address'      => config('mail.from.address'),
+            'mail_from_name'         => config('mail.from.name'),
+            'cache_driver'           => config('cache.default'),
+            'session_driver'         => config('session.driver'),
+            'queue_driver'           => config('queue.default'),
+            // These use env() directly because they have no matching built-in config key
+            'file_max_size'          => (int) env('FILE_MAX_SIZE', 10),
+            'allowed_file_types'     => env('ALLOWED_FILE_TYPES', 'jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip'),
+            'maintenance_mode'       => app()->isDownForMaintenance(),
+            'registration_enabled'   => filter_var(env('REGISTRATION_ENABLED', true), FILTER_VALIDATE_BOOLEAN),
+            'email_verification'     => filter_var(env('EMAIL_VERIFICATION', false), FILTER_VALIDATE_BOOLEAN),
+            'password_reset_enabled' => filter_var(env('PASSWORD_RESET_ENABLED', true), FILTER_VALIDATE_BOOLEAN),
+            'max_login_attempts'     => (int) env('MAX_LOGIN_ATTEMPTS', 5),
+            'lockout_duration'       => (int) env('LOCKOUT_DURATION', 15),
         ];
     }
 
@@ -439,39 +451,59 @@ class SystemSettingsController extends Controller
         
         // Map settings to environment variables
         $envMappings = [
-            'app_name' => 'APP_NAME',
-            'app_url' => 'APP_URL',
-            'app_timezone' => 'APP_TIMEZONE',
-            'mail_driver' => 'MAIL_MAILER',
-            'mail_host' => 'MAIL_HOST',
-            'mail_port' => 'MAIL_PORT',
-            'mail_username' => 'MAIL_USERNAME',
-            'mail_password' => 'MAIL_PASSWORD',
-            'mail_encryption' => 'MAIL_ENCRYPTION',
-            'mail_from_address' => 'MAIL_FROM_ADDRESS',
-            'mail_from_name' => 'MAIL_FROM_NAME',
-            'cache_driver' => 'CACHE_DRIVER',
-            'session_driver' => 'SESSION_DRIVER',
-            'queue_driver' => 'QUEUE_CONNECTION',
+            // Application
+            'app_name'                 => 'APP_NAME',
+            'app_url'                  => 'APP_URL',
+            'app_timezone'             => 'APP_TIMEZONE',
+            // Mail
+            'mail_driver'              => 'MAIL_MAILER',
+            'mail_host'                => 'MAIL_HOST',
+            'mail_port'                => 'MAIL_PORT',
+            'mail_username'            => 'MAIL_USERNAME',
+            'mail_password'            => 'MAIL_PASSWORD',
+            'mail_encryption'          => 'MAIL_ENCRYPTION',
+            'mail_from_address'        => 'MAIL_FROM_ADDRESS',
+            'mail_from_name'           => 'MAIL_FROM_NAME',
+            // Drivers
+            'cache_driver'             => 'CACHE_DRIVER',
+            'session_driver'           => 'SESSION_DRIVER',
+            'queue_driver'             => 'QUEUE_CONNECTION',
+            // File uploads
+            'file_max_size'            => 'FILE_MAX_SIZE',
+            'allowed_file_types'       => 'ALLOWED_FILE_TYPES',
+            // Security
+            'registration_enabled'     => 'REGISTRATION_ENABLED',
+            'email_verification'       => 'EMAIL_VERIFICATION',
+            'password_reset_enabled'   => 'PASSWORD_RESET_ENABLED',
+            'max_login_attempts'       => 'MAX_LOGIN_ATTEMPTS',
+            'lockout_duration'         => 'LOCKOUT_DURATION',
         ];
-        
+
+        // Boolean fields — must be written as true/false strings in .env
+        $booleanFields = ['registration_enabled', 'email_verification', 'password_reset_enabled'];
+
         foreach ($envMappings as $setting => $envVar) {
-            if (isset($settings[$setting])) {
-                $value = $settings[$setting];
-                
-                // Quote values that contain spaces
-                if (str_contains($value, ' ')) {
-                    $value = '"' . $value . '"';
-                }
-                
-                $pattern = "/^{$envVar}=.*/m";
-                $replacement = "{$envVar}={$value}";
-                
-                if (preg_match($pattern, $envContent)) {
-                    $envContent = preg_replace($pattern, $replacement, $envContent);
-                } else {
-                    $envContent .= "\n{$replacement}";
-                }
+            if (!array_key_exists($setting, $settings)) {
+                continue;
+            }
+
+            $value = $settings[$setting];
+
+            if (in_array($setting, $booleanFields)) {
+                // Cast to proper bool then to string so it writes 'true' or 'false'
+                $value = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
+            } elseif (is_string($value) && str_contains($value, ' ')) {
+                // Quote strings that contain spaces
+                $value = '"' . $value . '"';
+            }
+
+            $pattern = "/^{$envVar}=.*/m";
+            $replacement = "{$envVar}={$value}";
+
+            if (preg_match($pattern, $envContent)) {
+                $envContent = preg_replace($pattern, $replacement, $envContent);
+            } else {
+                $envContent .= "\n{$replacement}";
             }
         }
         
@@ -479,7 +511,9 @@ class SystemSettingsController extends Controller
     }
 
     /**
-     * Update configuration cache.
+     * Clear and rebuild the configuration cache (used by Optimize only).
+     * WARNING: After config:cache, env() calls in application code return null.
+     * Do NOT call this from update() — only call from optimize().
      */
     private function updateConfigCache(): void
     {
@@ -493,17 +527,25 @@ class SystemSettingsController extends Controller
     private function getEnvironmentVariables(): array
     {
         return [
-            'APP_NAME' => env('APP_NAME'),
-            'APP_ENV' => env('APP_ENV'),
-            'APP_DEBUG' => env('APP_DEBUG'),
-            'APP_URL' => env('APP_URL'),
-            'APP_TIMEZONE' => env('APP_TIMEZONE'),
-            'CACHE_DRIVER' => env('CACHE_DRIVER'),
-            'SESSION_DRIVER' => env('SESSION_DRIVER'),
-            'QUEUE_CONNECTION' => env('QUEUE_CONNECTION'),
-            'MAIL_MAILER' => env('MAIL_MAILER'),
-            'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
-            'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
+            'APP_NAME'               => env('APP_NAME'),
+            'APP_ENV'                => env('APP_ENV'),
+            'APP_DEBUG'              => env('APP_DEBUG'),
+            'APP_URL'                => env('APP_URL'),
+            'APP_TIMEZONE'           => env('APP_TIMEZONE'),
+            'CACHE_DRIVER'           => env('CACHE_DRIVER'),
+            'SESSION_DRIVER'         => env('SESSION_DRIVER'),
+            'QUEUE_CONNECTION'       => env('QUEUE_CONNECTION'),
+            'MAIL_MAILER'            => env('MAIL_MAILER'),
+            'MAIL_FROM_ADDRESS'      => env('MAIL_FROM_ADDRESS'),
+            'MAIL_FROM_NAME'         => env('MAIL_FROM_NAME'),
+            // File upload & security settings
+            'FILE_MAX_SIZE'          => env('FILE_MAX_SIZE'),
+            'ALLOWED_FILE_TYPES'     => env('ALLOWED_FILE_TYPES'),
+            'REGISTRATION_ENABLED'   => env('REGISTRATION_ENABLED'),
+            'EMAIL_VERIFICATION'     => env('EMAIL_VERIFICATION'),
+            'PASSWORD_RESET_ENABLED' => env('PASSWORD_RESET_ENABLED'),
+            'MAX_LOGIN_ATTEMPTS'     => env('MAX_LOGIN_ATTEMPTS'),
+            'LOCKOUT_DURATION'       => env('LOCKOUT_DURATION'),
         ];
     }
 

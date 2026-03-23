@@ -762,19 +762,18 @@ class ContentBlockController extends Controller
     {
         $types = Content::getContentTypes();
         
-        // precise server limits
-        $uploadMax = $this->convertToBytes(ini_get('upload_max_filesize'));
-        $postMax = $this->convertToBytes(ini_get('post_max_size'));
-        $serverLimit = min($uploadMax, $postMax); // The lower of the two is the hard limit
+        // Use global system settings max file size (in MB)
+        $globalMaxMb = config('settings.file_max_size', env('FILE_MAX_SIZE', 2048));
+        $globalMaxBytes = $globalMaxMb * 1024 * 1024;
 
-        // Clamp application limits to server limits
+        // Clamp application limits to global settings limit instead of php.ini
+        // since uploads go directly to R2 and bypass PHP limits.
         foreach ($types as $key => &$config) {
             if (isset($config['max_file_size'])) {
-                $config['max_file_size'] = min($config['max_file_size'], $serverLimit);
+                $config['max_file_size'] = min($config['max_file_size'], $globalMaxBytes);
             } else {
-                 // If no limit defined, default to server limit
                  if ($config['supports_files'] ?? false) {
-                     $config['max_file_size'] = $serverLimit;
+                     $config['max_file_size'] = $globalMaxBytes;
                  }
             }
         }

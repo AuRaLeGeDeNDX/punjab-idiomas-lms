@@ -33,22 +33,22 @@ class UploadController extends Controller
                 return response()->json(['success' => false, 'message' => 'Unauthorized to upload to this subpage.'], 403);
             }
 
-            // Check Content Block Type specific limits (if passed via front-end)
+            // Use Content Type specific limits (if passed via front-end)
             $type = $request->input('block_type', 'unknown'); // e.g. 'video', 'pdf'
             $config = \App\Models\Content::getContentTypeConfig($type);
             
             $allowedExtensions = $config['allowed_extensions'] ?? [];
             $maxFileSize = $config['max_file_size'] ?? (10 * 1024 * 1024); // default 10MB
             
-            // Adjust server limits to catch gross overages immediately
-            $uploadMax = $this->convertToBytes(ini_get('upload_max_filesize'));
-            $postMax = $this->convertToBytes(ini_get('post_max_size'));
-            if ($uploadMax > 0 && $postMax > 0) {
-                 $maxFileSize = min($maxFileSize, $uploadMax, $postMax);
-            }
+            // Check global system settings max file size (in MB)
+            $globalMaxMb = config('settings.file_max_size', env('FILE_MAX_SIZE', 2048));
+            $globalMaxBytes = $globalMaxMb * 1024 * 1024;
+            
+            // The limit should be whatever is smaller: the content type limit or the global limit
+            $effectiveMaxFileSize = min($maxFileSize, $globalMaxBytes);
 
-            if ($fileSize > $maxFileSize) {
-                $maxMb = round($maxFileSize / 1048576, 2);
+            if ($fileSize > $effectiveMaxFileSize) {
+                $maxMb = round($effectiveMaxFileSize / 1048576, 2);
                 return response()->json([
                     'success' => false, 
                     'message' => "File size exceeds maximum allowed limit of {$maxMb} MB."

@@ -193,10 +193,10 @@ class MessageController extends Controller
         $user = Auth::user();
         $recipients = collect();
 
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole(['Admin', 'admin'])) {
             // Admins can message anyone
             $recipients = User::where('id', '!=', $user->id)->get();
-        } elseif ($user->hasRole('teacher')) {
+        } elseif ($user->hasRole(['Teacher', 'teacher'])) {
             // Teachers can message students in their courses and other teachers/admins
             $studentIds = $user->teachingCourses()
                 ->with('enrollments.user')
@@ -206,13 +206,13 @@ class MessageController extends Controller
                 ->pluck('user.id')
                 ->unique();
 
-            $teacherAndAdminIds = User::role(['teacher', 'admin'])
+            $teacherAndAdminIds = User::role(['Teacher', 'teacher', 'Admin', 'admin'])
                 ->where('id', '!=', $user->id)
                 ->pluck('id');
 
             $allIds = $studentIds->merge($teacherAndAdminIds)->unique();
             $recipients = User::whereIn('id', $allIds)->get();
-        } elseif ($user->hasRole('student')) {
+        } elseif ($user->hasRole(['Student', 'student'])) {
             // Students can message teachers of their courses and admins
             $teacherIds = $user->enrollments()
                 ->with('course.teacher')
@@ -220,7 +220,7 @@ class MessageController extends Controller
                 ->pluck('course.teacher.id')
                 ->unique();
 
-            $adminIds = User::role('admin')->pluck('id');
+            $adminIds = User::role(['Admin', 'admin'])->pluck('id');
 
             $allIds = $teacherIds->merge($adminIds)->unique();
             $recipients = User::whereIn('id', $allIds)->get();

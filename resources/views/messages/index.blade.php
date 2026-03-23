@@ -1,112 +1,110 @@
 @extends('layouts.app')
 
-@section('title', 'Messages')
+@section('title', 'Mensajes')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <div class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-3xl font-bold text-gray-900">Messages</h1>
-            <p class="text-gray-600 mt-1">Communicate with teachers, students, and administrators</p>
-        </div>
-        
-        <a href="{{ route('messages.create') }}" 
-           class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
-            New Message
-        </a>
-    </div>
-
-    <!-- Tabs -->
-    <div class="border-b border-gray-200 mb-6">
-        <nav class="-mb-px flex space-x-8">
-            <a href="{{ route('messages.index', ['tab' => 'inbox']) }}" 
-               class="py-2 px-1 border-b-2 font-medium text-sm {{ $tab === 'inbox' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
-                Inbox
-                @if($tab === 'inbox' && $unreadCount > 0)
-                    <span class="ml-2 bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                        {{ $unreadCount }}
-                    </span>
-                @endif
-            </a>
-            <a href="{{ route('messages.index', ['tab' => 'sent']) }}" 
-               class="py-2 px-1 border-b-2 font-medium text-sm {{ $tab === 'sent' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
-                Sent
-            </a>
-        </nav>
-    </div>
-
-    @if($messages->count() > 0)
-        <div class="bg-white rounded-lg shadow-md border border-gray-200">
-            @foreach($messages as $message)
-                @php /** @var \App\Models\Message $message */ @endphp
-                <div class="border-b border-gray-200 last:border-b-0">
-                    <a href="{{ route('messages.show', $message) }}" 
-                       class="block p-4 hover:bg-gray-50 transition-colors duration-150">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-3 mb-2">
-                                    @if($tab === 'inbox' && !$message->isRead())
-                                        <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                    @endif
-                                    
-                                    <h3 class="text-sm font-medium text-gray-900 truncate {{ $tab === 'inbox' && !$message->isRead() ? 'font-semibold' : '' }}">
-                                        {{ $message->subject }}
-                                    </h3>
-                                    
-                                    @if($message->isReply())
-                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded">
-                                            Reply
-                                        </span>
-                                    @endif
-                                </div>
-                                
-                                <div class="flex items-center gap-4 text-sm text-gray-500">
-                                    <span>
-                                        {{ $tab === 'inbox' ? 'From: ' . $message->sender->name : 'To: ' . $message->recipient->name }}
-                                    </span>
-                                    <span>{{ $message->sent_at->format('M j, Y g:i A') }}</span>
-                                </div>
-                                
-                                <p class="mt-1 text-sm text-gray-600 truncate">
-                                    {{ \Illuminate\Support\Str::limit($message->message, 100) }}
-                                </p>
-                            </div>
-                            
-                            <div class="ml-4 flex-shrink-0">
-                                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </div>
-                    </a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="creative-page-header fade-in-up mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1><i class="fas fa-comments me-2"></i> Mensajes Internos</h1>
+                        <p class="mb-0">Comunícate con profesores, estudiantes y administradores.</p>
+                    </div>
+                    <div>
+                        <a href="{{ route('messages.create') }}" class="creative-btn creative-btn-outline">
+                            <i class="fas fa-plus me-1"></i> Nuevo Mensaje
+                        </a>
+                    </div>
                 </div>
-            @endforeach
-        </div>
-
-        <div class="mt-6">
-            {{ $messages->appends(['tab' => $tab])->links() }}
-        </div>
-    @else
-        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-8 text-center">
-            <div class="text-gray-400 mb-4">
-                <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
             </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-                {{ $tab === 'inbox' ? 'No messages received' : 'No messages sent' }}
-            </h3>
-            <p class="text-gray-500 mb-4">
-                {{ $tab === 'inbox' ? 'Messages from other users will appear here.' : 'Messages you send will appear here.' }}
-            </p>
-            @if($tab === 'inbox')
-                <a href="{{ route('messages.create') }}" 
-                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                    Send your first message
-                </a>
-            @endif
+
+            <!-- Tabs -->
+            <ul class="nav nav-tabs creative-tabs mb-4 fade-in-up" style="animation-delay: 0.1s;">
+                <li class="nav-item">
+                    <a class="nav-link {{ $tab === 'inbox' ? 'active' : '' }}" href="{{ route('messages.index', ['tab' => 'inbox']) }}">
+                        <i class="fas fa-inbox me-1"></i> Bandeja de Entrada
+                        @if($tab === 'inbox' && $unreadCount > 0)
+                            <span class="badge bg-danger ms-1 rounded-pill">{{ $unreadCount }}</span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ $tab === 'sent' ? 'active' : '' }}" href="{{ route('messages.index', ['tab' => 'sent']) }}">
+                        <i class="fas fa-paper-plane me-1"></i> Enviados
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Messages List -->
+            <div class="creative-card fade-in-up" style="animation-delay: 0.2s;">
+                @if($messages->count() > 0)
+                    <div class="list-group list-group-flush">
+                        @foreach($messages as $message)
+                            <a href="{{ route('messages.show', $message) }}" class="list-group-item list-group-item-action p-4 {{ $tab === 'inbox' && !$message->isRead() ? 'bg-light border-start border-4 border-primary' : '' }}" style="{{ $tab === 'inbox' && !$message->isRead() ? 'border-left-color: var(--color-primary) !important;' : '' }}">
+                                <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                                    <h5 class="mb-1 fw-bold text-dark d-flex align-items-center gap-2">
+                                        @if($tab === 'inbox' && !$message->isRead())
+                                            <span class="badge bg-primary rounded-circle p-1" style="width: 10px; height: 10px;"></span>
+                                        @endif
+                                        {{ $message->subject }}
+                                        @if($message->isReply())
+                                            <span class="badge bg-secondary ms-2" style="font-size: 0.7em;">Respuesta</span>
+                                        @endif
+                                    </h5>
+                                    <small class="text-muted"><i class="far fa-clock me-1"></i>{{ $message->sent_at->format('d M, Y H:i') }}</small>
+                                </div>
+                                <div class="mb-2 text-muted">
+                                    <i class="fas fa-user-circle me-1"></i> 
+                                    <strong>{{ $tab === 'inbox' ? 'De: ' . $message->sender->name : 'Para: ' . $message->recipient->name }}</strong>
+                                </div>
+                                <p class="mb-1 text-secondary text-truncate" style="max-width: 90%;">
+                                    {{ \Illuminate\Support\Str::limit($message->message, 150) }}
+                                </p>
+                            </a>
+                        @endforeach
+                    </div>
+                    
+                    @if($messages->hasPages())
+                        <div class="creative-card-body border-top">
+                            {{ $messages->appends(['tab' => $tab])->links() }}
+                        </div>
+                    @endif
+                @else
+                    <div class="creative-card-body text-center py-5">
+                        <div class="empty-state">
+                            <i class="fas fa-envelope-open-text text-muted mb-4" style="font-size: 4rem;"></i>
+                            <h4 class="text-muted fw-bold">{{ $tab === 'inbox' ? 'Bandeja de entrada vacía' : 'No hay mensajes enviados' }}</h4>
+                            <p class="text-muted mb-4">{{ $tab === 'inbox' ? 'Aquí aparecerán los mensajes que recibas de otros usuarios.' : 'Aquí aparecerán los mensajes que envíes.' }}</p>
+                            @if($tab === 'inbox')
+                                <a href="{{ route('messages.create') }}" class="creative-btn creative-btn-primary mt-2">
+                                    <i class="fas fa-paper-plane me-2"></i> Enviar tu primer mensaje
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
-    @endif
+    </div>
 </div>
+
+<style>
+/* Reusing the dashboard styling blocks */
+.creative-page-header { background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%); color: white; padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(79, 70, 229, 0.15); }
+.creative-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 0.5rem; transition: all 0.3s ease; text-decoration: none; border: none; cursor: pointer; }
+.creative-btn-primary { background-color: var(--color-accent); color: white; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+.creative-btn-primary:hover { background-color: var(--color-accent-hover); color: white; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+.creative-btn-outline { background-color: transparent; border: 2px solid white; color: white; }
+.creative-btn-outline:hover { background-color: rgba(255, 255, 255, 0.1); color: white; }
+.creative-card { background: var(--color-surface); border-radius: 1rem; border: 1px solid var(--color-border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden; }
+.creative-card-body { padding: 1.5rem; }
+.creative-tabs { border-bottom: 2px solid var(--color-border); }
+.creative-tabs .nav-link { color: var(--color-text-muted); font-weight: 600; border: none; border-bottom: 2px solid transparent; padding: 1rem 1.5rem; transition: all 0.3s ease; background: transparent; }
+.creative-tabs .nav-link:hover { color: var(--color-primary); border-bottom-color: rgba(79, 70, 229, 0.3); }
+.creative-tabs .nav-link.active { color: var(--color-primary); border-bottom-color: var(--color-primary); background: transparent; }
+.list-group-item-action:hover { background-color: rgba(79, 70, 229, 0.02); }
+</style>
 @endsection

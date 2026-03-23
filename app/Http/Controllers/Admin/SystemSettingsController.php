@@ -61,7 +61,7 @@ class SystemSettingsController extends Controller
             'cache_driver' => 'required|string',
             'session_driver' => 'required|string',
             'queue_driver' => 'required|string',
-            'file_max_size' => 'required|integer|min:1|max:100',
+            'file_max_size' => 'required|integer|min:1|max:2048',
             'allowed_file_types' => 'required|string',
             'maintenance_mode' => 'boolean',
             'registration_enabled' => 'boolean',

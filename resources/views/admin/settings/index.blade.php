@@ -223,7 +223,7 @@
                             <div class="mb-3">
                                 <label for="file_max_size" class="form-label">Max File Size (MB)</label>
                                 <input type="number" class="form-control" id="file_max_size" name="file_max_size" 
-                                       value="{{ $settings['file_max_size'] }}" min="1" max="100" required>
+                                       value="{{ $settings['file_max_size'] }}" min="1" max="2048" required>
                             </div>
                         </div>
                         <div class="col-md-6">

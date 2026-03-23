@@ -183,6 +183,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/contact-messages', [\App\Http\Controllers\ContactController::class, 'index'])->name('admin.contact-messages.index');
     Route::get('/contact-messages/{message}', [\App\Http\Controllers\ContactController::class, 'show'])->name('admin.contact-messages.show');
     Route::post('/contact-messages/{message}/reply', [\App\Http\Controllers\ContactController::class, 'reply'])->name('admin.contact-messages.reply');
+    Route::delete('/contact-messages/{message}', [\App\Http\Controllers\ContactController::class, 'destroy'])->name('admin.contact-messages.destroy');
     
     // Admin File Repair Management
     Route::prefix('file-repair')->name('admin.file-repair.')->group(function () {
@@ -263,6 +264,7 @@ Route::prefix('teacher')->middleware(['auth', 'role:Teacher'])->group(function (
     Route::get('/contact-messages', [\App\Http\Controllers\ContactController::class, 'index'])->name('teacher.contact-messages.index');
     Route::get('/contact-messages/{message}', [\App\Http\Controllers\ContactController::class, 'show'])->name('teacher.contact-messages.show');
     Route::post('/contact-messages/{message}/reply', [\App\Http\Controllers\ContactController::class, 'reply'])->name('teacher.contact-messages.reply');
+    Route::delete('/contact-messages/{message}', [\App\Http\Controllers\ContactController::class, 'destroy'])->name('teacher.contact-messages.destroy');
 
     // Teacher Activity Logs
     Route::get('/activity-logs', [\App\Http\Controllers\Teacher\ActivityLogController::class, 'index'])->name('teacher.logs.index');

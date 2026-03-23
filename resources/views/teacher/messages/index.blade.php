@@ -81,9 +81,18 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('teacher.contact-messages.show', $msg) }}" class="btn btn-sm btn-action btn-outline-primary" title="Ver / Responder">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('teacher.contact-messages.show', $msg) }}" class="btn btn-sm btn-action btn-outline-primary" title="Ver / Responder">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <form action="{{ route('teacher.contact-messages.destroy', $msg) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este mensaje de contacto?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-action" style="color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05);" title="Eliminar Mensaje" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.05)';">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @empty

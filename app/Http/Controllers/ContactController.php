@@ -158,4 +158,32 @@ class ContactController extends Controller
             return back()->withInput()->with('error', 'Error al guardar la respuesta.');
         }
     }
+    /**
+     * Admin/Teacher: Delete a message.
+     */
+    public function destroy(Request $request, ContactMessage $message)
+    {
+        try {
+            $message->delete();
+            
+            Log::info('Contact message deleted', [
+                'id' => $message->id,
+                'deleted_by' => auth()->id()
+            ]);
+            
+            $routePrefix = auth()->user()->hasRole('Admin') ? 'admin' : 'teacher';
+            
+            return redirect()
+                ->route("{$routePrefix}.contact-messages.index")
+                ->with('status', 'Mensaje eliminado correctamente.');
+                
+        } catch (\Exception $e) {
+            Log::error('Failed to delete contact message', [
+                'id' => $message->id,
+                'error' => $e->getMessage()
+            ]);
+            
+            return back()->with('error', 'Error al eliminar el mensaje.');
+        }
+    }
 }

@@ -367,4 +367,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/mark-read', [\App\Http\Controllers\NotificationPreferenceController::class, 'markAsRead'])->name('notifications.mark-read');
     Route::post('/notifications/mark-all-read', [\App\Http\Controllers\NotificationPreferenceController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::get('/notifications/unread-count', [\App\Http\Controllers\NotificationPreferenceController::class, 'getUnreadCount'])->name('notifications.unread-count');
+
+    // Profile & User Settings Routes
+    Route::get('/profile', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('profile.show');
+    Route::get('/settings', [\App\Http\Controllers\UserProfileController::class, 'settings'])->name('profile.settings');
+    Route::put('/profile', [\App\Http\Controllers\UserProfileController::class, 'update'])->name('profile.update');
 });

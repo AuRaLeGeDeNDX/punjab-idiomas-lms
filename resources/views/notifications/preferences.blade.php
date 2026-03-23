@@ -1,258 +1,234 @@
 @extends('layouts.app')
 
-@section('title', 'Notification Preferences')
+@section('title', __('Ajustes de Notificación'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Notification Preferences</h1>
-            <p class="text-gray-600">Manage how you receive notifications from the system</p>
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-xl-9">
+            <!-- Page Header -->
+            <div class="creative-page-header fade-in-up mb-4 shadow-lg overflow-hidden position-relative">
+                <div class="header-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+                <div class="d-flex justify-content-between align-items-center position-relative z-index-1">
+                    <div class="d-flex align-items-center gap-4">
+                        <div class="header-icon-box shadow-colored">
+                            <i class="fas fa-bell-on"></i>
+                        </div>
+                        <div>
+                            <h1 class="h2 fw-bold text-white mb-1">{{ __('Preferencias de Notificación') }}</h1>
+                            <p class="text-white-50 mb-0 d-none d-md-block">{{ __('Personaliza cómo y cuándo quieres que te informemos sobre las novedades.') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-lg mb-4 fade-in-up" role="alert">
+                    <div class="d-flex align-items-center p-1">
+                        <div class="alert-icon-box bg-success-light text-success rounded-circle me-3">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="fw-semibold">{{ session('success') }}</div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            <!-- Preference Form -->
+            <form method="POST" action="{{ route('notifications.preferences.update') }}" class="preference-form">
+                @csrf
+                @method('PUT')
+
+                <div class="row g-4">
+                    <!-- Channels Part -->
+                    <div class="col-lg-4 d-flex">
+                        <div class="creative-card flex-grow-1 fade-in-up stagger-1 h-100">
+                            <div class="creative-card-header mb-4">
+                                <h3 class="h5 mb-0"><i class="fas fa-broadcast-tower me-2"></i>{{ __('Canal de Envío') }}</h3>
+                                <div class="header-subtitle">{{ __('¿Cómo te notificamos?') }}</div>
+                            </div>
+                            
+                            <div class="channel-options px-1">
+                                <!-- In-App Preference -->
+                                <div class="preference-item py-3 px-3 rounded-lg border transition-base active-hover shadow-sm bg-white">
+                                    <div class="form-check form-switch d-flex align-items-center justify-content-between ps-0">
+                                        <div class="me-3">
+                                            <label class="form-check-label h6 fw-bold mb-1 d-block" for="database_notifications">
+                                                <i class="fas fa-mobile-android me-2 text-primary"></i>{{ __('App / Web') }}
+                                            </label>
+                                            <p class="small text-muted mb-0 lh-sm">{{ __('Alertas visuales dentro de la plataforma.') }}</p>
+                                        </div>
+                                        <input class="form-check-input ms-0 creative-switch" type="checkbox" name="database_notifications" id="database_notifications" value="1" {{ $preferences->database_notifications ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto pt-4 border-top mt-4 px-1">
+                                <button type="button" 
+                                        onclick="if(confirm('¿Seguro कि quieres borrar todos tus ajustes personalizados?')) { document.getElementById('reset-form').submit(); }"
+                                        class="creative-btn creative-btn-outline-secondary w-100 py-2">
+                                    <i class="fas fa-history me-2"></i> {{ __('Restablecer') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Types Part -->
+                    <div class="col-lg-8">
+                        <div class="creative-card fade-in-up stagger-2 border-0 shadow-lg">
+                            <div class="creative-card-header mb-4">
+                                <h3 class="h5 mb-0"><i class="fas fa-layer-group me-2"></i>{{ __('¿Qué quieres saber?') }}</h3>
+                                <div class="header-subtitle">{{ __('Selecciona los eventos que te interesan.') }}</div>
+                            </div>
+
+                            <div class="row g-3">
+                                @php
+                                    $typesConfig = [
+                                        ['id' => 'assignment_published', 'icon' => 'fas fa-file-upload', 'title' => 'Nuevas Tareas', 'desc' => 'Actividades publicadas.'],
+                                        ['id' => 'assignment_reminder', 'icon' => 'fas fa-alarm-clock', 'title' => 'Recordatorios', 'desc' => 'Plazos de entrega próximos.'],
+                                        ['id' => 'grade_published', 'icon' => 'fas fa-graduation-cap', 'title' => 'Notas', 'desc' => 'Resultados de correcciones.'],
+                                        ['id' => 'course_announcement', 'icon' => 'fas fa-bullhorn', 'title' => 'Anuncios', 'desc' => 'Noticias de tus profesores.'],
+                                        ['id' => 'course_update', 'icon' => 'fas fa-pencil-paintbrush', 'title' => 'Cambios', 'desc' => 'Actualización de contenido.'],
+                                        ['id' => 'direct_message', 'icon' => 'fas fa-paper-plane', 'title' => 'Mensajería', 'desc' => 'Chats y mensajes directos.'],
+                                        ['id' => 'forum_reply', 'icon' => 'fas fa-comments-alt', 'title' => 'Foros', 'desc' => 'Respuestas a tus debates.'],
+                                        ['id' => 'system_alert', 'icon' => 'fas fa-shield-check', 'title' => 'Sistema', 'desc' => 'Mantenimiento y avisos.'],
+                                    ];
+                                @endphp
+
+                                @foreach($typesConfig as $config)
+                                <div class="col-sm-6">
+                                    <div class="type-card p-3 rounded-lg border h-100 transition-base shadow-sm bg-white" onclick="document.getElementById('{{ $config['id'] }}').click()">
+                                        <div class="form-check custom-check ps-0 d-flex align-items-start gap-2">
+                                            <div class="check-box-wrapper pt-1">
+                                                <input class="form-check-input ms-0 me-2 shadow-none" type="checkbox" name="{{ $config['id'] }}" id="{{ $config['id'] }}" value="1" {{ $preferences->{$config['id']} ? 'checked' : '' }} onclick="event.stopPropagation()">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <label class="form-check-label d-block fw-bold h6 mb-1 text-dark" for="{{ $config['id'] }}" onclick="event.stopPropagation()">
+                                                    <i class="{{ $config['icon'] }} text-primary-light me-1 small"></i> {{ __($config['title']) }}
+                                                </label>
+                                                <p class="small text-muted mb-0">{{ __($config['desc']) }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            <div class="mt-5 pt-3 border-top d-flex justify-content-end gap-3">
+                                <a href="{{ url()->previous() }}" class="creative-btn creative-btn-outline-secondary py-2">
+                                    {{ __('Descartar') }}
+                                </a>
+                                <button type="submit" class="creative-btn creative-btn-primary px-5 py-2 fw-bold text-uppercase tracking-wider">
+                                    <i class="fas fa-save me-2"></i> {{ __('Guardar Ajustes') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Hidden Reset Form -->
+            <form id="reset-form" method="POST" action="{{ route('notifications.preferences.reset') }}" class="d-none">
+                @csrf
+            </form>
         </div>
-
-        <!-- Success Message -->
-        @if(session('success'))
-            <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 flex items-center">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <!-- Preferences Form -->
-        <form method="POST" action="{{ route('notifications.preferences.update') }}" class="bg-white rounded-lg shadow-md overflow-hidden">
-            @csrf
-            @method('PUT')
-
-            <!-- Channel Preferences -->
-            <div class="p-6 border-b border-gray-200">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Notification Channels</h2>
-                <p class="text-sm text-gray-600 mb-4">Choose how you want to receive notifications</p>
-
-                <div class="space-y-4">
-                    <!-- Email Notifications -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="email_notifications" 
-                                id="email_notifications"
-                                value="1"
-                                {{ $preferences->email_notifications ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="email_notifications" class="font-medium text-gray-900">Email Notifications</label>
-                            <p class="text-sm text-gray-600">Receive notifications via email</p>
-                        </div>
-                    </div>
-
-                    <!-- In-App Notifications -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="database_notifications" 
-                                id="database_notifications"
-                                value="1"
-                                {{ $preferences->database_notifications ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="database_notifications" class="font-medium text-gray-900">In-App Notifications</label>
-                            <p class="text-sm text-gray-600">Receive notifications within the application</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Notification Types -->
-            <div class="p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Notification Types</h2>
-                <p class="text-sm text-gray-600 mb-4">Select which types of notifications you want to receive</p>
-
-                <div class="space-y-4">
-                    <!-- Assignment Published -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="assignment_published" 
-                                id="assignment_published"
-                                value="1"
-                                {{ $preferences->assignment_published ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="assignment_published" class="font-medium text-gray-900">Assignment Published</label>
-                            <p class="text-sm text-gray-600">Get notified when new assignments are published</p>
-                        </div>
-                    </div>
-
-                    <!-- Assignment Reminder -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="assignment_reminder" 
-                                id="assignment_reminder"
-                                value="1"
-                                {{ $preferences->assignment_reminder ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="assignment_reminder" class="font-medium text-gray-900">Assignment Due Reminders</label>
-                            <p class="text-sm text-gray-600">Get reminded when assignments are due soon (24 hours before)</p>
-                        </div>
-                    </div>
-
-                    <!-- Grade Published -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="grade_published" 
-                                id="grade_published"
-                                value="1"
-                                {{ $preferences->grade_published ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="grade_published" class="font-medium text-gray-900">Grade Published</label>
-                            <p class="text-sm text-gray-600">Get notified when your grades are published</p>
-                        </div>
-                    </div>
-
-                    <!-- Course Announcements -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="course_announcement" 
-                                id="course_announcement"
-                                value="1"
-                                {{ $preferences->course_announcement ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="course_announcement" class="font-medium text-gray-900">Course Announcements</label>
-                            <p class="text-sm text-gray-600">Get notified about course announcements</p>
-                        </div>
-                    </div>
-
-                    <!-- Course Updates -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="course_update" 
-                                id="course_update"
-                                value="1"
-                                {{ $preferences->course_update ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="course_update" class="font-medium text-gray-900">Course Updates</label>
-                            <p class="text-sm text-gray-600">Get notified about course content updates and submissions</p>
-                        </div>
-                    </div>
-
-                    <!-- Direct Messages -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="direct_message" 
-                                id="direct_message"
-                                value="1"
-                                {{ $preferences->direct_message ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="direct_message" class="font-medium text-gray-900">Direct Messages</label>
-                            <p class="text-sm text-gray-600">Get notified when you receive direct messages</p>
-                        </div>
-                    </div>
-
-                    <!-- Forum Replies -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="forum_reply" 
-                                id="forum_reply"
-                                value="1"
-                                {{ $preferences->forum_reply ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="forum_reply" class="font-medium text-gray-900">Forum Replies</label>
-                            <p class="text-sm text-gray-600">Get notified when someone replies to your forum posts</p>
-                        </div>
-                    </div>
-
-                    <!-- System Alerts -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input 
-                                type="checkbox" 
-                                name="system_alert" 
-                                id="system_alert"
-                                value="1"
-                                {{ $preferences->system_alert ? 'checked' : '' }}
-                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            >
-                        </div>
-                        <div class="ml-3">
-                            <label for="system_alert" class="font-medium text-gray-900">System Alerts</label>
-                            <p class="text-sm text-gray-600">Get notified about important system updates and maintenance</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
-                <button 
-                    type="button"
-                    onclick="if(confirm('Are you sure you want to reset all preferences to defaults?')) { document.getElementById('reset-form').submit(); }"
-                    class="text-sm text-gray-600 hover:text-gray-900 font-medium"
-                >
-                    Reset to Defaults
-                </button>
-
-                <div class="flex space-x-3">
-                    <a 
-                        href="{{ url()->previous() }}" 
-                        class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium"
-                    >
-                        Cancel
-                    </a>
-                    <button 
-                        type="submit"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
-                    >
-                        Save Preferences
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <!-- Hidden Reset Form -->
-        <form id="reset-form" method="POST" action="{{ route('notifications.preferences.reset') }}" class="hidden">
-            @csrf
-        </form>
     </div>
 </div>
+
+<style>
+    /* Premium Header */
+    .creative-page-header {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1.25rem;
+        padding: 2.5rem 2rem;
+        position: relative;
+    }
+    .header-overlay {
+        background-image: radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.15) 0%, transparent 40%);
+    }
+    .header-icon-box {
+        background: var(--gradient-primary);
+        color: white;
+        width: 65px;
+        height: 65px;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+    }
+
+    /* Cards */
+    .creative-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        border-radius: 1.25rem;
+    }
+    .header-subtitle {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #94a3b8;
+        font-weight: 600;
+        margin-top: 0.25rem;
+    }
+
+    /* Selection Items */
+    .preference-item, .type-card {
+        border-color: #f1f5f9 !important;
+        cursor: pointer;
+    }
+    .preference-item:hover, .type-card:hover {
+        border-color: #f9731633 !important;
+        background-color: #fff9f5 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* Input Styling */
+    .creative-switch {
+        width: 3.25rem !important;
+        height: 1.75rem !important;
+        background-color: #e2e8f0;
+        border-color: transparent !important;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .form-check-input:checked.creative-switch {
+        background-color: var(--color-primary);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    }
+
+    .custom-check .form-check-input {
+        width: 1.4rem;
+        height: 1.4rem;
+        border: 2px solid #cbd5e1;
+        border-radius: 0.4rem;
+        cursor: pointer;
+    }
+    .custom-check .form-check-input:checked {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+
+    /* Utilities */
+    .rounded-lg { border-radius: 1rem !important; }
+    .shadow-colored { box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); }
+    .active-hover:hover .text-primary { color: var(--color-primary-dark) !important; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    
+    .text-primary-light { color: #f97316; opacity: 0.7; }
+
+    @media (max-width: 991px) {
+        .col-lg-4, .col-lg-8 { width: 100%; }
+        .creative-page-header { padding: 1.5rem; }
+        .header-icon-box { width: 50px; height: 50px; font-size: 1.25rem; }
+    }
+</style>
 @endsection
+
+

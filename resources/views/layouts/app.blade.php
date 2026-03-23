@@ -765,8 +765,8 @@
                             <li><a class="dropdown-item" href="{{ route('messages.index') }}"><i class="fas fa-envelope me-2"></i>Messages</a></li>
                             <li><a class="dropdown-item" href="{{ route('notifications.preferences') }}"><i class="fas fa-bell me-2"></i>Notification Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.settings') }}"><i class="fas fa-cog me-2"></i>Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">

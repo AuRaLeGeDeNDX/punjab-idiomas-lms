@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Cookies — Punjab Idiomas</title>
-    <meta name="description" content="Política de Cookies de Punjab Idiomas. Información sobre los tipos de cookies utilizadas en el sitio web conforme a la normativa española.">
+    <meta name="description" content="Política de Cookies de Punjab Idiomas. Información sobre los tipos de cookies utilizadas en www.punjabidiomas.com conforme a la normativa española.">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class', theme: { extend: {} } }</script>
@@ -56,7 +56,7 @@
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 p-8 md:p-12 legal-section">
 
-            <p>Este sitio web utiliza cookies conforme a la normativa española.</p>
+            <p>Este sitio web (<strong>www.punjabidiomas.com</strong>) utiliza cookies conforme a la normativa española.</p>
 
             <h2>¿Qué son las cookies?</h2>
             <p>Son archivos que se descargan en el dispositivo del usuario al acceder a determinadas páginas web.</p>
@@ -72,7 +72,7 @@
             <p>Las cookies son esenciales para permitir el acceso seguro a la plataforma de estudiantes y garantizar el correcto funcionamiento del sistema de autenticación.</p>
 
             <h2>Gestión de cookies</h2>
-            <p>El usuario puede configurar su navegador para aceptar o rechazar cookies.</p>
+            <p>El usuario puede configurar su navegador para aceptar o rechazar cookies. Sin embargo, la desactivación de cookies técnicas puede impedir el correcto funcionamiento del sitio web.</p>
 
             <h2>Consentimiento</h2>
             <p>Al acceder al sitio web, el usuario acepta el uso de cookies mediante el banner correspondiente.</p>

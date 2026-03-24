@@ -75,6 +75,10 @@
                     <p class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-1">Correo electrónico</p>
                     <p class="font-semibold text-slate-800 dark:text-slate-200">Punjabidiomas040@gmail.com</p>
                 </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-1">Sitio web</p>
+                    <p class="font-semibold text-slate-800 dark:text-slate-200">www.punjabidiomas.com</p>
+                </div>
             </div>
 
             <h2>Objeto</h2>

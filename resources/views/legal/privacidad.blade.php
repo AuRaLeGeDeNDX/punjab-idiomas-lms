@@ -64,6 +64,7 @@
                     <li><strong>Entidad:</strong> PUNJAB NANAK SL</li>
                     <li><strong>NIF/CIF:</strong> B55463772</li>
                     <li><strong>Correo electrónico:</strong> Punjabidiomas040@gmail.com</li>
+                    <li><strong>Sitio web:</strong> www.punjabidiomas.com</li>
                 </ul>
             </div>
 
@@ -95,16 +96,8 @@
             <p>Los datos se conservarán mientras dure la relación contractual o el tiempo legal necesario.</p>
 
             <h2>Derechos</h2>
-            <p>El usuario puede ejercer sus derechos de:</p>
-            <ul>
-                <li>Acceso</li>
-                <li>Rectificación</li>
-                <li>Supresión</li>
-                <li>Oposición</li>
-                <li>Limitación</li>
-                <li>Portabilidad</li>
-            </ul>
-            <p>Enviando solicitud a: <a href="mailto:punjabidiomas@gmail.com" class="text-orange-700 dark:text-orange-400 hover:underline">punjabidiomas@gmail.com</a></p>
+            <p>El usuario puede ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad enviando una solicitud a: <a href="mailto:Punjabidiomas040@gmail.com" class="text-orange-700 dark:text-orange-400 hover:underline">Punjabidiomas040@gmail.com</a></p>
+            <p>Asimismo, el usuario tiene derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD) — <a href="https://www.aepd.es" target="_blank" class="text-orange-700 dark:text-orange-400 hover:underline">www.aepd.es</a> — si considera que el tratamiento de sus datos no es adecuado.</p>
 
             <h2>Seguridad</h2>
             <p>Se aplican medidas técnicas para proteger los datos, especialmente en el acceso al área privada de estudiantes.</p>

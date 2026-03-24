@@ -27,6 +27,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 // Public Contact Form Route
 Route::post('/contact/submit', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.submit');
 
+// Legal Pages
+Route::get('/legal-notice', fn() => view('legal.aviso-legal'))->name('legal.notice');
+Route::get('/privacy-policy', fn() => view('legal.privacidad'))->name('legal.privacy');
+Route::get('/cookies-policy', fn() => view('legal.cookies'))->name('legal.cookies');
+
 // File Routes (authenticated users only)
 Route::middleware(['auth', 'file.access'])->group(function () {
     Route::post('/files/upload', [FileController::class, 'upload'])->name('files.upload');

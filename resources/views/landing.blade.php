@@ -577,9 +577,9 @@
             <div>
                 <h4 class="text-white font-bold mb-4 uppercase text-sm tracking-wider">Legal</h4>
                 <ul class="space-y-2 text-sm text-slate-400">
-                    <li><a href="#" class="hover:text-white transition-colors">Aviso Legal</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Política de Privacidad</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Política de Cookies</a></li>
+                    <li><a href="{{ route('legal.notice') }}" class="hover:text-white transition-colors">Aviso Legal</a></li>
+                    <li><a href="{{ route('legal.privacy') }}" class="hover:text-white transition-colors">Política de Privacidad</a></li>
+                    <li><a href="{{ route('legal.cookies') }}" class="hover:text-white transition-colors">Política de Cookies</a></li>
                 </ul>
             </div>
         </div>

@@ -49,13 +49,20 @@
             font-weight: bold;
             display: flex;
             align-items: center;
+            padding-top: 0;
+            padding-bottom: 0;
         }
         
         .navbar-logo {
-            height: 60px;
+            height: 65px;
             width: auto;
             margin-right: 12px;
             flex-shrink: 0;
+        }
+        
+        .navbar {
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
         }
         
         .sidebar {
@@ -685,10 +692,6 @@
                 <img src="{{ asset('images/logo.png') }}" 
                      alt="{{ config('app.name') }}" 
                      class="navbar-logo rounded-sm">
-                <div class="d-none d-md-flex flex-column ms-2">
-                    <span class="fw-bold fs-5 text-white leading-1">PUNJAB</span>
-                    <span class="fs-6 text-warning uppercase" style="font-size: 0.7rem !important; letter-spacing: 1px;">Idiomas</span>
-                </div>
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

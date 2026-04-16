@@ -66,15 +66,15 @@
     <div class="bg-orange-900 dark:bg-orange-950 text-white py-2 px-4 hidden md:flex justify-between items-center text-sm transition-colors duration-300">
         <div class="max-w-7xl mx-auto w-full flex justify-between items-center">
             <div class="flex space-x-6">
-                <span class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-2 text-yellow-400"></i> idiomaspunjab@gmail.com</span>
-                <span class="flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2 text-yellow-400"></i> +34 612 45 50 57</span>
-                <span class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-2 text-yellow-400"></i> Calle Padilla 391, Barcelona</span>
+                <a href="mailto:idiomaspunjab@gmail.com" class="flex items-center hover:text-yellow-400 transition-colors"><i data-lucide="mail" class="w-4 h-4 mr-2 text-yellow-400"></i> idiomaspunjab@gmail.com</a>
+                <a href="tel:+34612455057" class="flex items-center hover:text-yellow-400 transition-colors"><i data-lucide="phone" class="w-4 h-4 mr-2 text-yellow-400"></i> +34 612 45 50 57</a>
+                <a href="https://share.google/wmxaw4OfawtKdwHvi" target="_blank" class="flex items-center hover:text-yellow-400 transition-colors"><i data-lucide="map-pin" class="w-4 h-4 mr-2 text-yellow-400"></i> Calle Padilla 391, Barcelona</a>
             </div>
             <div class="flex space-x-4">
-                <a href="https://www.instagram.com/punjabdrivingschoolbcn?igsh=MWR3dTlsdzNydXBocw==" target="_blank" class="hover:text-yellow-400 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                <a href="https://www.instagram.com/punjabdrivingschoolbcn?igsh=MWR3dTlsdzNydXBocw==" target="_blank" class="hover:text-yellow-400 transition-colors flex items-center"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
                 <a href="https://www.tiktok.com/@punjabdrivingschoolbcn?_r=1&_t=ZN-94Wiw6bKeOt" target="_blank" class="hover:text-yellow-400 transition-colors flex items-center"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v4.6c-.2 5.06-4.99 8.87-9.98 7.37-3.23-1.02-5.5-3.8-5.9-7.14-.38-3.08 1.1-6.23 3.8-7.79 2.04-1.18 4.62-1.28 6.75-.24v4.32c-1.89-1.01-4.22-.05-4.99 1.96-.69 1.76.12 3.86 1.8 4.64 1.63.74 3.65.17 4.54-1.35.47-.84.67-1.8.62-2.77V.02z"/></svg></a>
-                <a href="https://www.facebook.com/p/Punjab-driving-school-Bcn-100085488819759/" target="_blank" class="hover:text-yellow-400 transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
-                <a href="https://www.youtube.com/@PunjabDriving-vx7uz/shorts" target="_blank" class="hover:text-yellow-400 transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+                <a href="https://www.facebook.com/p/Punjab-driving-school-Bcn-100085488819759/" target="_blank" class="hover:text-yellow-400 transition-colors flex items-center"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="https://www.youtube.com/@PunjabDriving-vx7uz/shorts" target="_blank" class="hover:text-yellow-400 transition-colors flex items-center"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
             </div>
         </div>
     </div>
@@ -84,11 +84,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <a href="#inicio" class="flex-shrink-0 flex items-center cursor-pointer no-underline">
-                    <img src="{{ asset('images/logo.png') }}" alt="Punjab Idiomas Logo" class="h-20 w-auto mr-3 rounded-sm">
-                    <div>
-                        <span class="font-extrabold text-2xl text-orange-900 dark:text-orange-500 leading-none block">PUNJAB</span>
-                        <span class="font-semibold text-sm text-yellow-500 uppercase tracking-wider block">Idiomas</span>
-                    </div>
+                    <img src="{{ asset('images/logo.png') }}" alt="Punjab Idiomas Logo" class="h-16 w-auto rounded-sm" style="height: 70px;">
                 </a>
 
                 <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
@@ -492,10 +488,10 @@
                     <div class="mt-12 relative z-10">
                         <p class="font-semibold mb-4 text-sm uppercase tracking-wider text-orange-200">Síguenos en</p>
                         <div class="flex space-x-4">
-                            <a href="https://www.instagram.com/punjabdrivingschoolbcn?igsh=MWR3dTlsdzNydXBocw==" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                            <a href="https://www.instagram.com/punjabdrivingschoolbcn?igsh=MWR3dTlsdzNydXBocw==" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
                             <a href="https://www.tiktok.com/@punjabdrivingschoolbcn?_r=1&_t=ZN-94Wiw6bKeOt" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v4.6c-.2 5.06-4.99 8.87-9.98 7.37-3.23-1.02-5.5-3.8-5.9-7.14-.38-3.08 1.1-6.23 3.8-7.79 2.04-1.18 4.62-1.28 6.75-.24v4.32c-1.89-1.01-4.22-.05-4.99 1.96-.69 1.76.12 3.86 1.8 4.64 1.63.74 3.65.17 4.54-1.35.47-.84.67-1.8.62-2.77V.02z"/></svg></a>
-                            <a href="https://www.facebook.com/p/Punjab-driving-school-Bcn-100085488819759/" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                            <a href="https://www.youtube.com/@PunjabDriving-vx7uz/shorts" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                            <a href="https://www.facebook.com/p/Punjab-driving-school-Bcn-100085488819759/" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                            <a href="https://www.youtube.com/@PunjabDriving-vx7uz/shorts" target="_blank" class="bg-orange-700 dark:bg-orange-800 p-3 rounded-full hover:bg-yellow-400 hover:text-orange-900 transition-all text-white flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
                         </div>
                     </div>
                 </div>
@@ -557,9 +553,8 @@
     <footer class="bg-slate-900 dark:bg-black text-slate-300 py-12 border-t border-slate-800 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <div class="flex items-center mb-4">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-8 w-auto mr-2 rounded-sm">
-                    <span class="font-extrabold text-xl text-white tracking-wider">PUNJAB Idiomas</span>
+                <div class="flex items-center mb-6">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto rounded-sm" style="height: 64px;">
                 </div>
                 <p class="text-sm text-slate-400 mb-4 max-w-xs">
                     Tu centro de confianza en Barcelona para dominar el español y prepararte para los exámenes oficiales.

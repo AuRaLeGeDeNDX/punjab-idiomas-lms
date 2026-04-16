@@ -554,7 +554,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <div class="flex items-center mb-6">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto rounded-sm" style="height: 64px;">
+                    <span class="text-2xl font-bold text-white tracking-widest uppercase">PUNJAB IDIOMAS</span>
                 </div>
                 <p class="text-sm text-slate-400 mb-4 max-w-xs">
                     Tu centro de confianza en Barcelona para dominar el español y prepararte para los exámenes oficiales.

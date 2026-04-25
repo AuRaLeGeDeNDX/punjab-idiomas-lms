@@ -25,7 +25,7 @@ class CourseController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Course::with('teacher')->withCount('enrollments');
+        $query = Course::with(['teachers', 'teacher'])->withCount('enrollments');
         
         // Apply filters
         if ($request->has('status') && $request->status !== '') {
@@ -37,7 +37,9 @@ class CourseController extends Controller
         }
         
         if ($request->has('teacher') && $request->teacher) {
-            $query->where('teacher_id', $request->teacher);
+            $query->whereHas('teachers', function ($q) use ($request) {
+                $q->where('users.id', $request->teacher);
+            })->orWhere('teacher_id', $request->teacher);
         }
         
         if ($request->has('category') && $request->category) {
@@ -86,7 +88,8 @@ class CourseController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'teacher_id' => 'required|exists:users,id',
+            'teacher_ids' => 'required|array',
+            'teacher_ids.*' => 'exists:users,id',
             'category' => 'nullable|string|max:100',
             'difficulty_level' => ['nullable', Rule::in(['beginner', 'intermediate', 'advanced'])],
             'duration_hours' => 'nullable|integer|min:1',
@@ -100,8 +103,9 @@ class CourseController extends Controller
         ]);
 
         try {
-            $teacher = User::findOrFail($validated['teacher_id']);
-            $course = $this->courseService->createCourse($validated, $teacher);
+            $teacherIds = $validated['teacher_ids'];
+            unset($validated['teacher_ids']);
+            $course = $this->courseService->createCourse($validated, $teacherIds);
             
             return redirect()
                 ->route('admin.courses.show', $course)
@@ -156,7 +160,8 @@ class CourseController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'teacher_id' => 'required|exists:users,id',
+            'teacher_ids' => 'required|array',
+            'teacher_ids.*' => 'exists:users,id',
             'category' => 'nullable|string|max:100',
             'difficulty_level' => ['nullable', Rule::in(['beginner', 'intermediate', 'advanced'])],
             'duration_hours' => 'nullable|integer|min:1',
@@ -173,7 +178,9 @@ class CourseController extends Controller
     $validated['is_featured'] = $request->has('is_featured');
 
         try {
-            $this->courseService->updateCourse($course, $validated);
+            $teacherIds = $validated['teacher_ids'];
+            unset($validated['teacher_ids']);
+            $this->courseService->updateCourse($course, $validated, $teacherIds);
             
             return redirect()
                 ->route('admin.courses.show', $course)
@@ -207,7 +214,7 @@ class CourseController extends Controller
      */
     public function trashed(Request $request): View
     {
-        $courses = Course::onlyTrashed()->with('teacher')->paginate(20);
+        $courses = Course::onlyTrashed()->with(['teachers', 'teacher'])->paginate(20);
         return view('admin.courses.trashed', compact('courses'));
     }
 

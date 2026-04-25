@@ -157,13 +157,17 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                @if($course->teacher)
-                                                    <div class="d-flex align-items-center">
-                                                        <div>
-                                                            <div class="fw-medium">{{ $course->teacher->name }}</div>
-                                                            <small class="text-muted">{{ $course->teacher->email }}</small>
-                                                        </div>
+                                                @if($course->teachers->count() > 0)
+                                                    <div class="d-flex flex-wrap gap-1">
+                                                        @foreach($course->teachers as $teacher)
+                                                            <div class="creative-badge creative-badge-outline-primary" style="font-size: 0.75rem;">
+                                                                {{ $teacher->name }}
+                                                            </div>
+                                                        @endforeach
                                                     </div>
+                                                @elseif($course->teacher)
+                                                    <div class="fw-medium">{{ $course->teacher->name }}</div>
+                                                    <small class="text-muted">{{ $course->teacher->email }}</small>
                                                 @else
                                                     <span class="text-muted">No teacher assigned</span>
                                                 @endif
@@ -245,7 +249,12 @@
                                             <i class="fas fa-users"></i>
                                             {{ $course->enrollments_count ?? 0 }} enrolled
                                         </span>
-                                        @if($course->teacher)
+                                        @if($course->teachers->count() > 0)
+                                            <span class="admin-mobile-card-meta-item">
+                                                <i class="fas fa-chalkboard-teacher"></i>
+                                                {{ $course->teachers->pluck('name')->join(', ') }}
+                                            </span>
+                                        @elseif($course->teacher)
                                             <span class="admin-mobile-card-meta-item">
                                                 <i class="fas fa-chalkboard-teacher"></i>
                                                 {{ $course->teacher->name }}

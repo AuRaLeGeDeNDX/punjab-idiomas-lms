@@ -34,7 +34,12 @@
                         <div class="card-body">
                             <h1 class="card-title">{{ $courseWithModules->title }}</h1>
                             <p class="text-muted mb-3">
-                                <i class="fas fa-user me-2"></i>{{ $courseWithModules->teacher->name }}
+                                <i class="fas fa-chalkboard-teacher me-2"></i>
+                                @if($courseWithModules->teachers->count() > 0)
+                                    {{ $courseWithModules->teachers->pluck('name')->join(', ') }}
+                                @else
+                                    {{ $courseWithModules->teacher->name }}
+                                @endif
                                 @if($courseWithModules->category)
                                     • <span class="badge bg-secondary">{{ $courseWithModules->category }}</span>
                                 @endif
@@ -123,7 +128,11 @@
                                         <h6><i class="fas fa-user-plus me-2"></i>Course Assignment Required</h6>
                                         <p class="mb-2">Students cannot enroll themselves in courses. You need to be assigned by:</p>
                                         <ul class="mb-2">
-                                            <li>Your teacher: {{ $courseWithModules->teacher->name }}</li>
+                                            @if($courseWithModules->teachers->count() > 0)
+                                                <li>Your teachers: {{ $courseWithModules->teachers->pluck('name')->join(', ') }}</li>
+                                            @else
+                                                <li>Your teacher: {{ $courseWithModules->teacher->name }}</li>
+                                            @endif
                                             <li>A system administrator</li>
                                         </ul>
                                         <small class="text-muted">

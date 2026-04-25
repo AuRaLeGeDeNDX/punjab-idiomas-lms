@@ -30,7 +30,7 @@ class CoursePolicy
 
         // Teachers can view their own courses and published courses
         if ($user->hasRole('Teacher')) {
-            return $course->teacher_id === $user->id || $course->is_published;
+            return $course->hasTeacher($user) || $course->is_published;
         }
 
         // Students can only view published courses
@@ -56,7 +56,7 @@ class CoursePolicy
         }
 
         // Teachers can only update their own courses
-        return $user->hasRole('Teacher') && $course->teacher_id === $user->id;
+        return $user->hasRole('Teacher') && $course->hasTeacher($user);
     }
 
     /**
@@ -70,7 +70,7 @@ class CoursePolicy
         }
 
         // Teachers can only delete their own courses if they have no active enrollments
-        if ($user->hasRole('Teacher') && $course->teacher_id === $user->id) {
+        if ($user->hasRole('Teacher') && $course->hasTeacher($user)) {
             return $course->enrollments()->where('status', 'active')->count() === 0;
         }
 
@@ -104,7 +104,7 @@ class CoursePolicy
         }
 
         // Teachers can publish/unpublish their own courses
-        return $user->hasRole('Teacher') && $course->teacher_id === $user->id;
+        return $user->hasRole('Teacher') && $course->hasTeacher($user);
     }
 
     /**
@@ -118,7 +118,7 @@ class CoursePolicy
         }
 
         // Teachers can manage modules for their own courses
-        return $user->hasRole('Teacher') && $course->teacher_id === $user->id;
+        return $user->hasRole('Teacher') && $course->hasTeacher($user);
     }
 
     /**
@@ -139,7 +139,7 @@ class CoursePolicy
 
         // Teachers can assign students to their own published courses
         if ($user->hasRole('Teacher')) {
-            return $course->is_published && $course->teacher_id === $user->id;
+            return $course->is_published && $course->hasTeacher($user);
         }
 
         return false;

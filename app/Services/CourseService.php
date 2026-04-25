@@ -21,23 +21,28 @@ class CourseService
     /**
      * Create a new course.
      */
-    public function createCourse(array $data, User $teacher): Course
+    public function createCourse(array $data, User|array $teachers): Course
     {
-        // Validate that the user is a teacher
-        if (!$teacher->hasRole('Teacher') && !$teacher->hasRole('Admin')) {
-            throw ValidationException::withMessages([
-                'teacher' => 'Only teachers and admins can create courses.'
-            ]);
+        $teacherIds = [];
+        if ($teachers instanceof User) {
+            $teacherIds = [$teachers->id];
+            $primaryTeacherId = $teachers->id;
+        } else {
+            $teacherIds = $teachers;
+            $primaryTeacherId = !empty($teachers) ? $teachers[0] : null;
         }
 
         DB::beginTransaction();
         try {
             $courseData = array_merge($data, [
-                'teacher_id' => $teacher->id,
+                'teacher_id' => $primaryTeacherId, // Keep legacy support
                 'is_published' => false, // New courses start as unpublished
             ]);
 
             $course = Course::create($courseData);
+            
+            // Attach teachers
+            $course->teachers()->attach($teacherIds);
 
             // Clear relevant caches
             $this->clearCourseListCaches();
@@ -53,10 +58,18 @@ class CourseService
     /**
      * Update an existing course.
      */
-    public function updateCourse(Course $course, array $data): Course
+    public function updateCourse(Course $course, array $data, array $teacherIds = null): Course
     {
         DB::beginTransaction();
         try {
+            if ($teacherIds !== null) {
+                $course->teachers()->sync($teacherIds);
+                // Update legacy teacher_id if it's in the list
+                if (!empty($teacherIds) && (!isset($data['teacher_id']) || !in_array($data['teacher_id'], $teacherIds))) {
+                    $data['teacher_id'] = $teacherIds[0];
+                }
+            }
+
             $course->update($data);
 
             // Clear course-specific caches
@@ -178,7 +191,7 @@ class CourseService
                 $query->orderBy('order_index');
             }, 'modules.subpages' => function ($query) {
                 $query->where('is_active', true)->orderBy('order_index');
-            }, 'teacher'])->findOrFail($courseId);
+            }, 'teachers', 'teacher'])->findOrFail($courseId);
         });
     }
 
@@ -190,7 +203,7 @@ class CourseService
         $cacheKey = "user:accessible_courses:{$user->id}";
         
         return Cache::remember($cacheKey, self::COURSE_LIST_CACHE_TTL, function () use ($user) {
-            return Course::accessibleBy($user)->with('teacher')->get();
+            return Course::accessibleBy($user)->with(['teachers', 'teacher'])->get();
         });
     }
 
@@ -202,7 +215,7 @@ class CourseService
         $cacheKey = "courses:published";
         
         return Cache::remember($cacheKey, self::COURSE_LIST_CACHE_TTL, function () {
-            return Course::published()->with('teacher')->get();
+            return Course::published()->with(['teachers', 'teacher'])->get();
         });
     }
 
@@ -214,7 +227,9 @@ class CourseService
         $cacheKey = "teacher:courses:{$teacher->id}";
         
         return Cache::remember($cacheKey, self::COURSE_LIST_CACHE_TTL, function () use ($teacher) {
-            return Course::where('teacher_id', $teacher->id)->with('modules')->get();
+            return Course::whereHas('teachers', function ($query) use ($teacher) {
+                $query->where('users.id', $teacher->id);
+            })->orWhere('teacher_id', $teacher->id)->with(['modules', 'teachers'])->get();
         });
     }
 
@@ -291,8 +306,13 @@ class CourseService
         // Invalidate enrollment specifically if needed, but progress is persistence-based now
         $this->clearCourseListCaches();
         
-        // Clear teacher's course cache
-        Cache::forget("teacher:courses:{$course->teacher_id}");
+        // Clear all teachers' course caches for this course
+        foreach ($course->teachers as $teacher) {
+            Cache::forget("teacher:courses:{$teacher->id}");
+        }
+        if ($course->teacher_id) {
+            Cache::forget("teacher:courses:{$course->teacher_id}");
+        }
     }
 
     /**

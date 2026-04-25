@@ -58,18 +58,18 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="teacher_id" class="creative-form-label">Assigned Teacher <span class="text-danger">*</span></label>
-                                        <select class="creative-form-input @error('teacher_id') is-invalid @enderror" 
-                                                id="teacher_id" name="teacher_id" required>
-                                            <option value="">Select a teacher...</option>
+                                        <label for="teacher_ids" class="creative-form-label">Assigned Teachers <span class="text-danger">*</span></label>
+                                        <select class="creative-form-input select2 @error('teacher_ids') is-invalid @enderror" 
+                                                id="teacher_ids" name="teacher_ids[]" multiple required>
                                             @foreach($teachers as $teacher)
                                                 <option value="{{ $teacher->id }}" 
-                                                        {{ old('teacher_id', $course->teacher_id) == $teacher->id ? 'selected' : '' }}>
+                                                        {{ (is_array(old('teacher_ids', $course->teachers->pluck('id')->toArray())) && in_array($teacher->id, old('teacher_ids', $course->teachers->pluck('id')->toArray()))) ? 'selected' : '' }}>
                                                     {{ $teacher->name }} ({{ $teacher->email }})
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('teacher_id')
+                                        <small class="form-text text-muted">You can select multiple teachers for this course.</small>
+                                        @error('teacher_ids')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -276,6 +276,45 @@
 
 @endsection
 
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--multiple {
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 8px;
+        padding: 5px;
+        background-color: #fff;
+    }
+    .dark .select2-container--default .select2-selection--multiple {
+        background-color: #0f172a;
+        border-color: rgba(255,255,255,0.1);
+    }
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border-color: #f97316;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #f97316;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        padding: 2px 8px;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: white;
+        margin-right: 5px;
+    }
+</style>
+@endpush
+
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Select teachers...",
+            allowClear: true
+        });
+    });
+</script>
     @vite(['resources/js/course-hierarchy-simple.jsx', 'resources/css/course-hierarchy.css'])
 @endpush

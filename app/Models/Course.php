@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -69,7 +70,23 @@ class Course extends Model
     ];
 
     /**
-     * Get the teacher that owns the course.
+     * Check if a user is assigned as a teacher to this course.
+     */
+    public function hasTeacher(User $user): bool
+    {
+        return $this->teachers->contains($user->id) || $this->teacher_id === $user->id;
+    }
+
+    /**
+     * Get the teachers that are assigned to the course.
+     */
+    public function teachers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'course_teacher');
+    }
+
+    /**
+     * Get the primary teacher (legacy support).
      */
     public function teacher(): BelongsTo
     {
@@ -143,7 +160,9 @@ class Course extends Model
 
         if ($user->hasRole('teacher')) {
             return $query->where(function ($q) use ($user) {
-                $q->where('teacher_id', $user->id)
+                $q->whereHas('teachers', function ($sq) use ($user) {
+                    $sq->where('users.id', $user->id);
+                })->orWhere('teacher_id', $user->id) // Keep legacy support for now
                   ->orWhere('is_published', true);
             });
         }

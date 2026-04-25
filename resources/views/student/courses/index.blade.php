@@ -108,7 +108,12 @@
                                     <div class="creative-card-footer">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             <small class="text-muted">
-                                                <i class="fas fa-user me-1"></i>{{ $course->teacher->name }}
+                                                <i class="fas fa-chalkboard-teacher me-1"></i>
+                                                @if($course->teachers->count() > 0)
+                                                    {{ $course->teachers->pluck('name')->join(', ') }}
+                                                @else
+                                                    {{ $course->teacher->name }}
+                                                @endif
                                             </small>
                                             @if($course->duration_hours)
                                                 <small class="text-muted">

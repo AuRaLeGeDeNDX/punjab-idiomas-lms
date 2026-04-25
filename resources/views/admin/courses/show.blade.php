@@ -64,8 +64,22 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h6>Teacher</h6>
-                                    @if($courseWithModules->teacher)
+                                    <h6>Teachers</h6>
+                                    @if($courseWithModules->teachers->count() > 0)
+                                        <div class="d-flex flex-wrap gap-2 mb-3">
+                                            @foreach($courseWithModules->teachers as $teacher)
+                                                <div class="creative-card p-2 d-flex align-items-center gap-2" style="background: rgba(0,0,0,0.05); min-width: 200px;">
+                                                    <div class="avatar-sm rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                                        {{ substr($teacher->name, 0, 1) }}
+                                                    </div>
+                                                    <div>
+                                                        <div class="fw-medium small">{{ $teacher->name }}</div>
+                                                        <div class="text-muted" style="font-size: 0.7rem;">{{ $teacher->email }}</div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @elseif($courseWithModules->teacher)
                                         <div class="d-flex align-items-center mb-3">
                                             <div>
                                                 <div class="fw-medium">{{ $courseWithModules->teacher->name }}</div>
@@ -304,7 +318,13 @@
                                 <a href="{{ route('admin.courses.edit', $courseWithModules) }}" class="creative-btn creative-btn-outline">
                                     <i class="fas fa-edit"></i>Edit Course
                                 </a>
-                                @if($courseWithModules->teacher)
+                                @if($courseWithModules->teachers->count() > 0)
+                                    @foreach($courseWithModules->teachers->take(3) as $teacher)
+                                        <a href="mailto:{{ $teacher->email }}" class="creative-btn creative-btn-outline">
+                                            <i class="fas fa-envelope"></i>Contact {{ Str::before($teacher->name, ' ') }}
+                                        </a>
+                                    @endforeach
+                                @elseif($courseWithModules->teacher)
                                     <a href="mailto:{{ $courseWithModules->teacher->email }}" class="creative-btn creative-btn-outline">
                                         <i class="fas fa-envelope"></i>Contact Teacher
                                     </a>

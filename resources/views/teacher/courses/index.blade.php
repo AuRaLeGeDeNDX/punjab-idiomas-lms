@@ -74,6 +74,15 @@
 
                                 <div class="mb-2">
                                     <small class="text-muted">
+                                        Teachers: 
+                                        @foreach($course->teachers as $t)
+                                            <span class="badge bg-light text-dark">{{ $t->id === auth()->id() ? 'You' : $t->name }}</span>
+                                        @endforeach
+                                    </small>
+                                </div>
+
+                                <div class="mb-2">
+                                    <small class="text-muted">
                                         Created: {{ $course->created_at->format('M j, Y') }}
                                     </small>
                                 </div>

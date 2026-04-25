@@ -225,77 +225,156 @@
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-    /* Select2 Dark Mode Fixes */
+    /* Prevent Flash of Unstyled Content (FOUC) - Target ONLY the raw select */
+    select#teacher_ids {
+        display: none !important;
+    }
+    
+    /* Select2 Dark Mode & Premium Styling */
     .select2-container--default .select2-selection--multiple {
-        border: 1px solid rgba(0,0,0,0.1);
-        border-radius: 8px;
-        padding: 5px;
-        background-color: #fff;
-        min-height: 45px;
+        border: 1px solid rgba(0,0,0,0.1) !important;
+        border-radius: 12px !important;
+        padding: 4px 8px !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        min-height: 50px !important;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
     }
     .dark .select2-container--default .select2-selection--multiple {
-        background-color: #1e293b !important;
-        border-color: rgba(255,255,255,0.1) !important;
+        background-color: rgba(15, 23, 42, 0.6) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px);
     }
     .select2-container--default.select2-container--focus .select2-selection--multiple {
         border-color: #f97316 !important;
-        box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background-color: #f97316 !important;
-        border: none !important;
-        color: white !important;
-        border-radius: 6px !important;
-        padding: 3px 10px !important;
-        margin-top: 4px !important;
-        font-weight: 500;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-        color: white !important;
-        margin-right: 8px !important;
-        border: none !important;
-        background: transparent !important;
-        font-weight: bold;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-        color: #eee !important;
-        background: rgba(255,255,255,0.2) !important;
-        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1) !important;
     }
     
-    /* Dropdown legibility */
+    /* Tags (Choices) */
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background: linear-gradient(135deg, #f97316 0%, #ed8936 100%) !important;
+        border: none !important;
+        color: white !important;
+        border-radius: 8px !important;
+        padding: 4px 12px 4px 28px !important; /* Extra left padding for the absolute cross */
+        margin: 4px !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        position: relative !important;
+        box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Remove Cross Fix */
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        position: absolute !important;
+        left: 8px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-size: 1.1rem !important;
+        font-weight: 300 !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        transition: all 0.2s ease;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+        color: white !important;
+        background: none !important;
+        transform: translateY(-50%) scale(1.2) !important;
+    }
+    
+    /* Search Input inside Select2 */
+    .select2-container--default .select2-search--inline .select2-search__field {
+        margin-top: 0 !important;
+        color: inherit !important;
+        font-family: inherit !important;
+    }
+    
+    /* Dropdown Styling - FULL FORCE DARK THEME */
     .select2-dropdown {
-        border-radius: 8px;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(0,0,0,0.1);
-        z-index: 9999;
-    }
-    .dark .select2-dropdown {
         background-color: #1e293b !important;
-        border-color: rgba(255,255,255,0.2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+        z-index: 9999 !important;
     }
+    
+    /* Default Option State */
     .select2-results__option {
-        padding: 8px 12px !important;
-        color: #334155;
-    }
-    .dark .select2-results__option {
+        background-color: transparent !important;
         color: #e2e8f0 !important;
+        padding: 12px 15px !important;
+        transition: none !important;
     }
+    
+    .select2-results__option .teacher-name {
+        color: #f8fafc !important;
+    }
+    
+    .select2-results__option .teacher-email {
+        color: #94a3b8 !important;
+    }
+    
+    /* Hover / Highlighted State - MUST BE ORANGE */
+    .select2-container--default .select2-results__option--highlighted,
     .select2-container--default .select2-results__option--highlighted[aria-selected] {
         background-color: #f97316 !important;
+        color: #ffffff !important;
     }
-    .dark .select2-results__option[aria-selected=true] {
-        background-color: rgba(249, 115, 22, 0.1) !important;
+    
+    .select2-results__option--highlighted .teacher-name,
+    .select2-results__option--highlighted .teacher-email {
+        color: #ffffff !important;
+    }
+    
+    /* Selected but NOT Hovered State */
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background-color: rgba(249, 115, 22, 0.15) !important;
         color: #f97316 !important;
     }
+    
+    .select2-results__option[aria-selected=true] .teacher-name {
+        color: #f97316 !important;
+    }
+    
+    /* Fix for unhovered items becoming white/invisible */
+    .select2-results__options {
+        background-color: #1e293b !important;
+    }
+    
+    /* Search Box in Dropdown */
+    .select2-search--dropdown {
+        padding: 10px !important;
+    }
     .select2-search--dropdown .select2-search__field {
-        border-radius: 6px;
-        padding: 8px !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        border: 1px solid rgba(0,0,0,0.1) !important;
     }
     .dark .select2-search--dropdown .select2-search__field {
         background-color: #0f172a !important;
-        border-color: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
         color: white !important;
+    }
+    
+    /* Custom Teacher Option Layout */
+    .teacher-option {
+        display: flex;
+        flex-direction: column;
+    }
+    .teacher-name {
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+    .teacher-email {
+        font-size: 0.75rem;
+        opacity: 0.7;
     }
 </style>
 @endpush
@@ -304,9 +383,35 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
+        function formatTeacher(teacher) {
+            if (!teacher.id) return teacher.text;
+            
+            const text = teacher.text;
+            const lastIndex = text.lastIndexOf(' (');
+            const name = lastIndex !== -1 ? text.substring(0, lastIndex) : text;
+            const email = lastIndex !== -1 ? text.substring(lastIndex + 2, text.length - 1) : '';
+            
+            return $(`
+                <div class="teacher-option">
+                    <span class="teacher-name">${name}</span>
+                    <span class="teacher-email text-muted small">${email}</span>
+                </div>
+            `);
+        }
+
+        function formatTeacherSelection(teacher) {
+            if (!teacher.id) return teacher.text;
+            const text = teacher.text;
+            const lastIndex = text.lastIndexOf(' (');
+            return lastIndex !== -1 ? text.substring(0, lastIndex) : text;
+        }
+
         $('.select2').select2({
             placeholder: "Select teachers...",
-            allowClear: true
+            allowClear: true,
+            width: '100%',
+            templateResult: formatTeacher,
+            templateSelection: formatTeacherSelection
         });
     });
 

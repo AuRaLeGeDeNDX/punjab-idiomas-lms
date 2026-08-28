@@ -43,6 +43,7 @@ class SecurePdfService
         // For R2-stored files, generate a direct pre-signed URL to avoid double-hop
         // (VPS downloads from R2, then re-serves to browser = slow)
         // Direct R2 pre-signed URL lets PDF.js load straight from Cloudflare's edge CDN
+        /* TEMPORARILY DISABLED TO PREVENT CORS ERRORS IN PDF.JS
         if ($content->storage_disk === 'r2' && $content->file_path) {
             try {
                 $disk = Storage::disk('r2');
@@ -79,6 +80,7 @@ class SecurePdfService
                 // Fall through to VPS-proxied URL below
             }
         }
+        */
         
         // Fallback: Generate VPS-proxied signed URL (for local/public/protected disks)
         return \URL::temporarySignedRoute(

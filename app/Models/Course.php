@@ -239,6 +239,21 @@ class Course extends Model
     }
 
     /**
+     * Check if a specific user is enrolled in this course.
+     */
+    public function isEnrolledBy(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+        
+        return $this->enrollments()
+                    ->where('user_id', $user->id)
+                    ->where('status', 'active')
+                    ->exists();
+    }
+
+    /**
      * Get active enrollments count.
      */
     public function getActiveEnrollmentsCount(): int

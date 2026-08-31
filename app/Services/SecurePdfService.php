@@ -50,7 +50,7 @@ class SecurePdfService
                 
                 // Verify file exists on R2
                 if ($disk->exists($content->file_path)) {
-                    /** @var \Aws\S3\S3Client $client */
+                    // @var \Aws\S3\S3Client $client
                     $client = $disk->getClient();
                     
                     $command = $client->getCommand('GetObject', [
